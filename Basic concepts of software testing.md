@@ -179,7 +179,9 @@
 
 ## Жизненный цикл бага
 
-[Здесь должен быть скриншот жизненного цикла бага]
+<div style="text-align: right;">
+  <img src="https://avatars.mds.yandex.net/i?id=462aab63a68ab4e14d8e6454d32bc60e_l-10157084-images-thumbs&n=13" alt="Скриншот жизненного цикла бага" style="width: 33%; height: auto;">
+</div>
 
 ## Severity vs Priority
 
