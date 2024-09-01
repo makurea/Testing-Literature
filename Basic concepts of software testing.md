@@ -274,7 +274,9 @@
 
 ## Методы тестирования
 
-[Здесь должен быть скриншот методов тестирования]
+<div style="text-align: right;">
+  <img src="https://habrastorage.org/webt/hh/zl/r5/hhzlr5zvvsgtvy9fifga315ohpw.jpeg" alt="Скриншот методов тестирования" style="width: 70%; height: auto;">
+</div>
 
 ### Тестирование белого ящика
 ### Тестирование серого ящика
