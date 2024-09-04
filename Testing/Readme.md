@@ -3,11 +3,11 @@
 
 ## Содержание
 
-- [Введение и общие понятия](Introduction/Introduction.md)
-- [Принципы тестирования](Testing-principles/Testing-principles.md)
-- [Обеспечение качества и контроль качества](Quality-assurance/Quality-assurance.md)
-- [Верификация и валидация](Verification-validation/)
-- [Документация в процессе разработки ПО](Documentation.md)
+- [Введение и общие понятия](1.Introduction/Introduction.md)
+- [Принципы тестирования](2.Testing-principles/Testing-principles.md)
+- [Обеспечение качества и контроль качества](3.Quality-assurance/Quality-assurance.md)
+- [Верификация и валидация](4.Verification-validation/)
+- [Документация в процессе разработки ПО](5.Documentation/Documentation.md)
 - [Этапы тестирования](Stages.md)
 - [Требования и их атрибуты](Requirements.md)
 - [Дефекты и отчеты о дефектах](Defects.md)
