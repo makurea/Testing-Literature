@@ -4,7 +4,7 @@
 ## Содержание
 
 - [Введение и общие понятия](1.%20Introduction/Introduction.md)
-- [Принципы тестирования](2.Testing-principles/Testing-principles.md)
+- [Принципы тестирования](2.%20Testing-principles/Testing-principles.md)
 - [Обеспечение качества и контроль качества](3.Quality-assurance/Quality-assurance.md)
 - [Верификация и валидация](4.Verification-validation/)
 - [Документация в процессе разработки ПО](5.Documentation/Documentation.md)
