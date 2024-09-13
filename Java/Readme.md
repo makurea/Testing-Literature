@@ -9,6 +9,6 @@
 4. [Циклы](004.%20Cycles)
 5. [Массивы](005.%20Arrays)
 6. [Методы](006.%20Methods)
-    - [Методы](/Methods.md)
-    - [Строковые методы](/String-methods.md)
+    - [Методы](006.%20Methods/Methods.md)
+    - [Строковые методы](006.%20Methods/String-methods.md)
 8. [Коллекции](007.%20Collections)
