@@ -38,4 +38,12 @@
 22. [CI/CD в контексте тестирования](022.%20Ci-cd)
 23. [Основы криптографии для тестировщиков](023.%20Cryptography)
 24. [Принципы юзабилити-тестирования](024.%20Usability-testing)
-
+25. [Selenium](025.%20Selenium)
+26. [JUnit 5 и AssertJ](026.%20JUnit-5-и-AssertJ)
+27. [Методологии разработки ПО](027.%20Software-development-methodologies)
+28. [Багтрекинговые системы](028.%20Bug-tracking-systems)
+29. [Основы DevTools](029.%20DevTools-Basic)
+30. [Основы Xml и Json](030.%20Xml-vs-Json-Basic)
+31. [Soap и Rest](031.%20Soap-vs-Rest)
+32. [Postman](032.%20Postman)
+33. [Api](033.%20Api)
