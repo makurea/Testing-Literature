@@ -13,6 +13,6 @@
 
 ## Навигация
 
-- [Главное меню](Testing/Readme.md)
+- [Главное меню](../Readme.md)
 - [Предыдущая глава: Основные фазы тестирования](Testing/013.Testing-phases)
 - [Следующая глава: Техники тест-дизайна](Testing/015.Test-design-techniques)
