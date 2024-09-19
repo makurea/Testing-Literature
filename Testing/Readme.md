@@ -47,3 +47,4 @@
 31. [Soap и Rest](031.%20Soap-vs-Rest)
 32. [Postman](032.%20Postman)
 33. [Api](033.%20Api)
+34. [Authorization vs Authentication](034.%20Authorization-vs-Authentication)
