@@ -2,8 +2,8 @@
 
 ## Содержание
 
-### [1. Основы и Введение](001.%20Introduction)
-1. [Введение и общие понятия](001.%20Introduction)
+### [1. Основы и Введение](001.%20Basics-and-Introduction)
+1. [Введение и общие понятия](001.%20Basics-and-Introduction/001.%20Introduction)
 2. [Принципы тестирования](002.%20Testing-principles)
 3. [Обеспечение качества и контроль качества](003.%20Quality-assurance)
 4. [Верификация и валидация](004.%20Verification-validation)
