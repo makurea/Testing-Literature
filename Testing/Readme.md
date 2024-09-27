@@ -60,3 +60,12 @@
 3. [Postman](006.%20Integration-and-API/003.%20Postman)
 4. [API](006.%20Integration-and-API/004.%20Api)
 5. [Авторизация и Аутентификация](006.%20Integration-and-API/005.%20Authorization-vs-Authentication)
+
+### [7. Стандарты](007.%20Standards)
+1. [ISO/IEC 25010](007.%20Standards/001.%20ISO-IEC-25010)
+2. [ISTQB](007.%20Standards/002.%20ISTQB)
+3. [IEEE 829](007.%20Standards/003.%20IEEE-829)
+4. [ISO/IEC 12207](007.%20Standards/004.%20ISO-IEC-12207)
+5. [CMMI](007.%20Standards/005.%20CMMI)
+6. [Agile Manifesto](007.%20Standards/006.%20Agile-Manifesto)
+7. [TMMi](007.%20Standards/007.%20TMMi)
