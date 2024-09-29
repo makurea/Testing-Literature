@@ -21,3 +21,9 @@
 1. [Линейный и бинарный поиск](003.%20Sorting-and-searching/001.%20Linear-and-binary-search)
 2. [Алгоритмы сортировки )](003.%20Sorting-and-searching/002.%20Sorting-algorithms)
 3. [Поиск в глубину и в ширину (DFS, BFS)](003.%20Sorting-and-searching/003.%20DFS-and-BFS)
+
+### [4. Алгоритмы на графах](004.%20Graph-algorithms)
+1. [Алгоритм Дейкстры](004.%20Graph-algorithms/001.%20Dijkstra's-algorithm)
+2. [Алгоритм Флойда-Уоршелла)](004.%20Graph-algorithms/002.%20Floyd-Warshall-algorithm)
+3. [Поиск кратчайшего пути](004.%20Graph-algorithms/003.%20Finding-the-shortest-path)
+4. [Обход графа](004.%20Graph-algorithms/004.%20Graph-traversal)
