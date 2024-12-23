@@ -9,11 +9,11 @@
 6. [Методологии разработки ПО](001.%20Basics-and-Introduction/006.%20Software-development-methodologies.md)
 
 ## [2. Документация и Дефекты](002.%20Documentation-and-Defects)
-1. [Документация в процессе разработки ПО](002.%20Documentation-and-Defects/001.%20Documentation)
-2. [Дефекты и отчеты о дефектах](002.%20Documentation-and-Defects/002.%20Defects)
-3. [Жизненный цикл бага](002.%20Documentation-and-Defects/003.%20Bug-lifecycle)
-4. [Severity vs Priority](002.%20Documentation-and-Defects/004.%20Severity-vs-priority)
-5. [Типы задач](002.%20Documentation-and-Defects/005.%20Tasks)
+1. [Документация в процессе разработки ПО](002.%20Documentation-and-Defects/001.%20Documentation.md)
+2. [Дефекты и отчеты о дефектах](002.%20Documentation-and-Defects/002.%20Defects.md)
+3. [Жизненный цикл бага](002.%20Documentation-and-Defects/003.%20Bug-lifecycle.md)
+4. [Severity vs Priority](002.%20Documentation-and-Defects/004.%20Severity-vs-priority.md)
+5. [Типы задач](002.%20Documentation-and-Defects/005.%20Tasks.md)
 
 ## [3. Тестирование и Среды](003.%20Testing-and-Environments)
 1. [Тестовые среды](003.%20Testing-and-Environments/001.%20Test-environments)
