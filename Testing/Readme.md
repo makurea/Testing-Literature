@@ -53,11 +53,11 @@
 5. [Работа с логами](005.%20Practical-tools-and-automation/005.%20Working-with-logs)
 
 ## [6. Интеграция и API](006.%20Integration-and-API)
-1. [Основы Xml и Json](006.%20Integration-and-API/001.%20Xml-vs-Json-Basic)
-2. [Soap и Rest](006.%20Integration-and-API/002.%20Soap-vs-Rest)
-3. [Postman](006.%20Integration-and-API/003.%20Postman)
-4. [API](006.%20Integration-and-API/004.%20Api)
-5. [Авторизация и Аутентификация](006.%20Integration-and-API/005.%20Authorization-vs-Authentication)
+1. [Основы Xml и Json](006.%20Integration-and-API/001.%20Xml-vs-Json-Basic.md)
+2. [Soap и Rest](006.%20Integration-and-API/002.%20Soap-vs-Rest.md)
+3. [Postman](006.%20Integration-and-API/003.%20Postman.md)
+4. [API](006.%20Integration-and-API/004.%20Api.md)
+5. [Авторизация и Аутентификация](006.%20Integration-and-API/005.%20Authorization-vs-Authentication.md)
 
 ## [7. Стандарты](007.%20Standards)
 1. [ISO/IEC 25010](007.%20Standards/001.%20ISO-IEC-25010.md)
