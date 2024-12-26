@@ -46,11 +46,11 @@
 6. [Основы криптографии для тестировщиков](004.%20Technical-aspects-and-networks/006.%20Cryptography)
 
 ## [5. Практические инструменты и автоматизация](005.%20Practical-tools-and-automation)
-1. [Selenium](005.%20Practical-tools-and-automation/001.%20Selenium)
-2. [JUnit 5 и AssertJ](005.%20Practical-tools-and-automation/002.%20JUnit-5-и-AssertJ)
-3. [Багтрекинговые системы](005.%20Practical-tools-and-automation/003.%20Bug-tracking-systems)
-4. [Основы DevTools](005.%20Practical-tools-and-automation/004.%20DevTools-Basic)
-5. [Работа с логами](005.%20Practical-tools-and-automation/005.%20Working-with-logs)
+1. [Selenium](005.%20Practical-tools-and-automation/001.%20Selenium.md)
+2. [JUnit 5 и AssertJ](005.%20Practical-tools-and-automation/002.%20JUnit-5-и-AssertJ.md)
+3. [Багтрекинговые системы](005.%20Practical-tools-and-automation/003.%20Bug-tracking-systems.md)
+4. [Основы DevTools](005.%20Practical-tools-and-automation/004.%20DevTools-Basic.md)
+5. [Работа с логами](005.%20Practical-tools-and-automation/005.%20Working-with-logs.md)
 
 ## [6. Интеграция и API](006.%20Integration-and-API)
 1. [Основы Xml и Json](006.%20Integration-and-API/001.%20Xml-vs-Json-Basic.md)
