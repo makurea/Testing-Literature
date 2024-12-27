@@ -38,12 +38,12 @@
 9. [Принципы юзабилити тестирования](003.%20Testing-and-Environments/009.%20Usability-testing)
 
 ## [4. Технические аспекты и сети](004.%20Technical-aspects-and-networks)
-1. [HTTP в контексте тестирования](004.%20Technical-aspects-and-networks/001.%20Http-testing)
-2. [Принципы ООП в контексте тестирования](004.%20Technical-aspects-and-networks/002.%20Oop-principles)
-3. [Модели сетевого взаимодействия](004.%20Technical-aspects-and-networks/003.%20Network-models)
-4. [SQL и тестирование баз данных](004.%20Technical-aspects-and-networks/004.%20Sql-testing)
-5. [CI/CD в контексте тестирования](004.%20Technical-aspects-and-networks/005.%20Ci-cd)
-6. [Основы криптографии для тестировщиков](004.%20Technical-aspects-and-networks/006.%20Cryptography)
+1. [HTTP в контексте тестирования](004.%20Technical-aspects-and-networks/001.%20Http-testing.md)
+2. [Принципы ООП в контексте тестирования](004.%20Technical-aspects-and-networks/002.%20Oop-principles.md)
+3. [Модели сетевого взаимодействия](004.%20Technical-aspects-and-networks/003.%20Network-models.md)
+4. [SQL и тестирование баз данных](004.%20Technical-aspects-and-networks/004.%20Sql-testing.md)
+5. [CI/CD в контексте тестирования](004.%20Technical-aspects-and-networks/005.%20Ci-cd.md)
+6. [Основы криптографии для тестировщиков](004.%20Technical-aspects-and-networks/006.%20Cryptography.md)
 
 ## [5. Практические инструменты и автоматизация](005.%20Practical-tools-and-automation)
 1. [Selenium](005.%20Practical-tools-and-automation/001.%20Selenium.md)
