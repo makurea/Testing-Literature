@@ -1,4 +1,4 @@
-# Горячие клавиши IntelliJ IDEA | Idea hot keys
+# Горячие клавиши IntelliJ IDEA | Idea hot keys ппп
 
 Этот список содержит наиболее полезные горячие клавиши для IntelliJ IDEA, упрощая повседневную работу с кодом.
 
