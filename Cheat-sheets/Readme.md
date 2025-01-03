@@ -6,7 +6,7 @@
 3. [Agile (Scrum, Kanban, XP, etc)](001.%20Testing-Theory/003.%20Software-development-models-and-methodologies.md)
 4. [Виды и уровни тестирования](001.%20Testing-Theory/004.%20Test-documentation.md)
 5. [Тестовая документация](001.%20Testing-Theory/005.%20Agile-(Scrum,-Kanban,-XP,-etc.).md)
-6. [Техники тест-дизайна]
+6. [Техники тест-дизайна]888
 7. [Тестирование документации]
 
 ## [2. Test Management](002.%20Test-Management)
