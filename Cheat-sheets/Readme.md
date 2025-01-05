@@ -6,13 +6,13 @@
 3. [Agile (Scrum, Kanban, XP, etc)](001.%20Testing-Theory/003.%20Software-development-models-and-methodologies.md)
 4. [Виды и уровни тестирования](001.%20Testing-Theory/004.%20Test-documentation.md)
 5. [Тестовая документация](001.%20Testing-Theory/005.%20Agile-(Scrum,-Kanban,-XP,-etc.).md)
-6. [Техники тест-дизайна]
-7. [Тестирование документации]
+6. [Техники тест-дизайна](001.%20Testing-Theory/006.%20Test-design-techniques.md)
+7. [Тестирование документации](001.%20Testing-Theory/007.%20Testing-documentation.md)
 
 ## [2. Test Management](002.%20Test-Management)
-1. Планирование, эстимация, метрики
-2. Отчеты о тестировании
-3. Приоритизация
+1. [Планирование, эстимация, метрики](002.%20Test-Management/001.%20Planning,-estimation,-metrics.md)
+2. [Отчеты о тестировании](002.%20Test-Management/002.%20Test-reports.md)
+3. [Приоритизация](002.%20Test-Management/003.%20Prioritization.md)
 
 ## ОС и веб
 1. Веб-тестирование
