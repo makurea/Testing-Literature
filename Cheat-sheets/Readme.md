@@ -14,10 +14,10 @@
 2. [Отчеты о тестировании](002.%20Test-Management/002.%20Test-reports.md)
 3. [Приоритизация](002.%20Test-Management/003.%20Prioritization.md)
 
-## ОС и веб
-1. Веб-тестирование
-2. Протоколы. Методы HTTP(S)-запросов, статус-коды
-3. API, REST/SOAP, форматы передачи данных
+## [3. ОС и веб](003.%20OS-and-web)
+1. [Веб-тестирование](003.%20OS-and-web/001.%20Web-testing.md)
+2. [Протоколы. Методы HTTP(S)-запросов, статус-коды](003.%20OS-and-web/002.%20Protocols.-HTTP(S)-request-methods,-status-codes.md)
+3. [API, REST/SOAP, форматы передачи данных](003.%20OS-and-web/003.%20API,-RESTSOAP,-data-transfer-formats.md)
 4. Интеграционное тестирование
 5. Инструменты работы с API
 6. ОС, браузеры, DevTools
