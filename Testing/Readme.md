@@ -1,4 +1,4 @@
-# Содержание 7777
+# Содержание 
 
 ## [1. Основы и Введение](001.%20Basics-and-Introduction)
 1. [Введение и общие понятия](001.%20Basics-and-Introduction/001.%20Introduction.md)
