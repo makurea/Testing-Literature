@@ -25,10 +25,10 @@
 8. [Анализаторы трафика - снифферы](003.%20OS-and-web/008.%20Traffic-analyzers---sniffers.md)
 
 ## [4. Базы данных в тестировании](004.%20Databases-in-testing)
-1. Основы и понятия
-2. Индексы, транзакции, триггеры
-3. SQL операторы
-4. SQL
+1. [Основы и понятия](004.%20Databases-in-testing/001.%20Database%20Basics-and-Concepts.md)
+2. [Индексы, транзакции, триггеры](004.%20Databases-in-testing/002.%20Indexes,-transactions,-triggers.md)
+3. [SQL операторы](004.%20Databases-in-testing/003.%20SQL-operators-DML,-DDL,-DCL,-TCL.md)
+4. [SQL](004.%20Databases-in-testing/004%20SQL.md)
 5. [JOIN](004.%20Databases-in-testing/005.%20JOIN.md)
 
 ## [5. Мобильное тестирование](005.%20Mobile-testing)
