@@ -34,13 +34,13 @@
 ## [5. Мобильное тестирование](005.%20Mobile-testing)
 1. [Основы](005.%20Mobile-testing/001.%20Basics.md)
 
-## [6. Автоматизированное тестирование](006.%20Automated-testing)
-1. [Основы теории по автоматизации](006.%20Automated-testing/001.%20Basics-of-automation-theory.md)
-2. [Системы контроля версий (Git, TFS и др.)](006.%20Automated-testing/002.%20Version-control-systems-(Git,-TFS,-etc.).md)
-3. [CI, CD](006.%20Automated-testing/003.%20CI,-CD.md)
-4. [Инструменты (фреймворки) автоматизации](006.%20Automated-testing/004.%20Automation-tools-(frameworks).md)
-5. [Инструменты для управления проектом (package manager)](006.%20Automated-testing/005.%20Project-management-tools-(package-manager).md)
-6. [Локаторы](006.%20Automated-testing/006.%20Locators.md)
+## [6. Автоматизированное тестирование](006.%20Basic-Theory-of-Test-Automation)
+1. [Основы теории по автоматизации](006.%20Basic-Theory-of-Test-Automation/001.%20Basics-of-automation-theory.md)
+2. [Системы контроля версий (Git, TFS и др.)](006.%20Basic-Theory-of-Test-Automation/002.%20Version-control-systems-(Git,-TFS,-etc.).md)
+3. [CI, CD](006.%20Basic-Theory-of-Test-Automation/003.%20CI,-CD.md)
+4. Инструменты (фреймворки) автоматизации
+5. Инструменты для управления проектом (package manager)
+6. Локаторы
 7. Инициализация браузера
 8. Selenium API
 9. Ожидания
