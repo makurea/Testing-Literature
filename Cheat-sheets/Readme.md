@@ -38,8 +38,8 @@
 1. [Основы теории по автоматизации](006.%20Basic-Theory-of-Test-Automation/001.%20Fundamentals-of-automation-theory.md)
 2. [Системы контроля версий (Git, TFS и др.)](006.%20Basic-Theory-of-Test-Automation/002.%20Version-control-systems-(Git,-TFS...).md)
 3. [☀️CI, CD](006.%20Basic-Theory-of-Test-Automation/003.%20CI,-CD.md)
-4. Инструменты (фреймворки) автоматизации
-5. Инструменты для управления проектом (package manager)
+4. [Инструменты (фреймворки) автоматизации](006.%20Basic-Theory-of-Test-Automation/004.%20Automation-tools-(frameworks).md)
+5. [Инструменты для управления проектом (package manager)](006.%20Basic-Theory-of-Test-Automation/005.%20Prject-management-tools-(package-manager))
 6. Локаторы
 7. Инициализация браузера
 8. Selenium API
