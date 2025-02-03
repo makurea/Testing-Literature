@@ -8,6 +8,12 @@
 [Задача 5: Генерация чисел Фибоначчи](#task5)  
 [Задача 6: Проверка на анaграмму](#task6)  
 [Задача 7: Сортировка массива методом пузырька](#task7)  
+[Задача 8: Удаление дубликатов символов в строке](#remove-duplicates-string)
+[Задача 9: Проверка, содержит ли массив заданное число](#array-contains-number)
+[Задача 10: Удаление дубликатов из массива](#remove-duplicates-array)
+[Задача 11: Объединение двух отсортированных массивов](#merge-sorted-arrays)
+[Задача 12: Проверка, является ли число простым](#prime-number-check)
+[Задача 13: Вычисление факториала числа](#factorial-calculation)
 
 <a name="task1"></a>
 ## Задача 1: Развернуть строку (3 способами)
@@ -264,4 +270,160 @@ public class BubbleSort {
 Реализация сортировки пузырьком, где элементы сравниваются и меняются местами, если они находятся в неправильном порядке.
 
 ---
+
+## <a name="task8"></a> 8. Удаление дубликатов символов в строке
+
+```java
+public class RemoveDuplicatesFromString {
+    public static void main(String[] args) {
+        String input = "programming";
+        String result = removeDuplicates(input);
+        System.out.println("Строка без дубликатов: " + result);
+    }
+
+    private static String removeDuplicates(String str) {
+        StringBuilder sb = new StringBuilder();
+        boolean[] seen = new boolean[256];
+        for (char c : str.toCharArray()) {
+            if (!seen[c]) {
+                sb.append(c);
+                seen[c] = true;
+            }
+        }
+        return sb.toString();
+    }
+}
+```
+
+---
+
+## <a name="task9"></a> 9. Проверка, содержит ли массив заданное число
+
+```java
+public class ArrayContainsNumber {
+    public static void main(String[] args) {
+        int[] numbers = {1, 2, 3, 4, 5};
+        int target = 3;
+        boolean contains = containsNumber(numbers, target);
+        System.out.println("Массив содержит " + target + "? " + contains);
+    }
+
+    private static boolean containsNumber(int[] arr, int num) {
+        for (int n : arr) {
+            if (n == num) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+```
+
+---
+
+## <a name="task10"></a> 10. Удаление дубликатов из массива
+
+```java
+public class RemoveDuplicatesFromArray {
+    public static void main(String[] args) {
+        int[] numbers = {1, 2, 2, 3, 4, 4, 5};
+        int[] uniqueNumbers = removeDuplicates(numbers);
+        System.out.println("Массив без дубликатов: ");
+        for (int num : uniqueNumbers) {
+            System.out.print(num + " ");
+        }
+    }
+
+    private static int[] removeDuplicates(int[] arr) {
+        return java.util.Arrays.stream(arr).distinct().toArray();
+    }
+}
+```
+
+---
+
+## <a name="task11"></a> 11. Объединение двух отсортированных массивов
+
+```java
+public class MergeSortedArrays {
+    public static void main(String[] args) {
+        int[] arr1 = {1, 3, 5, 7};
+        int[] arr2 = {2, 4, 6, 8};
+        int[] mergedArray = mergeSortedArrays(arr1, arr2);
+        System.out.println("Объединенный массив:");
+        for (int num : mergedArray) {
+            System.out.print(num + " ");
+        }
+    }
+
+    private static int[] mergeSortedArrays(int[] arr1, int[] arr2) {
+        int[] result = new int[arr1.length + arr2.length];
+        int i = 0, j = 0, k = 0;
+        while (i < arr1.length && j < arr2.length) {
+            if (arr1[i] < arr2[j]) {
+                result[k++] = arr1[i++];
+            } else {
+                result[k++] = arr2[j++];
+            }
+        }
+        while (i < arr1.length) {
+            result[k++] = arr1[i++];
+        }
+        while (j < arr2.length) {
+            result[k++] = arr2[j++];
+        }
+        return result;
+    }
+}
+```
+
+---
+
+## <a name="task12"></a> 12. Проверка, является ли число простым
+
+```java
+public class PrimeNumberCheck {
+    public static void main(String[] args) {
+        int num = 29;
+        boolean isPrime = isPrime(num);
+        System.out.println("Число " + num + " является простым? " + isPrime);
+    }
+
+    private static boolean isPrime(int num) {
+        if (num < 2) {
+            return false;
+        }
+        for (int i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+```
+
+---
+
+## <a name="task13"></a> 13. Вычисление факториала числа
+
+```java
+public class FactorialCalculation {
+    public static void main(String[] args) {
+        int num = 5;
+        long factorial = factorial(num);
+        System.out.println("Факториал числа " + num + " равен " + factorial);
+    }
+
+    private static long factorial(int n) {
+        if (n == 0) {
+            return 1;
+        }
+        return n * factorial(n - 1);
+    }
+}
+```
+
+---
+
 
