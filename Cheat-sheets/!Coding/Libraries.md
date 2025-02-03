@@ -1,116 +1,118 @@
-# Шпаргалка по библиотекам Java
+# Основные библиотеки для Java
 
-| Название библиотеки | Что делает | Пример кода |
-|---------------------|------------|-------------|
-| **Apache Commons Lang** | Предоставляет дополнительные утилиты для работы со строками, числами, датами и другими объектами. | ```java
-import org.apache.commons.lang3.StringUtils;
+## 1. Коллекции и утилиты
 
-public class Example {
-    public static void main(String[] args) {
-        String str = "  Hello World  ";
-        String trimmed = StringUtils.trim(str); // "Hello World"
-    }
-}
-``` |
-| **Google Guava** | Библиотека от Google, предоставляющая множество полезных утилит для работы с коллекциями, строками, вводом-выводом и многопоточностью. | ```java
-import com.google.common.base.Joiner;
-import java.util.Arrays;
+```java
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Collections;
+import java.util.stream.Collectors;
+```
 
-public class Example {
-    public static void main(String[] args) {
-        String result = Joiner.on(", ").join(Arrays.asList("apple", "banana", "cherry")); // "apple, banana, cherry"
-    }
-}
-``` |
-| **Jackson** | Библиотека для работы с JSON, позволяет сериализовать и десериализовать объекты Java в JSON и обратно. | ```java
+- **Java Collections Framework (JCF)** — стандартные коллекции (List, Set, Map).
+- **Apache Commons Collections** — расширенные коллекции и утилиты.
+- **Guava (Google Collections)** — функциональное программирование, работа с коллекциями.
+
+## 2. Работа с JSON и XML
+
+```java
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.JSONObject;
+import javax.xml.parsers.DocumentBuilder;
+```
 
-public class Example {
-    public static void main(String[] args) throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        Person person = new Person("John", "Doe");
-        String json = mapper.writeValueAsString(person); // {"firstName":"John","lastName":"Doe"}
-    }
-}
+- **Jackson** — работа с JSON.
+- **Gson** — альтернативная библиотека для работы с JSON.
+- **org.json** — простая обработка JSON.
+- **JAXB** — работа с XML.
 
-class Person {
-    public String firstName;
-    public String lastName;
+## 3. Логирование
 
-    public Person(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-}
-``` |
-| **Lombok** | Библиотека для упрощения кода, автоматически генерирует геттеры, сеттеры, конструкторы и другие повторяющиеся методы. | ```java
-import lombok.Data;
+```java
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+```
 
-@Data
-public class Person {
-    private String firstName;
-    private String lastName;
-}
-``` |
-| **JUnit** | Фреймворк для модульного тестирования, позволяет писать и запускать тесты для проверки корректности кода. | ```java
-import org.junit.Test;
-import static org.junit.Assert.*;
+- **SLF4J** — универсальный API для логирования.
+- **Logback** — продвинутая замена Log4j.
+- **Log4j** — классическая библиотека логирования.
 
-public class ExampleTest {
-    @Test
-    public void testAddition() {
-        Calculator calculator = new Calculator();
-        assertEquals(5, calculator.add(2, 3));
-    }
-}
+## 4. Тестирование
 
-class Calculator {
-    public int add(int a, int b) {
-        return a + b;
-    }
-}
-``` |
-| **Mockito** | Библиотека для создания мок-объектов, позволяет имитировать поведение объектов в тестах. | ```java
-import org.junit.Test;
-import static org.mockito.Mockito.*;
+```java
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+```
 
-public class ExampleTest {
-    @Test
-    public void testMock() {
-        Person person = mock(Person.class);
-        when(person.getName()).thenReturn("John Doe");
-        assertEquals("John Doe", person.getName());
-    }
-}
+- **JUnit** — стандартное тестирование.
+- **TestNG** — альтернатива JUnit с расширенным функционалом.
+- **Mockito** — мокирование объектов.
+- **AssertJ** — расширенные утверждения.
 
-class Person {
-    public String getName() {
-        return "Real Name";
-    }
-}
-``` |
-| **Spring Framework** | Фреймворк для создания корпоративных приложений, предоставляет множество инструментов для работы с зависимостями, веб-разработкой и многопоточностью. | ```java
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+## 5. HTTP-клиенты
 
-public class Example {
-    public static void main(String[] args) {
-        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-        MyBean myBean = context.getBean(MyBean.class);
-        myBean.doSomething();
-    }
-}
+```java
+import java.net.http.HttpClient;
+import org.apache.http.client.HttpClient;
+```
 
-class MyBean {
-    public void doSomething() {
-        System.out.println("Doing something");
-    }
-}
+- **Apache HttpClient** — мощный HTTP-клиент.
+- **OkHttp** — альтернатива для работы с HTTP.
+- **Java HttpClient (JDK 11+)** — стандартный HTTP-клиент.
 
-class AppConfig {
-    @Bean
-    public MyBean myBean() {
-        return new MyBean();
-    }
-}
-``` |
+## 6. Работа с базами данных
+
+```java
+import java.sql.Connection;
+import org.hibernate.Session;
+```
+
+- **JDBC** — стандартный драйвер SQL.
+- **Hibernate** — ORM для работы с БД.
+- **MyBatis** — альтернатива Hibernate.
+- **HikariCP** — пул соединений с БД.
+
+## 7. Работа с многопоточностью
+
+```java
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+```
+
+- **Java Concurrency API** — стандартные потоки.
+- **RxJava** — реактивное программирование.
+- **Akka** — акторная модель многопоточности.
+
+## 8. Работа с файлами
+
+```java
+import java.nio.file.Files;
+import java.io.File;
+```
+
+- **Apache Commons IO** — утилиты для работы с файлами.
+- **Java NIO** — стандартная работа с файлами.
+
+## 9. Парсинг HTML
+
+```java
+import org.jsoup.Jsoup;
+```
+
+- **Jsoup** — удобный HTML-парсер.
+
+## 10. Работа с зависимостями
+
+```xml
+<dependency>
+    <groupId>org.apache.maven</groupId>
+    <artifactId>maven-core</artifactId>
+    <version>3.8.1</version>
+</dependency>
+```
+
+- **Maven** — управление зависимостями и сборка проектов.
+- **Gradle** — альтернатива Maven, гибкость в настройке сборки.
+
+---
+
