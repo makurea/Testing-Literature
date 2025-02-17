@@ -18,18 +18,15 @@
 ```java
 public class ReverseUsingStringBuilder {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Введите строку: ");
-        String input = scanner.nextLine();
+        String input = "Привет, мир!";
         
         // Вызываем метод reverse и выводим результат
         String reversedString = reverse(input);
+        System.out.println("Исходная строка: " + input);
         System.out.println("Обратная строка (StringBuilder): " + reversedString);
-        
-        scanner.close(); // Закрываем сканер
     }
 
-    // через StringBuilder
+    // Метод для反转 строки с использованием StringBuilder
     public static String reverse(String input) {
         StringBuilder reversed = new StringBuilder(input);
         return reversed.reverse().toString(); // Используем метод reverse()
