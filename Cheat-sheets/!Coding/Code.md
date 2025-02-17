@@ -5,7 +5,8 @@
 [Задача 2: Развернуть строку (массив char)](#task2)  
 [Задача 3: Развернуть строку (цикл с StringBuilder)](#task3)  
 [Задача 4: Развернуть строку (стек (Deque))](#task4)  
-[Задача 5: Развернуть строку (использование рекурсии)](#task5)    
+[Задача 5: Развернуть строку (использование рекурсии)](#task5)
+[Задача 6: Проверка на полиндром](#task6)
 
 <a name="task1"></a>
 ## Задача 1: Развернуть строку (StringBuilder и метод reverse())
@@ -201,6 +202,42 @@ public class ReverseUsingRecursion {
 
 
 ---
+
+<a name="task5"></a>
+## Задача 6: Проверка на полиндром
+
+**Вопрос:** Напишите программу на Java, которая проверяет строку на полиндром.
+
+**Решение:**
+
+```java
+public class PalindromeChecker {
+
+    public static void main(String[] args) {
+        // Исходная строка
+        String input = "аргентина манит негра";
+        
+        // Проверяем, является ли строка палиндромом
+        if (isPalindrome(input)) {
+            System.out.println("Строка \"" + input + "\" является палиндромом.");
+        } else {
+            System.out.println("Строка \"" + input + "\" не является палиндромом.");
+        }
+    }
+
+    // Метод для проверки строки на палиндром
+    public static boolean isPalindrome(String input) {
+        // Удаляем пробелы и приводим строку к нижнему регистру
+        String cleanedInput = input.replaceAll("\\s", "").toLowerCase();
+        
+        // Сравниваем строку с её обратной версией
+        String reversed = new StringBuilder(cleanedInput).reverse().toString();
+        return cleanedInput.equals(reversed);
+    }
+}
+```
+
+
 
 
 
