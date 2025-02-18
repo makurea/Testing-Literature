@@ -249,12 +249,12 @@ public class PalindromeChecker {
 
 ```java
 public class Main {
-    public static void main(String[] args) {
-        String s = "привет мир";
-        char c = 'и';
-        int count = (int) s.chars().filter(ch -> ch == c).count();
-        System.out.println(count);
-    }
+   public static void main(String[] args) {
+      String input = "Potatoes";
+      char seek = 'o';
+      int count = (int) input.chars().filter(ch -> ch == seek).count();
+      System.out.println(count);
+  }
 }
 ```
 `s.chars()` - преобразует строку в поток (`IntStream`) целых чисел, где каждый символ представлен своим кодом ASCII/Unicode.  
