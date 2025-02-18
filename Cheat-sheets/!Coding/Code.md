@@ -9,6 +9,9 @@
 [Задача 6: Проверка на полиндром](#task6)  
 [Задача 7: Подсчет вхождений символа в строке](#task7)
 
+[Задача 9: Удаления дубликатов символов из строки](#task9)
+
+
 <a name="task1"></a>
 ## Задача 1: Развернуть строку (StringBuilder и метод reverse())
 
@@ -258,6 +261,32 @@ public class Main {
 `.filter(ch -> ch == c)` - фильтруем только те символы, которые равны нашему искомому символу `c`.  
 `.count()` - считаем количество оставшихся после фильтрации символов.  
 `(int)` - приводим результат к типу `int`, так как `count()` возвращает `long`.  
+
+---
+
+<a name="task7"></a>
+## Задача 9: Удаления дубликатов символов из строки
+
+**Вопрос:** Напишите программу на Java, которая ищет дубликаты и удаляет их.
+
+**Решение:**
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        String s = "приветмирмир";
+        String result = s.chars().distinct().collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
+        System.out.println(result);
+    }
+}
+```
+`s.chars()` - преобразует строку в поток (`IntStream`) целых чисел (коды символов).
+`.distinct()` - оставляет только уникальные символы, удаляя дубликаты.
+`.collect(...)` - собирает результат обратно в строку:
+`StringBuilder::new` - создает новый `StringBuilder`.
+`StringBuilder::appendCodePoint` - добавляет каждый уникальный символ.
+`StringBuilder::append` - объединяет результаты.
+`.toString()` - преобразует `StringBuilder` обратно в строку.
 
 
 
