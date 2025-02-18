@@ -280,13 +280,13 @@ public class Main {
     }
 }
 ```
-`s.chars()` - преобразует строку в поток (`IntStream`) целых чисел (коды символов).
-`.distinct()` - оставляет только уникальные символы, удаляя дубликаты.
-`.collect(...)` - собирает результат обратно в строку:
-`StringBuilder::new` - создает новый `StringBuilder`.
-`StringBuilder::appendCodePoint` - добавляет каждый уникальный символ.
-`StringBuilder::append` - объединяет результаты.
-`.toString()` - преобразует `StringBuilder` обратно в строку.
+`s.chars()` - преобразует строку в поток (`IntStream`) целых чисел (коды символов).  
+`.distinct()` - оставляет только уникальные символы, удаляя дубликаты.  
+`.collect(...)` - собирает результат обратно в строку:  
+  - `StringBuilder::new` - создает новый `StringBuilder`.  
+  - `StringBuilder::appendCodePoint` - добавляет каждый уникальный символ.  
+  - `StringBuilder::append` - объединяет результаты.  
+`.toString()` - преобразует `StringBuilder` обратно в строку.  
 
 
 
