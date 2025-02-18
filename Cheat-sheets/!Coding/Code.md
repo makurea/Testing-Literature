@@ -285,7 +285,7 @@ public class Main {
 `.collect(...)` - собирает результат обратно в строку:  
   - `StringBuilder::new` - создает новый `StringBuilder`.  
   - `StringBuilder::appendCodePoint` - добавляет каждый уникальный символ.  
-  - `StringBuilder::append` - объединяет результаты.  
+  - `StringBuilder::append` - объединяет результаты.
 `.toString()` - преобразует `StringBuilder` обратно в строку.  
 
 
