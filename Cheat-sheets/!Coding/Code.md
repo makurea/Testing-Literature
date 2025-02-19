@@ -10,7 +10,7 @@
 [Задача 7: Подсчет вхождений символа в строке](#task7)
 
 [Задача 9: Удаления дубликатов символов из строки](#task9)
-
+[Задача 10: Удаления дубликатов символов из строки - простой](#task10)
 
 <a name="task1"></a>
 ## Задача 1: Развернуть строку (StringBuilder и метод reverse())
@@ -287,6 +287,46 @@ public class Main {
  `StringBuilder::appendCodePoint` - добавляет каждый уникальный символ.  
  `StringBuilder::append` - объединяет результаты.  
 `.toString()` - преобразует `StringBuilder` обратно в строку.  
+
+---
+
+<a name="task10"></a>
+## Задача 10: Удаления дубликатов символов из строки - простой 
+
+**Вопрос:** Напишите программу на Java, которая ищет дубликаты и удаляет их.
+
+**Решение:**
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        String input = "приветмир"; // Исходная строка
+        String result = removeDuplicates(input);
+        System.out.println("Строка без дубликатов: " + result);
+    }
+
+    public static String removeDuplicates(String input) {
+        if (input == null || input.isEmpty()) {
+            return input; // Если строка пустая или null, возвращаем её как есть
+        }
+
+        StringBuilder sb = new StringBuilder(); // Для формирования результирующей строки
+        HashSet<Character> seen = new HashSet<>(); // Множество для хранения уже встреченных символов
+
+        for (char c : input.toCharArray()) { // Перебираем каждый символ строки
+            if (!seen.contains(c)) { // Если символ ещё не встречался
+                sb.append(c); // Добавляем его в результат
+                seen.add(c); // Помечаем как встретившийся
+            }
+        }
+
+        return sb.toString(); // Возвращаем строку без дубликатов
+    }
+}
+```
+`HashSet` - Мы используем `HashSet` для отслеживания символов, которые уже были обработаны. `HashSet` автоматически игнорирует повторяющиеся элементы.     
+`StringBuilder` : Используется для эффективного построения новой строки без дубликатов.  
+`Цикл` : Каждый символ строки проверяется на наличие в множестве `seen`. Если символ ещё не был добавлен, он добавляется в результат.  
 
 
 
