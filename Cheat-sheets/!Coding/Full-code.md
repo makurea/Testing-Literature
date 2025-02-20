@@ -1,4 +1,4 @@
-##1. Нахождение максимального числа в массиве
+## 1. Нахождение максимального числа в массиве
 
 ```java
 int max = Arrays.stream(new int[]{1, 5, 3, 9}).max().getAsInt();
@@ -7,7 +7,7 @@ int max = Arrays.stream(new int[]{1, 5, 3, 9}).max().getAsInt();
 
 ---
 
-##2. Удаление дубликатов из массива
+## 2. Удаление дубликатов из массива
 
 ```java
 List<Integer> unique = Arrays.stream(new int[]{1, 2, 2, 3, 4})
@@ -19,7 +19,7 @@ List<Integer> unique = Arrays.stream(new int[]{1, 2, 2, 3, 4})
 
 ---
 
-##3. Проверка, является ли строка палиндромом
+## 3. Проверка, является ли строка палиндромом
 
 ```java
 boolean isPalindrome = new StringBuilder("racecar").reverse().toString().equals("racecar");
