@@ -28,7 +28,7 @@ boolean isPalindrome = new StringBuilder("racecar").reverse().toString().equals(
 
 ---
 
-4. Подсчёт количества уникальных элементов в массиве
+## 4. Подсчёт количества уникальных элементов в массиве
 
 ```java
 long uniqueCount = Arrays.stream(new int[]{1, 2, 2, 3, 4}).distinct().count();
@@ -37,7 +37,7 @@ long uniqueCount = Arrays.stream(new int[]{1, 2, 2, 3, 4}).distinct().count();
 
 ---
 
-5. Преобразование массива в строку через разделитель
+## 5. Преобразование массива в строку через разделитель
 
 ```java
 String result = String.join(", ", Arrays.stream(new int[]{1, 2, 3}).mapToObj(String::valueOf).toArray(String[]::new));
@@ -46,7 +46,7 @@ String result = String.join(", ", Arrays.stream(new int[]{1, 2, 3}).mapToObj(Str
 
 ---
 
-6. Проверка, содержит ли массив определённое значение
+## 6. Проверка, содержит ли массив определённое значение
 
 ```java
 boolean contains = Arrays.stream(new int[]{1, 2, 3, 4}).anyMatch(n -> n == 3);
@@ -55,7 +55,7 @@ boolean contains = Arrays.stream(new int[]{1, 2, 3, 4}).anyMatch(n -> n == 3);
 
 ---
 
-7. Нахождение суммы всех элементов массива
+## 7. Нахождение суммы всех элементов массива
 
 ```java
 int sum = Arrays.stream(new int[]{1, 2, 3, 4}).sum();
@@ -64,7 +64,7 @@ int sum = Arrays.stream(new int[]{1, 2, 3, 4}).sum();
 
 ---
 
-8. Фильтрация чётных чисел из массива
+## 8. Фильтрация чётных чисел из массива
 
 ```java
 List<Integer> evens = Arrays.stream(new int[]{1, 2, 3, 4, 5})
@@ -76,7 +76,7 @@ List<Integer> evens = Arrays.stream(new int[]{1, 2, 3, 4, 5})
 
 ---
 
-9. Поиск индекса минимального элемента в массиве
+## 9. Поиск индекса минимального элемента в массиве
 
 ```java
 int minIndex = IntStream.range(0, new int[]{5, 1, 3, 2}.length)
@@ -87,7 +87,7 @@ int minIndex = IntStream.range(0, new int[]{5, 1, 3, 2}.length)
 
 ---
 
-10. Объединение двух массивов без дубликатов
+## 10. Объединение двух массивов без дубликатов
 
 ```java
 List<Integer> merged = Arrays.stream(new int[]{1, 2, 3})
@@ -102,7 +102,7 @@ List<Integer> merged = Arrays.stream(new int[]{1, 2, 3})
 
 ---
 
-11. Переворот строки
+## 11. Переворот строки
 
 ```java
 String reversed = new StringBuilder("hello").reverse().toString();
@@ -111,7 +111,7 @@ String reversed = new StringBuilder("hello").reverse().toString();
 
 ---
 
-12. Проверка, являются ли две строки анаграммами
+## 12. Проверка, являются ли две строки анаграммами
 
 ```java
 boolean areAnagrams = "listen".chars().sorted().toArray()
