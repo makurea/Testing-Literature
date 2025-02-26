@@ -67,6 +67,7 @@
 
 | Шаблон | Результат после расширения |
 |--------|----------------------------|
+| `psvm` | ```public static void main(String[] args) {<br>    // ваш код<br>}``` |
 | `sout` | `System.out.println();`    |
 | `soutv` | `System.out.println("variable = " + variable);` |
 | `soutm` | `System.out.println("methodName()");` |
@@ -74,7 +75,6 @@
 | `iter` | ```for (Type item : collection) {<br>    // ваш код<br>}``` |
 | `ifn` | ```if (variable == null) {<br>    // ваш код<br>}``` |
 | `inn` | ```if (variable != null) {<br>    // ваш код<br>}``` |
-| `psvm` | ```public static void main(String[] args) {<br>    // ваш код<br>}``` |
 | `syserr` | `System.err.println();` |
 | `list` | ```List<Type> list = new ArrayList<>();``` |
 | `arr` | ```Type[] array = new Type[]{};``` |
