@@ -324,29 +324,36 @@ public class Main {
 **Решение:**
 
 ```java
-public class PalindromeChecker {
+public class Main {
+  public static void main(String[] args) {
+    String input = "Аргентена манит негра";
 
-    public static void main(String[] args) {
-        // Исходная строка
-        String input = "аргентина манит негра";
-        
-        // Проверяем, является ли строка палиндромом
-        if (isPalindrome(input)) {
-            System.out.println("Строка \"" + input + "\" является палиндромом.");
-        } else {
-            System.out.println("Строка \"" + input + "\" не является палиндромом.");
-        }
+    // Вызываем метод isPalindrome и выводим результат
+    if (isPalindrome(input)) {
+      System.out.println("Строка является палиндромом.");
+    } else {
+      System.out.println("Строка не является палиндромом.");
+    }
+  }
+
+  public static boolean isPalindrome(String s) {
+    // 1. Приводим строку к нижнему регистру и убираем пробелы
+    s = s.toLowerCase().replaceAll("\\s+", "");
+
+    // 2. Сравниваем символы с начала и конца строки
+    int left = 0; // Индекс первого символа
+    int right = s.length() - 1; // Индекс последнего символа
+
+    while (left < right) {
+      if (s.charAt(left) != s.charAt(right)) {
+        return false; // Если символы не совпадают, это не палиндром
+      }
+      left++; // Переходим к следующему символу слева
+      right--; // Переходим к предыдущему символу справа
     }
 
-    // Метод для проверки строки на палиндром
-    public static boolean isPalindrome(String input) {
-        // Удаляем пробелы и приводим строку к нижнему регистру
-        String cleanedInput = input.replaceAll("\\s", "").toLowerCase();
-        
-        // Сравниваем строку с её обратной версией
-        String reversed = new StringBuilder(cleanedInput).reverse().toString();
-        return cleanedInput.equals(reversed);
-    }
+    return true; // Если все символы совпали, это палиндром
+  }
 }
 ```
 
