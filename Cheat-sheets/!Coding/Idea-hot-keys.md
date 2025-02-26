@@ -60,3 +60,27 @@
 |                             | **Ctrl + Alt + I**    | Автоформатирование курсора                                                  |
 | **Быстрое удаление импортов**| **Ctrl + Alt + O**    | Удаление неиспользуемых импортов                                            |
 | **Оборачивание кода**       | **Ctrl + Alt + T**    | Обернуть в if-else (и другие конструкции)                                   |
+
+---
+
+#  Шаблоны кода (live templates) в IntelliJ IDEA 
+
+| Шаблон | Результат после расширения |
+|--------|----------------------------|
+| `sout` | `System.out.println();`    |
+| `soutv` | `System.out.println("variable = " + variable);` |
+| `soutm` | `System.out.println("methodName()");` |
+| `fori` | ```for (int i = 0; i < ; i++) {<br>    // ваш код<br>}``` |
+| `iter` | ```for (Type item : collection) {<br>    // ваш код<br>}``` |
+| `ifn` | ```if (variable == null) {<br>    // ваш код<br>}``` |
+| `inn` | ```if (variable != null) {<br>    // ваш код<br>}``` |
+| `psvm` | ```public static void main(String[] args) {<br>    // ваш код<br>}``` |
+| `syserr` | `System.err.println();` |
+| `list` | ```List<Type> list = new ArrayList<>();``` |
+| `arr` | ```Type[] array = new Type[]{};``` |
+| `try` | ```try {<br>    // ваш код<br>} catch (Exception e) {<br>    // обработка исключения<br>}``` |
+| `switch` | ```switch (expression) {<br>    case :<br>        // ваш код<br>        break;<br>    default:<br>        // ваш код<br>}``` |
+| `while` | ```while () {<br>    // ваш код<br>}``` |
+| `foreach` | ```for (Type element : collection) {<br>    // ваш код<br>}``` |
+| `prop` | ```private Type name;<br><br>public Type getName() {<br>    return name;<br>}<br><br>public void setName(Type name) {<br>    this.name = name;<br>}``` |
+| `log` | `System.out.println("LOG: ");` |
