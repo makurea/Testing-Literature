@@ -77,7 +77,7 @@
 - [Разница между SOAP и REST](#разница-между-soap-и-rest)
 - [Безопасность SOAP и REST](#безопасность-soap-и-rest)
 
-## [▶️ HTTP и сети]
+## [▶️ HTTP и сети](#http-и-сети)
 
 - [HTTP и HTTPS. В чем отличия](#http-и-https-в-чем-отличия)
 - [HTTPS и шифрование](#https-и-шифрование)
@@ -816,6 +816,8 @@ API (Application Programming Interface) — это набор функций и 
 [К содержанию](#content)
 
 ---
+
+## ▶️ HTTP и сети <a id="http-и-сети"></a>
 
 ###  HTTP и HTTPS: в чем отличия <a id="http-и-https-в-чем-отличия"></a>
 
