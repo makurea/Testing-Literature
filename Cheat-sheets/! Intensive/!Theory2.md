@@ -64,7 +64,7 @@
     - [IFrame](#iframe)
     - [JSExecutor](#jsexecutor)
     - [WindowHandle](#windowhandle)
-    - [Исключения](#исключения)
+- [Исключения](#исключения)
 
 ## [⏳ Ожидания в тестах](#ожидания)
 
