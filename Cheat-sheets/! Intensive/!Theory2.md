@@ -1374,19 +1374,19 @@ Kaspresso, Espresso и WebdriverIO — это различные инструм�
 
 * **`executeQuery(String sql)`**  
 Этот метод используется для выполнения SQL-запроса, который возвращает `ResultSet`, например, SELECT-запросы.  
-    ```  
-ResultSet resultSet = statement.executeQuery("SELECT * FROM users");  
-      ```  
+```java
+ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
+```  
 * **executeUpdate(String sql)**  
 Этот метод используется для выполнения SQL-запросов, которые изменяют данные в базе данных, таких как INSERT, UPDATE и DELETE. Он возвращает количество затронутых строк.  
-      ```  
+```java 
 int rowsAffected = statement.executeUpdate("UPDATE users SET name = 'John' WHERE id = 1");  
-      ```  
+```  
 * **execute(String sql)**  
 Этот метод позволяет выполнять любой SQL-запрос, независимо от того, возвращает ли он ResultSet. Он возвращает true, если запрос возвращает ResultSet, и false, если это не так.  
-      ```  
+```java  
 boolean hasResultSet = statement.execute("SELECT * FROM users");  
-      ```  
+```  
 
 **Spring Data:**  
 - Высокоуровневый фреймворк, который упрощает работу с базами данных.
