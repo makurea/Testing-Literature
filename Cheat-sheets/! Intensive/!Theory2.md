@@ -1212,9 +1212,8 @@ MVC (Model-View-Controller) — это архитектурный паттерн
   
 Расширение файлов Gherkin — **.feature**
   
-    ```gherkin
+    ```
 Feature: Авторизация на сайте
-
   Scenario: Успешная авторизация
     Given Открыта страница авторизации
     When Пользователь вводит логин "user" и пароль "password123"
