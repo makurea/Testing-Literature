@@ -8,6 +8,7 @@
   - [🔍 Lighthouse](#lighthouse)
   - [🖥️ BrowserStack](#browserstack)
   - [☁️ Sauce Labs](#sauce-labs)
+  - [🔌 Расширения браузера](#расширения-браузера)
 
 ## [📱 Мобильное тестирование](#мобильное-тестирование)
 
@@ -157,6 +158,40 @@ Chrome DevTools — это набор инструментов для разра
 - Тестирование мобильных приложений на разных устройствах
 - Непрерывное тестирование в DevOps-процессах
 - Масштабирование тестовых сред
+
+[🔼 К содержанию](#content)
+
+---
+
+### 🔌 Расширения браузера <a id="расширения-браузера"></a>
+
+| Название | Ссылка | Функционал |
+|----------|--------|------------|
+| **Web Developer** | [Chrome Web Store](https://chrome.google.com/webstore/detail/web-developer/bfbameneiokkgbdmiekhjnmfkcnldhhm) | Панель инструментов для анализа HTML/CSS, валидации, отключения элементов |
+| **Wappalyzer** | [wappalyzer.com](https://www.wappalyzer.com/) | Определяет технологии сайта (CMS, фреймворки, аналитику) |
+| **JSON Formatter** | [Chrome Web Store](https://chrome.google.com/webstore/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa) | Форматирует JSON-ответы для удобного чтения |
+| **Axe DevTools** | [deque.com](https://www.deque.com/axe/devtools/) | Проверка доступности (WCAG) и выявление проблем |
+| **User-Agent Switcher** | [Chrome Web Store](https://chrome.google.com/webstore/detail/user-agent-switcher-for-c/djflhoibgkdhkhhcedjiklpkjnoahfmg) | Эмуляция разных устройств и браузеров |
+| **EditThisCookie** | [editthiscookie.com](http://www.editthiscookie.com/) | Управление куками (просмотр, редактирование, удаление) |
+| **Window Resizer** | [Chrome Web Store](https://chrome.google.com/webstore/detail/window-resizer/kkelicaakdanhinjdeammmilcgefonfh) | Тестирование адаптивности под разные разрешения |
+| **Lighthouse** | [Chrome Web Store](https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk) | Аудит производительности, SEO и доступности |
+| **Postman Interceptor** | [postman.com](https://learning.postman.com/docs/sending-requests/capturing-request-data/interceptor/) | Перехват API-запросов из браузера в Postman |
+| **VisBug** | [Chrome Web Store](https://chrome.google.com/webstore/detail/visbug/cdockenadnadldjbbgcallicgledbeoc) | Визуальное редактирование страницы (как в DevTools) |
+| **React Developer Tools** | [Chrome Web Store](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi) | Отладка React-приложений, просмотр компонентов и состояния |
+| **Redux DevTools** | [Chrome Web Store](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd) | Инструменты для отладки Redux-приложений |
+| **HTTP Header Live** | [Chrome Web Store](https://chrome.google.com/webstore/detail/http-header-live/kajfghlhfkcocafkcjlajldicbikpgnp) | Просмотр HTTP-заголовков в реальном времени |
+| **ColorZilla** | [Chrome Web Store](https://chrome.google.com/webstore/detail/colorzilla/bhlhnicpbhignbdhedgjhgdocnmhomnp) | Пипетка для определения цветов, генератор палитр |
+| **PerfectPixel** | [Chrome Web Store](https://chrome.google.com/webstore/detail/perfectpixel-by-welldonec/dkaagdgjmgdmbnecmcefdhjekcoceebi) | Наложение макета для pixel-perfect верстки |
+| **Session Manager** | [Chrome Web Store](https://chrome.google.com/webstore/detail/session-manager/mghenlmbmjcpehccoangkdpagbcbkdpc) | Сохранение и управление сессиями браузера |
+| **XPath Helper** | [Chrome Web Store](https://chrome.google.com/webstore/detail/xpath-helper/hgimnogjllphhhkhlmebbmlgjoejdpjl) | Построение и тестирование XPath-запросов |
+| **ModHeader** | [Chrome Web Store](https://chrome.google.com/webstore/detail/modheader/idgpnmonknjnojddfkpgkljpfnnfcklj) | Модификация HTTP-заголовков запросов |
+| **CSSViewer** | [Chrome Web Store](https://chrome.google.com/webstore/detail/cssviewer/ggfgijbpiheegefliciemofobhmofgce) | Быстрый просмотр CSS-свойств элементов |
+| **Responsive Viewer** | [Chrome Web Store](https://chrome.google.com/webstore/detail/responsive-viewer/inmopeiepgfljkpkidclfgbgbmfcennb) | Просмотр сайта на разных разрешениях одновременно |
+| **Ghostery** | [ghostery.com](https://www.ghostery.com/) | Блокировка трекеров и анализ скриптов |
+| **Checkbot** | [checkbot.io](https://www.checkbot.io/) | Проверка SEO, безопасности и производительности |
+| **Web Vitals** | [Chrome Web Store](https://chrome.google.com/webstore/detail/web-vitals/ahfhijdlegdabablpippeagghigmibma) | Мониторинг Core Web Vitals в реальном времени |
+| **Talend API Tester** | [Chrome Web Store](https://chrome.google.com/webstore/detail/talend-api-tester-free-ed/aejoelaoggembcahagimdiliamlcdmfm) | Отправка и тестирование API-запросов |
+| **RESTED** | [Chrome Web Store](https://chrome.google.com/webstore/detail/rested/eelcnbccaccipfolokglfhhmapdchbfg) | Простой REST-клиент для тестирования API |
 
 [🔼 К содержанию](#content)
 
