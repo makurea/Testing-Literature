@@ -314,3 +314,129 @@ public void tearDown() {
 [🔼 К содержанию](#content)
 
 ---
+
+## Поиск элементов <a id="поиск-элементов"></a>
+
+```python
+from appium.webdriver.common.appiumby import AppiumBy
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+```
+
+### Стратегии поиска <a id="стратегии-поиска"></a>
+
+Основные методы поиска элементов в Appium:
+
+1. По ID (рекомендуемый способ):
+```python
+element = driver.find_element(by=AppiumBy.ID, value="com.example:id/button")
+```
+
+2. По Accessibility ID:
+```python
+element = driver.find_element(by=AppiumBy.ACCESSIBILITY_ID, value="Login")
+```
+
+3. По XPath:
+```python
+element = driver.find_element(by=AppiumBy.XPATH, value="//android.widget.Button")
+```
+
+4. По классу:
+```python
+element = driver.find_element(by=AppiumBy.CLASS_NAME, value="android.widget.EditText")
+```
+
+5. Для Android (UiAutomator):
+```python
+element = driver.find_element(by=AppiumBy.ANDROID_UIAUTOMATOR,
+                           'new UiSelector().text("OK")')
+```
+[🔼 К содержанию](#content)
+
+---
+
+### XPath в Appium <a id="xpath-в-appium"></a>
+
+Примеры использования XPath:
+
+#### Поиск по тексту
+```python
+element = driver.find_element(by=AppiumBy.XPATH, "//*[@text='Save']")
+```
+#### Поиск по частичному совпадению текста
+```python
+element = driver.find_element(by=AppiumBy.XPATH, "//*[contains(@text, 'av')]")
+```
+#### Поиск по нескольким атрибутам
+```python
+element = driver.find_element(by=AppiumBy.XPATH,
+                           "//Button[@resource-id='btn' and @enabled='true']")
+```
+#### Поиск по индексу
+```python
+element = driver.find_element(by=AppiumBy.XPATH, "(//Button)[2]")
+```
+
+#### Поиск по иерархии
+```python
+element = driver.find_element(by=AppiumBy.XPATH,
+                           "//LinearLayout/TextView")
+```
+
+[🔼 К содержанию](#content)
+
+---
+
+### ID и Accessibility ID <a id="id-и-accessibility-id"></a>
+
+Разница между ID и Accessibility ID:
+
+#### ID (resource-id на Android)
+```python
+email_field = driver.find_element(by=AppiumBy.ID, value="com.app:id/email")
+```
+
+#### Accessibility ID (content-desc на Android)
+```python
+password_field = driver.find_element(by=AppiumBy.ACCESSIBILITY_ID, value="password")
+```
+Особенности:
+- ID должен быть уникальным на экране
+- Accessibility ID используется для тестирования доступности
+- На iOS оба метода часто используют атрибут 'name'
+
+[🔼 К содержанию](#content)
+
+---
+
+### Цепочки поиска <a id="цепочки-поиска"></a>
+
+Примеры цепочек поиска:
+
+1. Поиск внутри элемента:
+ ```python
+parent = driver.find_element(by=AppiumBy.ID, value="parent")
+child = parent.find_element(by=AppiumBy.CLASS_NAME, value="Button")
+```
+2. Поиск с ожиданием:
+```python
+element = WebDriverWait(driver, 10).until(
+    EC.presence_of_element_located((AppiumBy.ID, "dynamic_element"))
+)
+```
+3. Поиск нескольких элементов:
+```python
+buttons = driver.find_elements(by=AppiumBy.CLASS_NAME, value="Button")
+buttons[0].click()
+```
+4. Комбинированный поиск:
+```python
+element = WebDriverWait(driver, 10).until(
+    lambda d: d.find_element(by=AppiumBy.ID, value="parent")
+              .find_element(by=AppiumBy.XPATH, value=".//Button")
+)
+```
+[🔼 К содержанию](#content)
+
+---
