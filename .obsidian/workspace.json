@@ -1,0 +1,192 @@
+{
+  "main": {
+    "id": "31acb3bd26689464",
+    "type": "split",
+    "children": [
+      {
+        "id": "b073f71e4904cfce",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "687d73efbfb443b9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Cheat-sheets/! Intensive/!Python/Pytest.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Pytest"
+            }
+          },
+          {
+            "id": "3d09ab1d9c49a05e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Cheat-sheets/! Intensive/!Python/!Python.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "!Python"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "9e8250b0a853c298",
+    "type": "split",
+    "children": [
+      {
+        "id": "07636bdb5c896bdf",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "95c386126eef8aca",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Файловый менеджер"
+            }
+          },
+          {
+            "id": "115e38aa032fbb2c",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Поиск"
+            }
+          },
+          {
+            "id": "0f6a62ab95565ef4",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Закладки"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "1ae3bd4685519cc7",
+    "type": "split",
+    "children": [
+      {
+        "id": "5bbbf2bd3b52ae75",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "4db12277d903bde9",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Cheat-sheets/! Intensive/!Python/!Python.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Обратные ссылки для !Python"
+            }
+          },
+          {
+            "id": "8459665a15739db2",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Cheat-sheets/! Intensive/!Python/!Python.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Исходящие ссылки из !Python"
+            }
+          },
+          {
+            "id": "d3f17570ac4053c9",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Теги"
+            }
+          },
+          {
+            "id": "33f6705df740da9d",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Cheat-sheets/! Intensive/!Python/!Python.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Структура !Python"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Меню быстрого перехода": false,
+      "graph:Граф": false,
+      "canvas:Создать новый холст": false,
+      "daily-notes:Сегодняшняя заметка": false,
+      "templates:Вставить шаблон": false,
+      "command-palette:Открыть палитру команд": false
+    }
+  },
+  "active": "3d09ab1d9c49a05e",
+  "lastOpenFiles": [
+    "Cheat-sheets/! Intensive/!Python/Requests.md",
+    "Cheat-sheets/! Intensive/!Python/Pytest.md",
+    "Cheat-sheets/! Intensive/!Python/!Python.md"
+  ]
+}
