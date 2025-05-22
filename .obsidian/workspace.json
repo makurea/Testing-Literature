@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Cheat-sheets/! Intensive/!General-theory/!Theory-manual.md",
+                "file": "Cheat-sheets/! Intensive/!General-theory/Tools.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "!Theory-manual"
+              "title": "Tools"
             }
           }
         ]
@@ -170,6 +170,7 @@
   },
   "active": "111408387bbcc60d",
   "lastOpenFiles": [
+    "Cheat-sheets/! Intensive/!General-theory/!Theory-manual.md",
     "Cheat-sheets/! Intensive/!Python/Pytest.md",
     "Cheat-sheets/! Intensive/!Python/!Python.md",
     "Cheat-sheets/! Intensive/!Python/Requests.md"
