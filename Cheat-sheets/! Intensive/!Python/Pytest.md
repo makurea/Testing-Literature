@@ -159,7 +159,7 @@ pytest -n 4
 
 ---
 
-## Фикстуры  <a id="fixtures "></a>
+## Фикстуры  <a id="fixtures"></a>
 
 ### Область видимости фикстур (`scope`) <a id="fixture-scope"></a>
 
