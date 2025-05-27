@@ -3208,8 +3208,19 @@ DROP TABLE users;
 -- Удаление всех данных из таблицы, но сохранение её структуры
 TRUNCATE TABLE users;
 ```
-
+**DML (Data Manipulation Language) — Операторы манипуляции данными**
 ```sql
+-- Вставка данных в таблицу
+INSERT INTO users (id, name, email, age) VALUES (1, 'Иван', 'ivan@example.com', 30);
+
+-- Получение данных из таблицы
+SELECT * FROM users;
+
+-- Обновление данных в таблице
+UPDATE users SET age = 31 WHERE id = 1;
+
+-- Удаление данных из таблицы
+DELETE FROM users WHERE id = 1;
 
 ```
 
