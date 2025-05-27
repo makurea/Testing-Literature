@@ -3223,8 +3223,16 @@ UPDATE users SET age = 31 WHERE id = 1;
 DELETE FROM users WHERE id = 1;
 
 ```
-
+**DCL (Data Control Language) — Операторы управления данными**
 ```sql
+-- Предоставление прав пользователю
+GRANT SELECT, INSERT ON users TO 'new_user';
+
+-- Отмена прав у пользователя
+REVOKE INSERT ON users FROM 'new_user';
+
+-- Явный запрет действий (актуально для MS SQL Server)
+DENY DELETE ON users TO 'new_user';
 
 ```
 
