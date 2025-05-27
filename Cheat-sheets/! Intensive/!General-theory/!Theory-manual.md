@@ -3235,8 +3235,28 @@ REVOKE INSERT ON users FROM 'new_user';
 DENY DELETE ON users TO 'new_user';
 
 ```
-
+**TCL (Transaction Control Language) — Операторы управления транзакциями**
 ```sql
+-- Начало транзакции (обычно автоматическое)
+START TRANSACTION;
+
+-- Вставка данных
+INSERT INTO users (id, name, email) VALUES (2, 'Анна', 'anna@example.com');
+
+-- Сохранение изменений
+COMMIT;
+
+-- Откат изменений
+ROLLBACK;
+
+-- Установка точки сохранения
+SAVEPOINT save1;
+
+-- Откат к точке сохранения
+ROLLBACK TO save1;
+
+-- Настройка параметров транзакции
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
 
 ```
 
