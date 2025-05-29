@@ -70,14 +70,14 @@
 
 ## [🛠️ Инструменты для мануального тестирования](#инструменты-мануального-тестирования)
 
-  - [📋 TestLink](#testlink) - инструмент для управления тестами
-  - [🔍 Mantis](#mantis) - система отслеживания багов
-  - [📑 Redmine](#redmine) - альтернатива Jira для управления задачами
-  - [🖥️ Bugzilla](#bugzilla) - мощный инструмент для отслеживания дефектов
-  - [🛡️ QASE](#qase) - тест-менеджмент платформа
-  - [📖 PractiTest](#practitest) - инструмент для управления тестированием
-  - [📷 Screenshot tools (LightShot, Greenshot)](#screenshot-tools) - удобные инструменты для снятия скриншотов
-  - [📢 Mind Mapping tools (XMind, FreeMind)](#mind-mapping-tools) - визуализация тестовых идей
+  - [📋 TestLink](#testlink) 
+  - [🔍 Mantis](#mantis) 
+  - [📑 Redmine](#redmine) 
+  - [🖥️ Bugzilla](#bugzilla) 
+  - [🛡️ QASE](#qase) 
+  - [📖 PractiTest](#practitest) 
+  - [📷 Screenshot tools (LightShot, Greenshot)](#screenshot-tools)
+  - [📢 Mind Mapping tools (XMind, FreeMind)](#mind-mapping-tools) 
 
 ---
 
