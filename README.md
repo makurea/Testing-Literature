@@ -1,4 +1,4 @@
-# Resources and Literature on Software Testing and Quality Assurance
+# Resources and Literature on Software Testing and Quality Assurance 
 
 В этом репозитории собраны материалы для обучения тестированию программного обеспечения и обеспечению качества (QA).
 
