@@ -1,10 +1,9 @@
 ## Содержание
 
-**[Прогон по Python](!Python.md)**
-   - Вопросы по Python
+- [Python](!Python.md)
 
-**[Прогон по Pytest](Pytest.md)**
-   - Вопросы по Pytest
+- [Pytest](Pytest.md)
 
-**[Прогон по Requests](Requests.md)**
-   - Вопросы по Requests
+- [Requests](Requests.md)
+
+- [Appium](Appium.md)
