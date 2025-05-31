@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "6a30fe876cf60fc2",
+        "id": "496960b31782f592",
         "type": "tabs",
         "children": [
           {
-            "id": "b45b683a9a4d0c61",
+            "id": "20e2ea286c8b7e2f",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Cheat-sheets/!Coding/Readme.md",
+                "file": "Testing/007. Standards/Readme.md",
                 "mode": "source",
                 "source": false
               },
@@ -168,10 +168,13 @@
       "command-palette:Открыть палитру команд": false
     }
   },
-  "active": "95c386126eef8aca",
+  "active": "20e2ea286c8b7e2f",
   "lastOpenFiles": [
-    "Cheat-sheets/!Coding/Full-code.md",
+    "001. Xml-vs-Json-Basic.md",
+    "Testing/007. Standards/Readme.md",
+    "Testing/007. Standards/001. ISO-IEC 25010.md",
     "Cheat-sheets/!Coding/Readme.md",
+    "Cheat-sheets/!Coding/Full-code.md",
     "Cheat-sheets/!Coding/Code.md",
     "Cheat-sheets/!Intensive/!General-theory/!Theory-manual.md",
     "Cheat-sheets/!Intensive/!Python/!Python.md",
