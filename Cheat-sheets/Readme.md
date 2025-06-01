@@ -37,6 +37,7 @@
 
 ## [5. Мобильное тестирование](005.%20Mobile-testing)
 1. [Основы](005.%20Mobile-testing/001.%20Basics.md)
+2. [Основы - 2](005.%20Mobile-testing/001.%20Basic-2.md)
 
 ## [6. Автоматизированное тестирование](006.%20Basic-Theory-of-Test-Automation)
 1. [Основы теории по автоматизации](006.%20Basic-Theory-of-Test-Automation/001.%20Fundamentals-of-automation-theory.md)
