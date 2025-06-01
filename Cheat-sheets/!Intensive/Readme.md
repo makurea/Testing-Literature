@@ -1,8 +1,8 @@
 ## Содержание   
 
-🎯. **[Основы тестирования](!General-theory)**
+🎯. **[Основы тестирования](!General-theory/Readme.md)**
 
-🐍. **[Материалы по Python](!Python)**  
+🐍. **[Материалы по Python](!Python/Readme.md)**  
 
 
 1. **[Срез №1](001.md)**  
