@@ -11,10 +11,14 @@
             "id": "20e2ea286c8b7e2f",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Граф"
+              "type": "markdown",
+              "state": {
+                "file": "Cheat-sheets/!Intensive/Readme.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Readme"
             }
           }
         ]
@@ -166,9 +170,14 @@
   },
   "active": "20e2ea286c8b7e2f",
   "lastOpenFiles": [
+    "Cheat-sheets/!Intensive/!Python/!Python.md",
+    "Cheat-sheets/!Intensive/Readme.md",
+    "!General-theory.md",
+    "Cheat-sheets/Readme.md",
+    "006. Integration-and-API.md",
+    "Без названия.canvas",
     "Testing/005. Practical-tools-and-automation/Readme.md",
     "Cheat-sheets/!Intensive/!General-theory/Readme.md",
-    "Cheat-sheets/!Intensive/!Python/!Python.md",
     "Testing/006. Integration-and-API/001. Xml-vs-Json-Basics.md",
     "Cheat-sheets/003. OS-and-web/005. Tools-for-working-with-API.md",
     "Cheat-sheets/005. Mobile-testing/002. Basic-2.md",
