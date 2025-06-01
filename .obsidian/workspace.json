@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Testing/005. Practical-tools-and-automation/002. JUnit-5-vs-AssertJ.md",
+                "file": "Cheat-sheets/005. Mobile-testing/002. Basic-2.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "002. JUnit-5-vs-AssertJ"
+              "title": "002. Basic-2"
             }
           }
         ]
@@ -170,8 +170,8 @@
   },
   "active": "20e2ea286c8b7e2f",
   "lastOpenFiles": [
-    "Testing/005. Practical-tools-and-automation/004. DevTools-Basics.md",
     "Testing/005. Practical-tools-and-automation/002. JUnit-5-vs-AssertJ.md",
+    "Testing/005. Practical-tools-and-automation/004. DevTools-Basics.md",
     "Testing/007. Standards/Readme.md",
     "001. Xml-vs-Json-Basic.md",
     "Testing/007. Standards/001. ISO-IEC 25010.md",
