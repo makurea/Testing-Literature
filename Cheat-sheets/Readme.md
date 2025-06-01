@@ -23,7 +23,7 @@
 2. [Протоколы. Методы HTTP(S)-запросов, статус-коды](003.%20OS-and-web/002.%20Protocols.-HTTP(S)-request-methods,-status-codes.md)
 3. [API, REST/SOAP, форматы передачи данных](003.%20OS-and-web/003.%20API,-RESTSOAP,-data-transfer-formats.md)
 4. [Интеграционное тестирование](003.%20OS-and-web/004.%20Integration-testing.md)
-5. [Инструменты работы с API](003.%20OS-and-web/005.%20API-tools.md)
+5. [Инструменты работы с API](003.%20OS-and-web/005.%20Tools-for-working-with-API.md)
 6. [ОС, браузеры, DevTools](003.%20OS-and-web/006.%20OS,-browsers,-DevTools.md)
 7. [VM, RDP, VPN, CMS](003.%20OS-and-web/007.%20VM,-RDP,-VPN,-CMS.md)
 8. [Анализаторы трафика - снифферы](003.%20OS-and-web/008.%20Traffic-analyzers---sniffers.md)
