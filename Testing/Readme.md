@@ -36,9 +36,9 @@
 
 ## [5. Практические инструменты и автоматизация](005.%20Practical-tools-and-automation)
 1. [Selenium](005.%20Practical-tools-and-automation/001.%20Selenium.md)
-2. [JUnit 5 и AssertJ](005.%20Practical-tools-and-automation/002.%20JUnit-5-и-AssertJ.md)
+2. [JUnit 5 и AssertJ](005.%20Practical-tools-and-automation/002.%20JUnit-5-vs-AssertJ.md)
 3. [Багтрекинговые системы](005.%20Practical-tools-and-automation/003.%20Bug-tracking-systems.md)
-4. [Основы DevTools](005.%20Practical-tools-and-automation/004.%20DevTools-Basic.md)
+4. [Основы DevTools](005.%20Practical-tools-and-automation/004.%20DevTools-Basics.md)
 5. [Работа с логами](005.%20Practical-tools-and-automation/005.%20Working-with-logs.md)
 
 ## [6. Интеграция и API](006.%20Integration-and-API)
