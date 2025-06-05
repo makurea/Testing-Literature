@@ -4166,8 +4166,15 @@ JSON (JavaScript Object Notation) — это легковесный формат
 | Поддержка всеми языками | Нет поддержки бинарных данных |
 
 #### 🔧 Инструменты для работы с JSON
-- [JSON Maker](https://thisyogesh.github.io/jsonmaker/) — онлайн-инструмент для создания и редактирования JSON
-- [JSON Schema Validator](https://www.jsonschemavalidator.net/) — валидация JSON по схеме
+
+| Инструмент | Назначение | Ссылка |
+|------------|------------|--------|
+| **JSON Maker** | Онлайн-редактор и генератор JSON | [thisyogesh.github.io](https://thisyogesh.github.io/jsonmaker/) |
+| **JSON Schema Validator** | Валидация JSON по схеме | [jsonschemavalidator.net](https://www.jsonschemavalidator.net/) |
+| **JSON to POJO** | Генератор Java-классов из JSON | [json2csharp.com](https://json2csharp.com/code-converters/json-to-pojo) |
+| **JSON to Schema** | Конвертер JSON в схему | [Liquid Technologies](https://www.liquid-technologies.com/online-json-to-schema-converter) |
+| **JSON Formatter** | Форматирование и проверка JSON | [jsonformatter.org](https://jsonformatter.org/) |
+| **JSONPath Tester** | Тестирование JSONPath выражений | [jsonpath.com](https://jsonpath.com/) |
 
 #### 🔍 JSONPath (Синтаксис и примеры)
 
