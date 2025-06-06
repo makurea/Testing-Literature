@@ -4299,8 +4299,12 @@ JSON (JavaScript Object Notation) — это легковесный формат
 | **JSON Schema Validator** | Валидация JSON по схеме | [jsonschemavalidator.net](https://www.jsonschemavalidator.net/) |
 | **JSON to POJO** | Генератор Java-классов из JSON | [json2csharp.com](https://json2csharp.com/code-converters/json-to-pojo) |
 | **JSON to Schema** | Конвертер JSON в схему | [Liquid Technologies](https://www.liquid-technologies.com/online-json-to-schema-converter) |
-| **JSON Formatter** | Форматирование и проверка JSON | [jsonformatter.org](https://jsonformatter.org/) |
+| **JSON Formatter & Validator** | Форматирование и валидация JSON | [jsonformatter.org](https://jsonformatter.org/) |
 | **JSONPath Tester** | Тестирование JSONPath выражений | [jsonpath.com](https://jsonpath.com/) |
+| **JSON Validator** | Проверка синтаксиса JSON | [jsonlint.com](https://jsonlint.com/) |
+| **JSON Diff Tool** | Сравнение двух JSON-документов | [diffchecker.com](https://www.diffchecker.com/text-compare/) |
+| **JSON Beautifier** | Форматирование и "украшение" JSON | [codebeautify.org](https://codebeautify.org/jsonviewer) |
+| **JSON to CSV** | Конвертер JSON в CSV формат | [convertcsv.com](https://www.convertcsv.com/json-to-csv.htm) |
 
 #### 🔍 JSONPath (Синтаксис и примеры)
 
