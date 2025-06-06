@@ -1314,7 +1314,7 @@ public class MathUtilsTest {
 Пирамида тестирования — это концепция, предложенная Майклом Коэном, которая помогает правильно распределять тесты по уровням, чтобы достичь оптимального покрытия и эффективности тестирования.
 
 <div align="center">
-  <img src="https://habrastorage.org/webt/qz/lv/xu/qzlvxuwxpf5cocp0ryev46w7ax8.png" alt="Пирамида тестирования" width="400">
+  <img src="https://habrastorage.org/webt/qz/lv/xu/qzlvxuwxpf5cocp0ryev46w7ax8.png" alt="Пирамида тестирования" width="500">
 </div>
 
 #### Структура пирамиды тестирования:
@@ -1330,6 +1330,11 @@ public class MathUtilsTest {
 ---
 
 #### Обратная пирамида (Ice Cream Cone, "Мороженое")
+
+<div align="center">
+  <img src="https://bugbug-homepage.s3.eu-central-1.amazonaws.com/icecream_anti_pattern_85c90d6cfc.png" alt="Обратная пирамида" width="500">
+</div>
+
 Это антипаттерн тестирования, при котором тестирование сосредоточено в основном на UI-тестах, а автоматизированных модульных и интеграционных тестов недостаточно.
 - Большое количество UI-тестов делает тестирование медленным и хрупким.
 - Ручное тестирование доминирует над автоматизацией, что снижает эффективность.
