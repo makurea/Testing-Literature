@@ -567,7 +567,26 @@ public class Main {
 ### 🔍 Проверка на уникальность символов в строке (Set) <a id="is-unique-characters"></a>
 
 ```java
+import java.util.HashSet;
+import java.util.Set;
 
+public class Main {
+
+    public static boolean isUnique(String input) {
+        Set<Character> seen = new HashSet<>();
+        for (char c : input.toCharArray()) {
+            if (!seen.add(c)) {
+                return false; // символ уже встречался
+            }
+        }
+        return true; // все символы уникальны
+    }
+
+    public static void main(String[] args) {
+        System.out.println(isUnique("abcdef"));   // true
+        System.out.println(isUnique("hello"));    // false
+    }
+}
 ```
 [🔼 К содержанию](#Содержание)
 
@@ -575,6 +594,9 @@ public class Main {
 
 ### 🆚 Являются ли строки анаграммами <a id="check-anagram"></a>
 
+```java
+
+```
 
 [🔼 К содержанию](#Содержание)
 
