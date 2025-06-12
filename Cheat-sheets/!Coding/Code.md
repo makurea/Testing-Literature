@@ -595,6 +595,35 @@ public class Main {
 ### 🆚 Являются ли строки анаграммами <a id="check-anagram"></a>
 
 ```java
+import java.util.Arrays;
+
+public class Main {
+
+    public static boolean isAnagram(String s1, String s2) {
+        // Убираем пробелы и приводим к нижнему регистру
+        s1 = s1.replaceAll("\\s+", "").toLowerCase();
+        s2 = s2.replaceAll("\\s+", "").toLowerCase();
+
+        // Если длины не совпадают — точно не анаграммы
+        if (s1.length() != s2.length()) {
+            return false;
+        }
+
+        // Сортируем символы и сравниваем
+        char[] a1 = s1.toCharArray();
+        char[] a2 = s2.toCharArray();
+        Arrays.sort(a1);
+        Arrays.sort(a2);
+
+        return Arrays.equals(a1, a2);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(isAnagram("listen", "silent"));     // true
+        System.out.println(isAnagram("triangle", "integral")); // true
+        System.out.println(isAnagram("hello", "world"));       // false
+    }
+}
 
 ```
 
@@ -604,6 +633,9 @@ public class Main {
 
 ### 🔢 Подсчет количества слов в строке <a id="count-words-in-string"></a>
 
+```java
+
+```
 
 [🔼 К содержанию](#Содержание)
 
@@ -611,6 +643,9 @@ public class Main {
 
 ### 🧵 Удаление всех пробелов из строки <a id="remove-all-whitespaces"></a>
 
+```java
+
+```
 
 [🔼 К содержанию](#Содержание)
 
