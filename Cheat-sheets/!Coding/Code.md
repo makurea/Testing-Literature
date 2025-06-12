@@ -772,7 +772,24 @@ public class Main {
 ### 🧪 Содержит ли строка только цифры (Character) <a id="contains-only-digits"></a>
 
 ```java
+public class Main {
 
+    public static boolean containsOnlyDigits(String input) {
+        if (input == null || input.isEmpty()) return false;
+        for (char c : input.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(containsOnlyDigits("123456"));   // true
+        System.out.println(containsOnlyDigits("123a456"));  // false
+        System.out.println(containsOnlyDigits(""));         // false
+    }
+}
 ```
 
 [🔼 К содержанию](#Содержание)
