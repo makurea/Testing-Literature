@@ -799,7 +799,31 @@ public class Main {
 ### 📏 Самое длинное слово в строке <a id="longest-word-in-string"></a>
 
 ```java
+public class Main {
 
+    public static String longestWord(String input) {
+        if (input == null || input.trim().isEmpty()) {
+            return "";
+        }
+
+        String[] words = input.trim().split("\\s+");
+        String longest = "";
+
+        for (String word : words) {
+            if (word.length() > longest.length()) {
+                longest = word;
+            }
+        }
+
+        return longest;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(longestWord("Java is awesome"));         // "awesome"
+        System.out.println(longestWord("   hello world "));          // "hello"
+        System.out.println(longestWord(""));                         // ""
+    }
+}
 ```
 
 [🔼 К содержанию](#Содержание)
