@@ -750,7 +750,19 @@ public class Main {
 ### 🪓 Удаление всех цифр из строки (регулярка) <a id="remove-digits-regex"></a>
 
 ```java
+public class Main {
 
+    public static String removeDigits(String input) {
+        if (input == null) return null;
+        return input.replaceAll("\\d", "");
+    }
+
+    public static void main(String[] args) {
+        System.out.println(removeDigits("abc123def456"));  // "abcdef"
+        System.out.println(removeDigits("2025 год"));      // " год"
+        System.out.println(removeDigits("no digits"));     // "no digits"
+    }
+}
 ```
 
 [🔼 К содержанию](#Содержание)
