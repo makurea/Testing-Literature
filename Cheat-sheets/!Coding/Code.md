@@ -661,6 +661,18 @@ public class Main {
 ### 🧵 Удаление всех пробелов из строки <a id="remove-all-whitespaces"></a>
 
 ```java
+public class Main {
+
+    public static String removeWhitespaces(String input) {
+        return input.replaceAll("\\s+", "");
+    }
+
+    public static void main(String[] args) {
+        System.out.println(removeWhitespaces("Java is fun"));         // "Javaisfun"
+        System.out.println(removeWhitespaces("   Hello   world "));   // "Helloworld"
+        System.out.println(removeWhitespaces(""));                    // ""
+    }
+}
 
 ```
 
