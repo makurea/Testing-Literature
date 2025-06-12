@@ -715,7 +715,32 @@ public class Main {
 ### 🔄 Инвертировать порядок слов в строке <a id="reverse-word-order"></a>
 
 ```java
+public class Main {
 
+    public static String reverseWordOrder(String input) {
+        if (input == null || input.trim().isEmpty()) {
+            return input;
+        }
+
+        String[] words = input.trim().split("\\s+");
+        StringBuilder reversed = new StringBuilder();
+
+        for (int i = words.length - 1; i >= 0; i--) {
+            reversed.append(words[i]);
+            if (i != 0) {
+                reversed.append(" ");
+            }
+        }
+
+        return reversed.toString();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(reverseWordOrder("Java is fun"));          // "fun is Java"
+        System.out.println(reverseWordOrder("  Hello   world  "));    // "world Hello"
+        System.out.println(reverseWordOrder("single"));               // "single"
+    }
+}
 ```
 
 [🔼 К содержанию](#Содержание)
