@@ -1271,7 +1271,37 @@ public class CountExample {
 ### 🧮 Суммирование значений поля объектов с использованием стримов <a id="sum-field-values"></a>  
 
 ```java
+import java.util.List;
 
+class Product {
+    private String name;
+    private int price;
+
+    public Product(String name, int price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+}
+
+public class SumExample {
+    public static void main(String[] args) {
+        List<Product> products = List.of(
+            new Product("Book", 100),
+            new Product("Pen", 20),
+            new Product("Notebook", 50)
+        );
+
+        int totalPrice = products.stream()
+            .mapToInt(Product::getPrice)
+            .sum();
+
+        System.out.println("Общая сумма цен: " + totalPrice); // Выведет: 170
+    }
+}
 ```
 
 [🔼 К содержанию](#Содержание)  
