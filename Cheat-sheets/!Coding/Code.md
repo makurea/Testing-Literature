@@ -1248,7 +1248,20 @@ public class FilterExample {
 ### 📊 Подсчет количества элементов, удовлетворяющих условию <a id="count-elements-by-condition"></a> 
 
 ```java
+import java.util.List;
 
+public class CountExample {
+    public static void main(String[] args) {
+        List<Integer> numbers = List.of(1, 5, 8, 10, 3, 7);
+
+        // Подсчитать количество чисел больше 5
+        long count = numbers.stream()
+            .filter(n -> n > 5)
+            .count();
+
+        System.out.println("Количество чисел больше 5: " + count); // Выведет: 3
+    }
+}
 ```
 
 [🔼 К содержанию](#Содержание)  
