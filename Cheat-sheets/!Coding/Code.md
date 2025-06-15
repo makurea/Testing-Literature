@@ -1225,7 +1225,21 @@ public class Main {
 ### 🔄 Фильтрация и сбор элементов списка по условию <a id="filter-and-collect-list"></a>  
 
 ```java
+import java.util.List;
+import java.util.stream.Collectors;
 
+public class FilterExample {
+    public static void main(String[] args) {
+        List<String> names = List.of("Anna", "Bob", "Alice", "Mike", "Amanda");
+
+        // Фильтрация: выбрать имена, начинающиеся с буквы 'A'
+        List<String> filteredNames = names.stream()
+            .filter(name -> name.startsWith("A"))
+            .collect(Collectors.toList());
+
+        System.out.println(filteredNames); // Выведет: [Anna, Alice, Amanda]
+    }
+}
 ```
 
 [🔼 К содержанию](#Содержание)  
