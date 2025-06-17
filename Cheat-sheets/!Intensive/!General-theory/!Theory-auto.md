@@ -55,7 +55,8 @@
 ## [🎭 Selenium ](#selenium)
 
 - [Что такое Selenium?](#что-такое-selenium)
-- [Какие преимущества дает Selenide?](#selenide)
+- [Selenide](#selenide)
+- [Selenoid](#selenoid)
 - [Классы](#selenium-классы)
     - [WebDriver](#webdriver)
     - [WebElement](#webelement)
