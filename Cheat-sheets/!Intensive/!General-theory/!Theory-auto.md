@@ -1471,10 +1471,32 @@ Selenoid идеально подходит для автоматизации UI-
 
 **Expected Conditions** — это набор предустановленных условий, которые могут использоваться с явными и текучими ожиданиями. Эти условия описывают состояния, которые могут быть проверены в процессе теста, например:
 
-- **visibilityOf(WebElement element)** — ждет, пока элемент станет видимым.
-- **elementToBeClickable(WebElement element)** — ждет, пока элемент станет кликабельным.
-- **presenceOfElementLocated(By locator)** — ждет, пока элемент появится в DOM.
-- **alertIsPresent()** — ждет появления алерта.
+| Метод | Описание |
+|-------|----------|
+| `alertIsPresent()` | Ожидает появления alert-окна. |
+| `elementSelectionStateToBe(WebElement, boolean)` | Ожидает, что элемент будет выбран или не выбран. |
+| `elementToBeClickable(By / WebElement)` | Ожидает, что элемент станет кликабельным (видимым и активным). |
+| `elementToBeSelected(By / WebElement)` | Ожидает, что элемент будет выбран (checkbox, radio и т.д.). |
+| `frameToBeAvailableAndSwitchToIt(By / WebElement / int / String)` | Ожидает доступности iframe и переключается в него. |
+| `invisibilityOf(WebElement)` | Ожидает, что элемент станет невидимым. |
+| `invisibilityOfElementLocated(By)` | То же, но по локатору. |
+| `invisibilityOfElementWithText(By, String)` | Ожидает, что элемент с определённым текстом исчезнет. |
+| `numberOfElementsToBe(By, int)` | Ожидает, что количество найденных элементов по локатору будет равно заданному числу. |
+| `numberOfElementsToBeLessThan(By, int)` | Количество элементов станет меньше заданного. |
+| `numberOfElementsToBeMoreThan(By, int)` | Количество элементов станет больше заданного. |
+| `presenceOfAllElementsLocatedBy(By)` | Ожидает появления всех элементов по локатору. |
+| `presenceOfElementLocated(By)` | Ожидает, что элемент появится в DOM (не обязательно видим). |
+| `textToBe(By, String)` | Ожидает, что элемент будет содержать точный текст. |
+| `textToBePresentInElement(WebElement, String)` | Ожидает, что элемент будет содержать указанный текст. |
+| `textToBePresentInElementLocated(By, String)` | То же самое, но по локатору. |
+| `titleIs(String)` | Ожидает, что заголовок страницы будет точно таким. |
+| `titleContains(String)` | Ожидает, что заголовок страницы будет содержать подстроку. |
+| `urlToBe(String)` | Ожидает, что URL будет равен указанному. |
+| `urlContains(String)` | Ожидает, что URL будет содержать указанную подстроку. |
+| `visibilityOf(WebElement)` | Ожидает, что элемент станет видимым. |
+| `visibilityOfAllElements(List<WebElement>)` | Ожидает, что все элементы в списке станут видимыми. |
+| `visibilityOfAllElementsLocatedBy(By)` | Ожидает видимости всех элементов, найденных по локатору. |
+| `visibilityOfElementLocated(By)` | Ожидает, что элемент по локатору станет видимым. |
 
 Expected Conditions значительно упрощают использование явных ожиданий, позволяя избежать необходимости вручную определять условия для каждого элемента.
 
