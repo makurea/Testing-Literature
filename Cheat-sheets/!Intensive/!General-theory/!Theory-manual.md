@@ -117,7 +117,7 @@
 
 ## [🎨 HTTP-механизмы и безопасность ](#http-и-безопасность)
 
-- [Headers - Заголовки http](http-заголовки)
+- [Headers - Заголовки http](#http-заголовки)
 - [CORS (Cross-Origin Resource Sharing)](#cors)
 - [LocalStorage и SessionStorage](#localstorage)
 - [DevTools](#devtools)
