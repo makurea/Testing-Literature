@@ -850,7 +850,62 @@ public class Main {
 ### 🧮 Подсчет частоты слов в строке (Map) <a id="word-frequency-map"></a>
 
 ```java
+import java.util.HashMap;
+import java.util.Map;
 
+public class Main {
+
+    /**
+     * Подсчитывает частоту каждого слова в заданной строке.
+     *
+     * @param text Строка, в которой нужно подсчитать слова.
+     * @return Map, где ключ - это слово, а значение - его частота.
+     */
+    public static Map<String, Integer> countWordFrequency(String text) {
+        // Проверяем, что строка не пустая и не null.
+        if (text == null || text.trim().isEmpty()) {
+            return new HashMap<>(); // Возвращаем пустую Map.
+        }
+
+        // Создаем HashMap для хранения слов и их частоты.
+        Map<String, Integer> frequencyMap = new HashMap<>();
+        
+        // Разделяем строку на слова, переводя их в нижний регистр.
+        // Используем регулярное выражение для разделения по пробелам и знакам препинания.
+        String[] words = text.toLowerCase().split("[\\s,.!?]+");
+        
+        // Итерируем по массиву слов.
+        for (String word : words) {
+            // Проверяем, что слово не пустое (может быть в случае нескольких разделителей подряд).
+            if (!word.isEmpty()) {
+                // Увеличиваем счетчик слова. Если слово еще не встречалось, начинаем с 1.
+                frequencyMap.put(word, frequencyMap.getOrDefault(word, 0) + 1);
+            }
+        }
+        
+        return frequencyMap;
+    }
+
+    public static void main(String[] args) {
+        // Пример использования:
+        String sentence1 = "Java - это мощный язык. Java используется повсюду.";
+        Map<String, Integer> result1 = countWordFrequency(sentence1);
+        System.out.println("Результат для строки: \"" + sentence1 + "\"");
+        System.out.println(result1); // Выведет: {это=2, java=2, мощный=1, повсюду=1, используется=1, язык=1}
+        System.out.println("---");
+
+        String sentence2 = "Hello world, hello Java!";
+        Map<String, Integer> result2 = countWordFrequency(sentence2);
+        System.out.println("Результат для строки: \"" + sentence2 + "\"");
+        System.out.println(result2); // Выведет: {java=1, hello=2, world=1}
+        System.out.println("---");
+
+        String sentence3 = "";
+        Map<String, Integer> result3 = countWordFrequency(sentence3);
+        System.out.println("Результат для строки: \"" + sentence3 + "\"");
+        System.out.println(result3); // Выведет: {}
+    }
+}
 ```
 
 [🔼 К содержанию](#Содержание)
