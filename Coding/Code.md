@@ -1116,7 +1116,47 @@ public class Main {
 ### 📚 Генерация всех подстрок строки <a id="generate-all-substrings"></a>
 
 ```java
+import java.util.ArrayList;
+import java.util.List;
 
+public class Main {
+
+    /**
+     * Генерирует и возвращает список всех возможных подстрок заданной строки.
+     *
+     * @param input Исходная строка.
+     * @return Список всех подстрок.
+     */
+    public static List<String> generateSubstrings(String input) {
+        // Проверяем, что строка не null и не пустая.
+        if (input == null || input.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        List<String> substrings = new ArrayList<>();
+        int n = input.length();
+
+        // Внешний цикл для определения начальной позиции подстроки.
+        for (int i = 0; i < n; i++) {
+            // Внутренний цикл для определения конечной позиции подстроки.
+            for (int j = i; j < n; j++) {
+                // Извлекаем подстроку и добавляем её в список.
+                substrings.add(input.substring(i, j + 1));
+            }
+        }
+
+        return substrings;
+    }
+
+    public static void main(String[] args) {
+        // Пример использования:
+        String str = "abc";
+        List<String> allSubstrings = generateSubstrings(str);
+        
+        System.out.println("Все подстроки строки '" + str + "':");
+        System.out.println(allSubstrings); // Выведет: [a, ab, abc, b, bc, c]
+    }
+}
 ```
 
 [🔼 К содержанию](#Содержание)
