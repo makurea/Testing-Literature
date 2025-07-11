@@ -159,8 +159,13 @@
 #### Пример минимальной Java-программы
 
 ```java
+// Объявление публичного класса с именем HelloWorld
 public class HelloWorld {
+    
+    // Точка входа в программу — главный метод main
     public static void main(String[] args) {
+        
+        // Вывод текста "Hello, World!" в консоль
         System.out.println("Hello, World!");
     }
 }
