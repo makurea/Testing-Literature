@@ -4074,6 +4074,204 @@ SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
 | **INTERSECT**                  | Возвращает пересечение двух запросов.                                         |
 | **MINUS**                      | Возвращает разницу между двумя запросами (Oracle).                            |
 
+#### 🏗 Операторы фильтрации и ограничения данных
+```sql
+-- DESCRIBE
+DESCRIBE users;
+
+-- LIMIT
+SELECT * FROM orders LIMIT 5;
+
+-- DISTINCT
+SELECT DISTINCT country FROM customers;
+
+-- GROUP BY
+SELECT country, COUNT(*) FROM customers GROUP BY country;
+
+-- HAVING
+SELECT country, COUNT(*) as cnt FROM customers GROUP BY country HAVING cnt > 10;
+
+-- ORDER BY
+SELECT * FROM products ORDER BY price;
+
+-- ORDER BY ASC
+SELECT * FROM products ORDER BY price ASC;
+
+-- ORDER BY DESC
+SELECT * FROM products ORDER BY price DESC;
+```
+
+#### 📊 Агрегатные функции
+```sql
+-- COUNT()
+SELECT COUNT(*) FROM orders;
+
+-- AVG()
+SELECT AVG(price) FROM products;
+
+-- SUM()
+SELECT SUM(total) FROM invoices;
+
+-- MAX()
+SELECT MAX(age) FROM users;
+
+-- MIN()
+SELECT MIN(age) FROM users;
+
+-- GROUP_CONCAT() (MySQL)
+SELECT department, GROUP_CONCAT(name) FROM employees GROUP BY department;
+
+-- STRING_AGG() (SQL Server / PostgreSQL)
+SELECT department, STRING_AGG(name, ', ') FROM employees GROUP BY department;
+
+-- JSON_AGG() (PostgreSQL)
+SELECT JSON_AGG(name) FROM employees;
+
+-- ARRAY_AGG() (PostgreSQL)
+SELECT ARRAY_AGG(name) FROM employees;
+
+-- MEDIAN() (PostgreSQL)
+SELECT PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY salary) FROM employees;
+
+-- MODE() (PostgreSQL)
+SELECT MODE() WITHIN GROUP (ORDER BY rating) FROM reviews;
+
+-- VARIANCE()
+SELECT VARIANCE(price) FROM products;
+
+-- STDDEV()
+SELECT STDDEV(price) FROM products;
+
+```
+
+#### 🔎 Фильтрация и условия
+```sql
+-- WHERE
+SELECT * FROM users WHERE age > 18;
+
+-- AND
+SELECT * FROM users WHERE age > 18 AND gender = 'female';
+
+-- OR
+SELECT * FROM users WHERE city = 'Paris' OR city = 'London';
+
+-- IN
+SELECT * FROM products WHERE category IN ('Books', 'Toys');
+
+-- NOT IN
+SELECT * FROM products WHERE category NOT IN ('Electronics', 'Appliances');
+
+-- BETWEEN
+SELECT * FROM orders WHERE order_date BETWEEN '2024-01-01' AND '2024-12-31';
+
+-- NOT BETWEEN
+SELECT * FROM orders WHERE price NOT BETWEEN 100 AND 200;
+
+-- LIKE
+SELECT * FROM users WHERE name LIKE 'A%';
+
+-- NOT LIKE
+SELECT * FROM users WHERE email NOT LIKE '%.com';
+
+-- REGEXP (MySQL / PostgreSQL)
+SELECT * FROM users WHERE name REGEXP '^J.*n$';
+
+```
+#### ✅ Проверка значений
+```sql
+-- IS NULL
+SELECT * FROM users WHERE phone IS NULL;
+
+-- IS NOT NULL
+SELECT * FROM users WHERE phone IS NOT NULL;
+
+-- EXISTS
+SELECT name FROM customers WHERE EXISTS (
+  SELECT 1 FROM orders WHERE orders.customer_id = customers.id
+);
+
+-- NOT EXISTS
+SELECT name FROM customers WHERE NOT EXISTS (
+  SELECT 1 FROM orders WHERE orders.customer_id = customers.id
+);
+
+-- ALL
+SELECT * FROM products WHERE price > ALL (
+  SELECT price FROM products WHERE category = 'Toys'
+);
+
+-- ANY
+SELECT * FROM products WHERE price < ANY (
+  SELECT price FROM products WHERE category = 'Books'
+);
+
+```
+#### 🔄 Операторы сравнения
+```sql
+-- =
+SELECT * FROM users WHERE country = 'Germany';
+
+-- != или <>
+SELECT * FROM users WHERE country != 'Germany';
+
+-- >
+SELECT * FROM products WHERE price > 500;
+
+-- <
+SELECT * FROM products WHERE price < 100;
+
+-- >=
+SELECT * FROM users WHERE age >= 18;
+
+-- <=
+SELECT * FROM users WHERE age <= 30;
+
+```
+#### 🔗 Объединение запросов
+```sql
+-- UNION
+SELECT name FROM customers
+UNION
+SELECT name FROM suppliers;
+
+-- UNION ALL
+SELECT name FROM customers
+UNION ALL
+SELECT name FROM suppliers;
+
+```
+
+#### 🏷 Условные выражения
+```sql
+-- CASE
+SELECT name,
+       CASE
+           WHEN age < 18 THEN 'Minor'
+           WHEN age BETWEEN 18 AND 64 THEN 'Adult'
+           ELSE 'Senior'
+       END AS age_group
+FROM users;
+
+```
+
+#### ➗ Арифметические операторы
+```sql
+-- +
+SELECT price + tax AS total_price FROM products;
+
+-- -
+SELECT balance - payment AS remaining FROM accounts;
+
+-- *
+SELECT quantity * unit_price AS total FROM order_items;
+
+-- /
+SELECT salary / 12 AS monthly_salary FROM employees;
+
+-- %
+SELECT id % 2 AS parity FROM users;
+
+```
 
 [🔼 К содержанию](#content)
 
