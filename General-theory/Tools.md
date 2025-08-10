@@ -1721,6 +1721,17 @@ deploy:
 
 ---
 
+### ☸️ Openshift  <a id="openshift"></a>
+
+[🔼 К содержанию](#content)
+
+---
+### 🌐 Spring Cloud  <a id="spring-cloud"></a>
+
+[🔼 К содержанию](#content)
+
+---
+
 ## 🛠️ Инструменты для мануального тестирования <a id="инструменты-мануального-тестирования"></a>
 
 ### 📋 TestLink  <a id="testlink"></a>
@@ -1976,14 +1987,14 @@ XMind и FreeMind — популярные инструменты для соз�
 
 ## 📡 Брокеры сообщений  <a id="брокеры-сообщений"></a>
 
-  - ☕ Kafka<a id="kafka"></a>
+### ☕ Kafka<a id="kafka"></a>
   
-  [🔼 К содержанию](#content)
+[🔼 К содержанию](#content)
 
 ---
-  - 🐇 RabbitMQ<a id="rabbitmq"></a>
+### 🐇 RabbitMQ<a id="rabbitmq"></a>
   
-  [🔼 К содержанию](#content)
+[🔼 К содержанию](#content)
 
 ---
 
