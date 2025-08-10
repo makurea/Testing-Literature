@@ -1,10 +1,10 @@
 # Содержание 🌍 <a id="content"></a>    
 
-## [🐧 Linux](#linux)
+## [🐧 Linux](#linux)  <a id="linux-глава"></a>
 
    - [🖥️ Основы Linux](#основы-linux)
 
-## [🌐 Веб-тестирование](#веб-тестирование)
+## [🌐 Веб-тестирование](#веб-тестирование) <a id="веб-тестирование-глава"></a>
 
   - [🛠️ Chrome DevTools](#chrome-devtools)
   - [🔍 Lighthouse](#lighthouse)
@@ -12,12 +12,12 @@
   - [☁️ Sauce Labs](#sauce-labs)
   - [🔌 Расширения браузера](#расширения-браузера)
 
-## [📱 Мобильное тестирование](#мобильное-тестирование)
+## [📱 Мобильное тестирование](#мобильное-тестирование) <a id="мобильное-тестирование-глава"></a>
 
   - [🤖 Android Studio](#android-studio)
   - [🍏 Xcode](#xcode)
 
-## [🔌 Тестирование API](#тестирование-апи)
+## [🔌 Тестирование API](#тестирование-апи) <a id="тестирование-апи-глава"></a>
 
   - [🌐 REST API](#rest-api)
   - [📬 Postman](#postman)
@@ -28,7 +28,7 @@
   - [🧩 SoapUI](#soapui)
   - [🔌 WireMock](#wiremock)
 
-## [🗄️ Базы данных](#тесты-бд)
+## [🗄️ Базы данных](#тесты-бд) <a id="тесты-бд-глава"></a>
 
   - [🧮 SQL](#sql)
   - [🐬 DBeaver](#dbeaver)
@@ -40,20 +40,20 @@
   - [📦 NoSQL (например MongoDB или аналоги)](#nosql)
   - [☸️ Hazelcast](#hazelcast)
 
-## [📋 Тест-менеджмент](#тест-менеджмент)
+## [📋 Тест-менеджмент](#тест-менеджмент) <a id="тест-менеджмент-глава"></a>
 
   - [📌 Jira](#jira)
   - [📖 Confluence](#confluence)
   - [📊 TestRail](#testrail)
   - [🧪 Zephyr](#зефир)
 
-## [🔍 BDD-тестирование](#bdd-авто)
+## [🔍 BDD-тестирование](#bdd-авто) <a id="bdd-авто-глава"></a>
 
   - [📘 Что такое BDD](#что-такое-bdd)
   - [✍️ Gherkin](#gherkin)
   - [🥒 Cucumber](#cucumber)
 
-## [⚙️ DevOps и CI/CD](#devops-ci-cd)
+## [⚙️ DevOps и CI/CD](#devops-ci-cd) <a id="devops-ci-cd-глава"></a>
 
   - [🔁 Docker](#docker)
   - [🚢 Kubernetes](#kubernetes)
@@ -70,7 +70,7 @@
   - [☸️ Openshift](#openshift)
   - [🌐 Spring Cloud](#spring-cloud)
 
-## [🛠️ Инструменты для мануального тестирования](#инструменты-мануального-тестирования)
+## [🛠️ Инструменты для мануального тестирования](#инструменты-мануального-тестирования) <a id="инструменты-мануального-тестирования-глава"></a>
 
   - [📋 TestLink](#testlink) 
   - [🔍 Mantis](#mantis) 
@@ -81,13 +81,13 @@
   - [📷 Screenshot tools (LightShot, Greenshot)](#screenshot-tools)
   - [📢 Mind Mapping tools (XMind, FreeMind)](#mind-mapping-tools) 
 
-## [📚 Контроль версий и IDE](#контроль-версий-и-ide)
+## [📚 Контроль версий и IDE](#контроль-версий-и-ide) <a id="контроль-версий-и-ide-глава"></a>
 
   - [🐙 Git](#git)
   - [🔗 Bitbucket](#bitbucket)
   - [🧑‍💻 IntelliJ IDEA](#intellij-idea)
 
-## [📡 Брокеры сообщений](#брокеры-сообщений)
+## [📡 Брокеры сообщений](#брокеры-сообщений) <a id="брокеры-сообщений-глава"></a>
 
   - [☕ Kafka](#kafka)
   - [🐇 RabbitMQ](#rabbitmq)
