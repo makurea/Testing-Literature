@@ -1985,6 +1985,27 @@ XMind и FreeMind — популярные инструменты для соз�
 
 ---
 
+## 📚 Контроль версий и IDE  <a id="контроль-версий-и-ide"></a>
+
+### 🐙 Git  <a id="git"></a>
+  
+[🔼 К содержанию](#content)
+
+---
+
+### 🔗 Bitbucket <a id="bitbucket"></a>
+  
+[🔼 К содержанию](#content)
+
+---
+
+### 🧑‍💻 IntelliJ IDEA <a id="intellij-idea"></a>
+  
+[🔼 К содержанию](#content)
+
+---
+
+
 ## 📡 Брокеры сообщений  <a id="брокеры-сообщений"></a>
 
 ### ☕ Kafka<a id="kafka"></a>
@@ -1992,6 +2013,7 @@ XMind и FreeMind — популярные инструменты для соз�
 [🔼 К содержанию](#content)
 
 ---
+
 ### 🐇 RabbitMQ<a id="rabbitmq"></a>
   
 [🔼 К содержанию](#content)
