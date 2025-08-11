@@ -451,55 +451,55 @@ jobs:
 - **Нотификации** – отправка уведомлений при успешном или неуспешном запуске пайплайна.
 
 ```yaml
-name: CI/CD Pipeline
+name: CI/CD Pipeline                  # Название workflow (отображается в GitHub Actions)
 
-on:
-  push:
+on:                                 # События, при которых запускается workflow
+  push:                            # При пуше в репозиторий
     branches:
-      - main
+      - main                      # Только при пуше в ветку main
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout репозиторий
-        uses: actions/checkout@v3
+jobs:                             # Определение задач (джобов) workflow
+  build:                         # Джоб с именем "build"
+    runs-on: ubuntu-latest        # Запуск на виртуальной машине с последней Ubuntu
 
-      - name: Установка Node.js
-        uses: actions/setup-node@v3
+    steps:                       # Последовательность шагов внутри джоба
+      - name: Checkout репозиторий      # Шаг: клонирование кода
+        uses: actions/checkout@v3       # Использование официального действия для клонирования репозитория
+
+      - name: Установка Node.js           # Шаг: установка Node.js нужной версии
+        uses: actions/setup-node@v3      # Официальное действие для настройки Node.js
         with:
-          node-version: '18'
+          node-version: '18'             # Версия Node.js — 18
 
-      - name: Установка зависимостей
+      - name: Установка зависимостей       # Шаг: установка npm-зависимостей проекта
         run: npm install
 
-      - name: Запуск тестов
+      - name: Запуск тестов                # Шаг: запуск тестов, как указано в package.json (npm test)
         run: npm test
 ```
 
 #### Пример файла настройки для GitLab CI/CD
 Создание `.gitlab-ci.yml`:
 ```yaml
-stages:
-  - build
-  - test
-  - deploy
+stages:               # Определение этапов (стадий) пайплайна
+  - build             # Этап сборки
+  - test              # Этап тестирования
+  - deploy            # Этап деплоя (развертывания)
 
-build:
-  stage: build
+build:                # Джоб для этапа сборки
+  stage: build       # Относится к стадии build
+  script:            # Команды, которые выполняются в этом джобе
+    - echo "Сборка проекта..."   # Просто выводит сообщение (пример)
+
+test:                 # Джоб для этапа тестирования
+  stage: test        # Относится к стадии test
   script:
-    - echo "Сборка проекта..."
+    - echo "Запуск тестов..."    # Просто выводит сообщение (пример)
 
-test:
-  stage: test
+deploy:               # Джоб для этапа деплоя
+  stage: deploy      # Относится к стадии deploy
   script:
-    - echo "Запуск тестов..."
-
-deploy:
-  stage: deploy
-  script:
-    - echo "Деплой в продакшен..."
-
+    - echo "Деплой в продакшен..."  # Просто выводит сообщение (пример)
 ```
 #### **Основные параметры YAML-файлов**
 - **on/push** (GitHub) или **stages** (GitLab) — определяют, когда запускать процесс.
