@@ -555,46 +555,46 @@ Jenkins использует Pipeline DSL (на Groovy-подобном синт
 
 📄 Пример Jenkinsfile:
 ```groovy
-pipeline {
-    agent any
+pipeline {                             // Начало описания пайплайна Jenkins
+    agent any                         // Запускать пайплайн на любом доступном агенте (ноде Jenkins)
 
-    environment {
-        JAVA_HOME = '/usr/lib/jvm/java-11-openjdk'
+    environment {                    // Определение переменных окружения для всех стадий
+        JAVA_HOME = '/usr/lib/jvm/java-11-openjdk'   // Путь к установленной JDK 11
     }
 
-    stages {
-        stage('Checkout') {
+    stages {                         // Определение последовательных стадий пайплайна
+        stage('Checkout') {          // Стадия 1: Получение кода из репозитория
             steps {
-                git 'https://github.com/makurea/project.git'
+                git 'https://github.com/makurea/project.git'   // Клонирование Git-репозитория по указанному URL
             }
         }
 
-        stage('Build') {
+        stage('Build') {             // Стадия 2: Сборка проекта
             steps {
-                sh './gradlew build'
+                sh './gradlew build'   // Запуск Gradle задачи сборки проекта через shell
             }
         }
 
-        stage('Test') {
+        stage('Test') {              // Стадия 3: Запуск тестов
             steps {
-                sh './gradlew test'
+                sh './gradlew test'    // Запуск Gradle задачи тестирования через shell
             }
         }
 
-        stage('Publish') {
+        stage('Publish') {           // Стадия 4: Публикация или деплой (в данном случае — пример)
             steps {
-                echo 'Deploy to staging...'
-                // sh 'scp build/libs/app.jar user@server:/app'
+                echo 'Deploy to staging...'   // Вывод сообщения о публикации
+                // sh 'scp build/libs/app.jar user@server:/app'  // Закомментированная команда копирования артефакта на сервер
             }
         }
     }
 
-    post {
-        always {
-            junit 'build/test-results/**/*.xml'
+    post {                         // Блок действий, которые выполняются после всех стадий
+        always {                   // Всегда выполнять этот блок — независимо от результата сборки
+            junit 'build/test-results/**/*.xml'    // Публикация отчетов JUnit из указанных файлов (для отображения результатов тестов в Jenkins)
         }
-        failure {
-            echo 'Build failed!'
+        failure {                  // Если сборка/тесты упали — выполнить эти шаги
+            echo 'Build failed!'   // Вывести сообщение о неудачной сборке
         }
     }
 }
@@ -608,33 +608,33 @@ pipeline {
 
 📄 Пример .gitlab-ci.yml:
 ```yaml
-stages:
-  - build
-  - test
-  - deploy
+stages:                      # Определение этапов (стадий) пайплайна
+  - build                   # Этап сборки
+  - test                    # Этап тестирования
+  - deploy                  # Этап деплоя (развертывания)
 
-variables:
-  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+variables:                  # Глобальные переменные окружения для всех джобов
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"  # Параметры для Maven, указывающие локальный кэш репозитория в папке .m2/repository
 
-build_job:
-  stage: build
+build_job:                  # Джоб для этапа сборки
+  stage: build             # Отнесён к стадии build
+  script:                  # Скрипт команд, которые нужно выполнить
+    - mvn clean compile     # Запуск Maven: очистка проекта и компиляция кода
+
+test_job:                   # Джоб для этапа тестирования
+  stage: test              # Отнесён к стадии test
   script:
-    - mvn clean compile
-
-test_job:
-  stage: test
-  script:
-    - mvn test
-  artifacts:
+    - mvn test              # Запуск Maven для выполнения тестов
+  artifacts:                # Настройка артефактов — файлов, которые сохраняются после выполнения джоба
     reports:
-      junit: target/surefire-reports/*.xml
+      junit: target/surefire-reports/*.xml   # Отчёты JUnit для отображения результатов тестов в интерфейсе GitLab CI
 
-deploy_job:
-  stage: deploy
+deploy_job:                 # Джоб для этапа деплоя
+  stage: deploy            # Отнесён к стадии deploy
   script:
-    - echo "Deploying to staging"
-  only:
-    - main
+    - echo "Deploying to staging"    # Просто выводит сообщение (пример команды деплоя)
+  only:                    # Условие запуска этого джоба
+    - main                 # Джоб запускается только при пуше в ветку main
 ```
 
 #### 🟦 GitHub Actions
@@ -645,32 +645,32 @@ deploy_job:
 
 📄 Пример .github/workflows/ci.yml:
 ```yaml
-name: Java CI
+name: Java CI                 # Название workflow (отображается в GitHub Actions)
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on:                          # Триггеры запуска workflow
+  push:                      # При пуше в репозиторий
+    branches: [ main ]       # Только при пуше в ветку main
+  pull_request:              # При создании или обновлении pull request
+    branches: [ main ]       # Для ветки main
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+jobs:                        # Определение джобов (задач)
+  build:                     # Джоб с именем build
+    runs-on: ubuntu-latest   # Выполняется на виртуальной машине с Ubuntu последней версии
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    steps:                   # Шаги внутри джоба
+      - name: Checkout code            # Шаг: Клонирование кода из репозитория
+        uses: actions/checkout@v3     # Использует официальный GitHub Action для клонирования
 
-      - name: Set up Java
-        uses: actions/setup-java@v4
+      - name: Set up Java              # Шаг: Установка нужной версии Java
+        uses: actions/setup-java@v4   # Официальный Action для настройки Java
         with:
-          java-version: '17'
+          java-version: '17'           # Версия Java — 17
 
-      - name: Build with Gradle
-        run: ./gradlew build
+      - name: Build with Gradle       # Шаг: Сборка проекта с помощью Gradle
+        run: ./gradlew build           # Запускает скрипт сборки Gradle
 
-      - name: Run tests
-        run: ./gradlew test
+      - name: Run tests                # Шаг: Запуск тестов
+        run: ./gradlew test            # Запускает задачу тестирования Gradle
 ```
 #### 🟨 TeamCity
 ✅ Как работает:
@@ -680,36 +680,38 @@ jobs:
 
 📄 Пример Kotlin DSL:
 ```kotlin
-version = "2024.1"
+version = "2024.1"                 // Версия DSL для TeamCity (соответствует версии TeamCity)
 
-project {
-    buildType(BuildAndTest)
+project {                         // Определение проекта в TeamCity
+    buildType(BuildAndTest)       // Добавление билд-конфигурации BuildAndTest в проект
 }
 
-object BuildAndTest : BuildType({
-    name = "Build and Test"
+object BuildAndTest : BuildType({  // Создание билд-конфигурации с именем "Build and Test"
 
-    vcs {
-        root(DslContext.settingsRoot)
+    name = "Build and Test"       // Название билд-конфигурации в UI TeamCity
+
+    vcs {                         // Настройка VCS (системы контроля версий)
+        root(DslContext.settingsRoot)  // Использовать корень репозитория, где лежат настройки DSL (обычно тот же репозиторий)
     }
 
-    steps {
+    steps {                       // Определение шагов сборки
         script {
-            name = "Build"
-            scriptContent = "./gradlew build"
+            name = "Build"        // Шаг с именем "Build"
+            scriptContent = "./gradlew build"  // Команда для сборки проекта с помощью Gradle
         }
         script {
-            name = "Test"
-            scriptContent = "./gradlew test"
+            name = "Test"         // Шаг с именем "Test"
+            scriptContent = "./gradlew test"   // Команда для запуска тестов Gradle
         }
     }
 
-    triggers {
-        vcs {
+    triggers {                   // Триггеры запуска билдов
+        vcs {                   // Триггер запуска при изменениях в репозитории (VCS trigger)
+            // Пустой блок — триггер с настройками по умолчанию (срабатывает при любом коммите)
         }
     }
 
-    artifactRules = "build/libs/*.jar"
+    artifactRules = "build/libs/*.jar"  // Правило публикации артефактов — все JAR-файлы из папки build/libs будут доступны после сборки
 })
 ```
 
