@@ -1879,6 +1879,97 @@ numbersforEach(n -> Systemoutprintln(n * 2))
 
 ### 🔹 Optional <a id="optional"></a>
 
+`Optional<T>` - контейнерный объект, который может содержать или не содержать ненулевое значение. Основное назначение - явное указание на возможное отсутствие значения и избегание `NullPointerException`.
+
+#### Создание Optional
+
+```java
+Optional<String> emptyOpt = Optional.empty();  // пустой Optional
+Optional<String> valueOpt = Optional.of("value");  // с гарантированно не-null значением
+Optional<String> nullableOpt = Optional.ofNullable(getNullableString());  // может быть null
+```
+
+#### Основные методы
+Проверка наличия значения
+```java
+boolean isPresent = optional.isPresent();  // true если значение есть
+boolean isEmpty = optional.isEmpty();     // Java 11+, true если значения нет
+```
+
+#### Получение значения
+```java
+String value = optional.get();  // бросает NoSuchElementException если пусто
+
+// Безопасные альтернативы:
+String value = optional.orElse("default");
+String value = optional.orElseGet(() -> generateDefault());
+String value = optional.orElseThrow(() -> new CustomException());
+```
+#### Условные операции
+```java
+optional.ifPresent(val -> System.out.println(val));  // выполнить если значение есть
+
+// Java 9+
+optional.ifPresentOrElse(
+    val -> System.out.println(val),
+    () -> System.out.println("Значение отсутствует")
+);
+```
+
+#### Преобразования
+```java
+Optional<Integer> lengthOpt = optional.map(String::length);  // преобразование значения
+Optional<Optional<Integer>> nested = optional.map(s -> Optional.of(s.length()));
+Optional<Integer> flat = optional.flatMap(s -> Optional.of(s.length()));  // "разворачивает" вложенный Optional
+
+Optional<String> filtered = optional.filter(s -> s.length() > 3);  // фильтрация
+```
+
+#### Лучшие практики
+Не использовать:
+
+```java
+// Плохо:
+Optional<String> optParam // как параметр метода
+Optional<User> userField; // как поле класса
+```
+#### Рекомендуется:
+
+```java
+// Хорошо:
+public Optional<User> findUser(String id) {
+    // возвращаем Optional из метода
+}
+
+// Обработка цепочки возможных null:
+String city = Optional.ofNullable(user)
+    .flatMap(User::getAddress)
+    .map(Address::getCity)
+    .orElse("Unknown");
+```
+
+#### Альтернативы для примитивов
+
+```java
+OptionalInt optionalInt = OptionalInt.of(42);
+OptionalLong optionalLong = OptionalLong.empty();
+OptionalDouble optionalDouble = OptionalDouble.of(3.14);
+```
+
+#### Ограничения
+ - Не сериализуем
+ - Не полностью заменяет проверки на null
+ - Может снижать производительность в hot-коде
+
+#### Форматирование включает:
+1. Блоки кода на Java с тройными кавычками
+2. Заголовки разных уровней
+3. Четкое разделение на логические блоки
+4. Примеры правильного и неправильного использования
+5. Важные заметки в виде маркированных списков
+
+
+
 [🔄 К содержанию - главы](#современные-фичи-java-2)  
 [▶️ К содержанию](#content)
 
