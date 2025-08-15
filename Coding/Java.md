@@ -204,6 +204,23 @@ public class HelloWorld {
 
 #### Классы и методы: примеры и реализуемые методы
 
+| Тип класса             | Назначение                                                                 | Примеры использования                                      | Особенности                                                                 |
+|------------------------|----------------------------------------------------------------------------|------------------------------------------------------------|------------------------------------------------------------------------------|
+| **POJO**               | Простой Java-объект без аннотаций и логики                                 | `User`, `Product`, `Address`                               | Без зависимостей, легко сериализуется                                        |
+| **DTO (Data Transfer Object)** | Передача данных между слоями, особенно в API                          | `UserDTO`, `OrderDTO`, `LoginRequestDTO`                   | Часто используется с `@JsonProperty`, `@Builder`, `@Data`                   |
+| **Entity**             | Отображение на таблицу БД, используется в ORM                              | `@Entity class User`, `@Entity class Order`                | Аннотации: `@Entity`, `@Id`, `@Column`, `@Table`                            |
+| **VO (Value Object)**  | Представляет неизменяемые значения                                          | `MoneyVO`, `CoordinatesVO`, `DateRangeVO`                  | `final`, без сеттеров, с `equals()` и `hashCode()`                         |
+| **Model**              | Общий термин, может включать POJO, Entity, DTO                             | `UserModel`, `ProductModel`                                | Часто используется в MVC или MVVM                                           |
+| **Request/Response**   | Классы для REST-запросов и ответов                                         | `LoginRequest`, `LoginResponse`, `RegisterRequest`         | Удобны для сериализации JSON, часто с валидацией                            |
+| **Service**            | Бизнес-логика приложения                                                    | `UserService`, `PaymentService`                            | Аннотация `@Service`, содержит методы обработки                             |
+| **Controller**         | Обработка HTTP-запросов, точка входа API                                   | `UserController`, `AuthController`                         | Аннотация `@RestController`, `@RequestMapping`                              |
+| **Repository**         | Доступ к данным, интерфейс для работы с БД                                 | `UserRepository extends JpaRepository<User, Long>`         | Аннотация `@Repository`, часто используется с Spring Data JPA               |
+| **Mapper**             | Преобразование между DTO и Entity                                          | `UserMapper`, `OrderMapper`                                | Используется с MapStruct или вручную                                        |
+| **Exception**          | Кастомные исключения                                                       | `UserNotFoundException`, `InvalidRequestException`         | Наследуются от `RuntimeException`, можно аннотировать `@ResponseStatus`    |
+| **Utility / Helper**   | Вспомогательные методы, утилиты                                            | `DateUtils`, `ValidationHelper`, `JsonConverter`           | Статические методы, `final` класс, приватный конструктор                   |
+| **Config**             | Конфигурационные классы                                                     | `WebSecurityConfig`, `SwaggerConfig`                       | Аннотация `@Configuration`, содержит `@Bean`                                |
+| **Test Class**         | Классы для юнит- и интеграционных тестов                                   | `UserServiceTest`, `LoginControllerTest`                   | Используются с JUnit, Mockito, Espresso, Appium                             |
+
 | Класс                 | Пример методов                            | Описание методов                                                |
 |-----------------------|------------------------------------------|----------------------------------------------------------------|
 | **`Object`**          | `equals()`, `hashCode()`, `toString()`, `clone()`, `finalize()` | Базовые методы, унаследованные всеми классами в Java. Отвечают за сравнение, хеширование, строковое представление, клонирование и очистку объектов. |
