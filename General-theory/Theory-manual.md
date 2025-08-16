@@ -5604,37 +5604,61 @@ JSON Schema — это язык для описания структуры JSON-
 Пример схемы:
 ```json
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Sith Lord Profile",
   "type": "object",
+  "required": ["name", "title", "force_sensitive", "midichlorian_count"],
   "properties": {
     "name": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 50
+    },
+    "title": {
+      "type": "string",
+      "enum": ["Лорд Ситх", "Император", "Джедай", "Падаван"]
+    },
+    "lightsaber_color": {
+      "type": "string",
+      "enum": ["красный", "синий", "зелёный", "фиолетовый", "жёлтый"]
+    },
+    "home_planet": {
       "type": "string"
     },
-    "age": {
+    "affiliation": {
+      "type": "string"
+    },
+    "force_sensitive": {
+      "type": "boolean"
+    },
+    "midichlorian_count": {
       "type": "integer",
-      "minimum": 0
+      "minimum": 0,
+      "maximum": 30000
+    },
+    "apprentices": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 0,
+      "uniqueItems": true
     }
   },
-  "required": ["name"]
+  "additionalProperties": false
 }
 ```
 📝 Пример JSON
 ```json
 {
-  "user": {
-    "name": "Colin",
-    "age": 25,
-    "skills": [
-      "Python",
-      "Docker",
-      "Kubernetes"
-    ]
-  },
-  "settings": {
-    "theme": "dark",
-    "notifications": true,
-    "language": "ru"
-  }
+  "name": "Дарт Вейдер",
+  "title": "Лорд Ситх",
+  "lightsaber_color": "красный",
+  "home_planet": "Татуин",
+  "affiliation": "Галактическая Империя",
+  "force_sensitive": true,
+  "midichlorian_count": 20000,
+  "apprentices": ["Галэн Марек", "Инквизиторы"]
 }
 ```
 
