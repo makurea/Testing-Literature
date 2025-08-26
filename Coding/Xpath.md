@@ -1,4 +1,4 @@
-# 🧭 XPath Cheatsheet – Быстрый справочник по XPath  
+# 🧭 XPath Cheatsheet – Быстрый справочник по XPath   
 
 ## 📌 Общая информация
 
