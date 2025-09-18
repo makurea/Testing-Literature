@@ -3333,7 +3333,7 @@ public class RegisterClient {
 
             try(OutputStream os = conn.getOutputStream()) {
                 byte[] input = jsonInputString.getBytes("utf-8");
-                os.write(input, 0, input.length);
+                os.write(input, 0, input.length); 
             }
 
             int responseCode = conn.getResponseCode();
