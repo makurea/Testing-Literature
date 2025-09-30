@@ -39,7 +39,7 @@ List<Integer> unique = Arrays.stream(new int[]{1, 2, 2, 3, 4})
 
 ---
 
-## 3. Проверка, является ли строка палиндромом <a name="palindrome"></a>
+## 3. Проверка, является ли строка палиндромом <a name="palindrome"></a> 
 
 ```java
 boolean isPalindrome = new StringBuilder("racecar").reverse().toString().equals("racecar");
