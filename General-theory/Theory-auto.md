@@ -1477,6 +1477,36 @@ Selenium WebDriver предоставляет широкий функциона�
 ### Headless-режим  <a id="headless-режим"></a>
 Headless-режим позволяет запускать браузер без графического интерфейса, что полезно для CI/CD, серверных тестов и снижения нагрузки на систему.
 
+```java
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class HeadlessChromeExample {
+    public static void main(String[] args) {
+        // Автоматическая настройка драйвера
+        WebDriverManager.chromedriver().setup();
+
+        // Настройка headless-режима
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless"); // Без GUI
+        options.addArguments("--disable-gpu"); // Отключить GPU
+        options.addArguments("--window-size=1920,1080"); // Размер окна
+
+        // Инициализация драйвера
+        WebDriver driver = new ChromeDriver(options);
+
+        // Работа с сайтом
+        driver.get("https://example.com");
+        System.out.println("Title: " + driver.getTitle());
+
+        // Завершение
+        driver.quit();
+    }
+}
+```
+
 [🔄 К содержанию - главы](#инициализация-браузера-глава)  
 [🔼 К содержанию](#content)
 
