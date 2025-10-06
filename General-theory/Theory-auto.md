@@ -52,7 +52,7 @@
 - [JSON Wire Protocol](#json-wire-protocol)
 - [Browser capabilities](#browser-capabilities)
 - [Browser-менеджер](#browser-менеджер)
-- [Headless-режим](#headless-режим)
+- [Headless-режим](#headless-режим) 
 
 ## [🎭 Selenium ](#selenium)  <a id="selenium-глава"></a>
 
