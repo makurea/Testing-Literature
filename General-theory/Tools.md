@@ -12,6 +12,12 @@
   - [☁️ Sauce Labs](#sauce-labs)
   - [🔌 Расширения браузера](#расширения-браузера)
 
+## [⚙️ Инструменты тестирования HP (UFT, LoadRunner, AutoIt)](#hp-tools) <a id="hp-tools-глава"></a>
+
+  - [🤖 HP UFT (Unified Functional Testing)](#hp-uft)
+  - [📊 HP LoadRunner](#hp-loadrunner)
+  - [🔄 AutoIt](#autoit)
+
 ## [📱 Мобильное тестирование](#мобильное-тестирование) <a id="мобильное-тестирование-глава"></a>
 
   - [🤖 Android Studio](#android-studio)
@@ -291,6 +297,29 @@ Chrome DevTools — это набор инструментов для разра
 | **RESTED** | [Chrome Web Store](https://chrome.google.com/webstore/detail/rested/eelcnbccaccipfolokglfhhmapdchbfg) | Простой REST-клиент для тестирования API |
 
 [🔄 К содержанию - главы](#веб-тестирование-глава)  
+[🔼 К содержанию](#content)
+
+---
+
+## ⚙️ Инструменты тестирования HP (UFT, LoadRunner, AutoIt)  <a id="hp-tools"></a>  
+
+### 🤖 HP UFT (Unified Functional Testing)  <a id="hp-uft"></a>
+
+[🔄 К содержанию - главы](#hp-tools-глава)  
+[🔼 К содержанию](#content)
+
+---
+
+### 📊 HP LoadRunner <a id="hp-loadrunner"></a>
+
+[🔄 К содержанию - главы](#hp-tools-глава)  
+[🔼 К содержанию](#content)
+
+---
+
+### 🔄 AutoIt <a id="autoit"></a>
+
+[🔄 К содержанию - главы](#hp-tools-глава)  
 [🔼 К содержанию](#content)
 
 ---
