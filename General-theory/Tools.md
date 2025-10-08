@@ -12,7 +12,7 @@
   - [☁️ Sauce Labs](#sauce-labs)
   - [🔌 Расширения браузера](#расширения-браузера)
 
-## [⚙️ Инструменты тестирования HP (UFT, LoadRunner, AutoIt)](#hp-tools) <a id="hp-tools-глава"></a>
+## [⚙️ Инструменты тестирования HP](#hp-tools) <a id="hp-tools-глава"></a>
 
   - [🤖 HP UFT (Unified Functional Testing)](#hp-uft)
   - [📊 HP LoadRunner](#hp-loadrunner)
