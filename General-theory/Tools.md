@@ -39,7 +39,7 @@
   - [🧮 SQL](#sql)
   - [🐬 DBeaver](#dbeaver)
   - [💾 PL/SQL Developer](#plsql-developer)
-  - [🐬 MySQL](#mysql)
+  - [🐬 MySQL](#mysql) 
   - [🐘 PostgreSQL](#postgresql)
   - [🟠 Oracle](#oracle)
   - [🧠 Redis](#redis)
