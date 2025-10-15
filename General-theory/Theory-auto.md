@@ -127,7 +127,7 @@
 - [AssertJ](#assertj-библиотека)
 - [Jackson](#jackson-библиотека)
 - [Gson](#gson-библиотека)
-- [Awaitility](#awaitility-библиотека-2)
+- [Awaitility](#awaitility-библиотека-2) 
 - [WireMock](#wiremock-библиотека)
 - [Mockito](#mockito-библиотека)
 - [Lombok](#lombok-библиотека)
