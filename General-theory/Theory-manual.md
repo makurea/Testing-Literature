@@ -4256,7 +4256,7 @@ fetch('https://api.example.com/data')
 
 ##### **Облачные**
 - Управляемые сервисы
-- Примеры: `AWS ALB/NLB`, `Google Cloud LB`, `Azure Gateway`
+- Примеры: `AWS ALB/NLB`, `Google Cloud LB`, `Azure Gateway` 
 
 #### 🔹 Алгоритмы балансировки
 
