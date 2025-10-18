@@ -3136,7 +3136,7 @@ jobs:
 <div align="center">
   <img src="https://media.geeksforgeeks.org/wp-content/uploads/20230417045622/OSI-vs-TCP-vs-Hybrid-2.webp" alt="Модель OSI" width="700">
 </div>
-
+ 
 #### Модель OSI
 1. **Физический** — передача данных по физическим каналам (например, кабели).
 2. **Канальный** — управление доступом к каналу передачи.
