@@ -3159,6 +3159,61 @@ Kaspresso, Espresso и WebdriverIO — это различные инструм�
 | **Режимы работы (Deployment)** | Может запускаться как **библиотека** (внутри JVM-теста), как **отдельный процесс** (Standalone Server), как **Docker-контейнер** или в режиме **Reverse Proxy** (запись реальных запросов и ответов). | Обеспечивает гибкость использования в **юнит-тестах** (быстрая инициализация), **интеграционных тестах** (как отдельный сервис) или для создания тестовых данных. |
 | **Stateful Behavior** | Возможность настройки заглушек, которые зависят от предыдущих вызовов (Stateful Stubbing). | Позволяет имитировать **сессии** или **многошаговые процессы** (например, сначала создать ресурс – POST, затем получить его – GET). |
 
+#### Основные методы WireMock <a id="основные-методы-wiremock"></a>
+
+| Метод | Назначение | Пример использования |
+| :--- | :--- | :--- |
+| `stubFor()` | Создаёт заглушку (stub) — определяет, какой ответ сервер должен вернуть на определённый запрос. | `stubFor(get(urlEqualTo("/users/1")).willReturn(aResponse().withStatus(200)))` |
+| `get()`, `post()`, `put()`, `delete()` | Определяют HTTP-метод запроса, на который должна реагировать заглушка. | `post(urlEqualTo("/login"))` |
+| `urlEqualTo()`, `urlMatching()` | Определяют URL или шаблон URL, на который среагирует заглушка. | `urlMatching("/users/[0-9]+")` |
+| `aResponse()` | Определяет тело, код и заголовки ответа. | `aResponse().withStatus(200).withBody("{\"ok\":true}")` |
+| `withHeader()`, `withBody()`, `withStatus()` | Настраивают параметры ответа мок-сервера. | `withHeader("Content-Type", "application/json")` |
+| `verify()` | Проверяет, что тестируемый код отправил нужный запрос на мок-сервер. | `verify(postRequestedFor(urlEqualTo("/login")))` |
+| `resetAll()` | Сбрасывает все заглушки и историю запросов. | `resetAll();` |
+
+#### Пример кода
+```java
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static org.junit.jupiter.api.Assertions.*;
+import com.github.tomakehurst.wiremock.WireMockServer;
+import org.junit.jupiter.api.*;
+
+public class WireMockExampleTest {
+
+    private static WireMockServer wireMockServer;
+
+    @BeforeAll
+    static void setup() {
+        wireMockServer = new WireMockServer(8080); // порт мок-сервера
+        wireMockServer.start();
+        configureFor("localhost", 8080);
+    }
+
+    @AfterAll
+    static void teardown() {
+        wireMockServer.stop();
+    }
+
+    @Test
+    void testUserEndpoint() {
+        // создаём заглушку
+        stubFor(get(urlEqualTo("/user/1"))
+                .willReturn(aResponse()
+                        .withStatus(200)
+                        .withHeader("Content-Type", "application/json")
+                        .withBody("{\"id\":1, \"name\":\"Nikolay\"}")));
+
+        // эмулируем вызов (в реальном тесте — код клиента делает запрос)
+        String response = get("http://localhost:8080/user/1").asString();
+
+        // проверяем ответ
+        assertTrue(response.contains("Nikolay"));
+
+        // проверяем, что запрос был действительно отправлен
+        verify(getRequestedFor(urlEqualTo("/user/1")));
+    }
+}
+```
 #### 🔗 Официальная документация
 
   * **Сайт:** [WireMock Documentation](https://www.google.com/search?q=http://wiremock.org/docs/)
