@@ -3585,6 +3585,41 @@ Content-Type: application/x-www-form-urlencoded
 field1=value1&field2=value2
 ```
 
+**HTTP-ответ включает:**
+ - **Строку состояния** (версия HTTP, код состояния, описание кода)
+ - **Заголовки**
+ - **Тело ответа** (содержимое страницы, JSON, файл и т.д.)
+
+Пример HTTP-ответа:
+```http
+HTTP/1.1 200 OK
+Date: Wed, 23 Oct 2025 18:00:00 GMT
+Server: nginx/1.24.0
+Content-Type: application/json
+Content-Length: 125
+{
+  "status": "success",
+  "code": 200,
+  "message": "Данные получены успешно"
+}
+```
+
+**Пример ошибки в формате JSON:**
+
+```http
+HTTP/1.1 404 Not Found
+Date: Wed, 23 Oct 2025 18:01:00 GMT
+Server: nginx/1.24.0
+Content-Type: application/json
+Content-Length: 90
+
+{
+  "status": "error",
+  "code": 404,
+  "message": "Ресурс не найден"
+}
+```
+
 [🔄 К содержанию - главы](#http-и-сети-глава)   
 [🔼 К содержанию](#content)
 
