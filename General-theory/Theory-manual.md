@@ -3067,7 +3067,7 @@ WS-Security — набор протоколов, обеспечивающих б
    <soapenv:Header>
       <sec:Security>
          <sec:UsernameToken>
-            <sec:Username>username</sec:Username>
+            <sec:Username>username</sec:Username> 
             <sec:Password>password</sec:Password>
          </sec:UsernameToken>
       </sec:Security>
