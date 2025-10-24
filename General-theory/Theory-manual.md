@@ -135,7 +135,6 @@
 - [Методы HTTP](#методы-http)
 - [Характеристика запросов](#get-и-post-запросы) 
 - [Коды ответов](#коды-ответов)
-- [Код на регистрацию нового клиента](#код-на-регистрацию-нового-клиента)
 
 ## [🎨 HTTP-механизмы и безопасность ](#http-и-безопасность) <a id="http-и-безопасность-глава"></a>
 
@@ -3830,50 +3829,6 @@ Content-Length: 90
 | **508 Loop Detected**   | Ошибки сервера     | Обнаружен бесконечный цикл.                                                                        |
 | **510 Not Extended**    | Ошибки сервера     | Необходимы дополнительные расширения для выполнения запроса.                                       |
 | **511 Network Authentication Required** | Ошибки сервера | Требуется аутентификация в сети.                                                                   |
-
-[🔄 К содержанию - главы](#http-и-сети-глава)   
-[🔼 К содержанию](#content)
-
----
-
-###  Код на регистрацию нового клиента <a id="код-на-регистрацию-нового-клиента"></a>
-
-Для регистрации нового клиента в системе используется POST запрос к API, содержащий данные нового клиента (например, имя, email, пароль) в теле запроса. Пример кода:
-
-```java
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.io.OutputStream;
-
-public class RegisterClient {
-    public static void main(String[] args) {
-        try {
-            URL url = new URL("http://www.example.com/api/register");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json; utf-8");
-            conn.setDoOutput(true);
-
-            String jsonInputString = "{\"name\": \"John Doe\", \"email\": \"john.doe@example.com\", \"password\": \"securePassword\"}";
-
-            try(OutputStream os = conn.getOutputStream()) {
-                byte[] input = jsonInputString.getBytes("utf-8");
-                os.write(input, 0, input.length); 
-            }
-
-            int responseCode = conn.getResponseCode();
-            System.out.println("POST Response Code :: " + responseCode);
-
-            if (responseCode == HttpURLConnection.HTTP_OK) { //success
-                System.out.println("Client registered successfully.");
-            } else {
-                System.out.println("Failed to register client.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-```
 
 [🔄 К содержанию - главы](#http-и-сети-глава)   
 [🔼 К содержанию](#content)
