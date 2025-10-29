@@ -59,7 +59,7 @@
      - [UI/UX testing](#тестирование-uiux)
      - [Accessibility Testing](#тестирование-доступности)
      - [Compatibility testing](#тестирование-совместимости)
-     - [Cross-platform testing](#кроссплатформенное-тестирование)
+     - [Cross-platform testing](#кроссплатформенное-тестирование) 
      - [Localization testing](#тестирование-локализации)
      - [Internationalization testing](#тестирование-интернацианализации)
      - [Performance testing](#тестирование-производительности)  
