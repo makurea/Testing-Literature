@@ -3552,7 +3552,7 @@ WSDL — это XML-документ, который описывает:
 </soapenv:Envelope>
 ```
 
-Пример **SOAP-ответа с ошибкой (Fault)**:
+Пример **SOAP-ответа с ошибкой (Fault)**:  
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
