@@ -1860,6 +1860,57 @@ Selenoid идеально подходит для автоматизации UI-
 - **Явные ожидания** позволяют настроить точные условия ожидания для каждого элемента или действия.
 - **Текучие ожидания** предлагают дополнительные возможности, такие как частота опроса и игнорирование исключений.
 
+```java
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+import java.util.NoSuchElementException;
+
+public class WaitExamples {
+    public static void main(String[] args) {
+        WebDriver driver = new ChromeDriver();
+
+        // 1️⃣ Неявное ожидание (Implicit Wait)
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.get("https://example.com");
+
+        // WebDriver будет ждать до 10 секунд появления элемента перед выбросом ошибки
+        WebElement element1 = driver.findElement(By.id("username"));
+        element1.sendKeys("makurea");
+
+        // 2️⃣ Явное ожидание (Explicit Wait)
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.id("loginButton")));
+        button.click();
+
+        // 3️⃣ Текучее ожидание (Fluent Wait)
+        FluentWait<WebDriver> fluentWait = new FluentWait<>(driver)
+                .withTimeout(Duration.ofSeconds(15))         // общее время ожидания
+                .pollingEvery(Duration.ofSeconds(2))         // частота проверки
+                .ignoring(NoSuchElementException.class);     // игнорировать ошибки поиска элемента
+
+        WebElement message = fluentWait.until(d ->
+                d.findElement(By.id("successMessage"))
+        );
+
+        System.out.println("Текст сообщения: " + message.getText());
+
+        driver.quit();
+    }
+}
+```
+####  Кратко по примеру:
+
+* **Implicit Wait** — ждёт элемент при каждом `findElement()`.
+* **Explicit Wait** — ждёт конкретное условие (`elementToBeClickable`).
+* **Fluent Wait** — то же, что explicit, но с гибкостью (интервал опроса, игнорируемые ошибки и т.д.).
+
 [🔄 К содержанию - главы](#ожидания-глава)   
 [🔼 К содержанию](#content)  
 
