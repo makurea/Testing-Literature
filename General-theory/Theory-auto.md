@@ -811,7 +811,7 @@ JUnit 5 состоит из **трёх основных модулей**:
 |                      | - Аннотации: `@Test`, `@BeforeEach`, `@ParameterizedTest` и др. |
 |                      | - Расширения: `@ExtendWith`, `@TestInstance` и т.д.             |
 | **3. JUnit Vintage**  | - Опционально                                                  |
-|                      | - Запуск старых тестов JUnit 3/4 (`@RunWith`, `org.junit.Test`)  |
+|                      | - Запуск старых тестов JUnit 3/4 (`@RunWith`, `org.junit.Test`)  |  
  
 **Аннотации в JUnit:**
 #### **Базовые аннотации для тестирования:**
