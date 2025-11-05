@@ -1941,7 +1941,7 @@ public class WaitExamples {
 | `titleIs(String)` | Ожидает, что заголовок страницы будет точно таким. |
 | `titleContains(String)` | Ожидает, что заголовок страницы будет содержать подстроку. |
 | `urlToBe(String)` | Ожидает, что URL будет равен указанному. |
-| `urlContains(String)` | Ожидает, что URL будет содержать указанную подстроку. |
+| `urlContains(String)` | Ожидает, что URL будет содержать указанную подстроку. |  
 | `visibilityOf(WebElement)` | Ожидает, что элемент станет видимым. |
 | `visibilityOfAllElements(List<WebElement>)` | Ожидает, что все элементы в списке станут видимыми. |
 | `visibilityOfAllElementsLocatedBy(By)` | Ожидает видимости всех элементов, найденных по локатору. |
