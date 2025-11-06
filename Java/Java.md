@@ -646,7 +646,7 @@ System.out.println(str); // Вывод: Hello World!
      ```java
      switch (выражение) {
          case значение1:
-             // Код для значения1
+             // Код для значения1  
              break;
          case значение2:
              // Код для значения2
