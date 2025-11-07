@@ -85,7 +85,7 @@ Appium имеет клиент-серверную архитектуру:
    - Android: UIAutomator2, Espresso
    - iOS: XCUITest
 4. **Связующие компоненты**:
-   - JSON Wire Protocol (для общения клиент-сервер)
+   - JSON Wire Protocol (для общения клиент-сервер)  
    - WebDriver Protocol (стандартный протокол автоматизации)
 
 Рабочий процесс:
