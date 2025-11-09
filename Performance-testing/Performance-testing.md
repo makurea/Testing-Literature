@@ -111,7 +111,7 @@
 * [CPU и Memory Bottlenecks](#cpu-memory-bottlenecks)
 * [Database Bottlenecks: Индексы, SQL-запросы, Connection Pool](#database-bottlenecks)
 * [Application Code Bottlenecks](#code-bottlenecks)
-* [Caching стратегии (CDN, Distributed Caching)](#caching-стратегии)
+* [Caching стратегии (CDN, Distributed Caching)](#caching-стратегии) 
 * [Load Balancing и его влияние](#load-balancing)
 
 ## [🌐 Особенности тестирования веб-приложений и API](#тестирование-веб-приложений) <a id="тестирование-веб-приложений-глава"></a>
