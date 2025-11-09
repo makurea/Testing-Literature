@@ -133,7 +133,7 @@
 
 ## [☁️ Cloud, Микросервисы и CI/CD](#cloud-и-микросервисы) <a id="cloud-и-микросервисы-глава"></a>
 
-* [Performance Testing в Cloud-среде](#cloud-performance-testing)
+* [Performance Testing в Cloud-среде](#cloud-performance-testing)  
 * [Тестирование микросервисов](#тестирование-микросервисов)
 * [Kubernetes и нагрузочное тестирование](#kubernetes-нагрузочное)
 * [Auto-scaling тестирование](#auto-scaling-тестирование)
