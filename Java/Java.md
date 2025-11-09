@@ -161,7 +161,7 @@ list.add("Java");
 
 #### Пример мутабельного класса:
 ```java
-// Класс StringBuilder является мутабельным
+// Класс StringBuilder является мутабельным  
 StringBuilder sb = new StringBuilder("Hello");
 sb.append(" World!"); // Изменяет исходный объект
 System.out.println(sb); // Вывод: Hello World!
