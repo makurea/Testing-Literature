@@ -64,7 +64,7 @@
    
    - [Методы класса Object](#методы-класса-object)
    - [Базовый синтаксис - Basic Syntax](#basic)
-   - [Интерфейсы - Interface](#interface)
+   - [Интерфейсы - Interface](#interface)  
    - [Методы](#методы)
    - [Классы ](#классы)
    - [Множественное наследование - Multiple Inheritance](#multiple) 
