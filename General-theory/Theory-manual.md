@@ -3210,7 +3210,7 @@ WSDL — это XML-документ, который описывает:
 </definitions>
 ```
 
-#### 🔹 XML Schema (XSD) - XML (eXtensible Markup Language)  Schema Definition 
+#### 🔹 XML Schema (XSD) - XML (eXtensible Markup Language)  Schema Definition   
 
 **XSD** определяет структуру данных, передаваемых в SOAP-сообщениях.
 
