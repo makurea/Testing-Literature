@@ -706,7 +706,7 @@ else:
 
 ---
 
-### Break / Continue / Else в циклах <a id="break-continue-else"></a>
+### Break / Continue / Else в циклах <a id="break-continue-else"></a>  
 
 **break**
 Полностью прекращает выполнение цикла. Управление передаётся коду после цикла.
