@@ -123,7 +123,7 @@ boolean isTrue = true;
 - Копируются по ссылке: две переменные могут ссылаться на один и тот же объект.  
 - Пример использования:
 ```java
-String message = "Hello, World!";
+String message = "Hello, World!";  
 int[] numbers = {1, 2, 3, 4, 5};
 List<String> list = new ArrayList<>();
 list.add("Java");
