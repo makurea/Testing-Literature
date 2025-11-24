@@ -1655,7 +1655,7 @@ Generics (обобщения) позволяют создавать классы
      ```java
      String str1 = "Hello";
      String str2 = "Hello";
-     Systemoutprintln(str1 == str2); // true, так как строки берутся из пула
+     Systemoutprintln(str1 == str2); // true, так как строки берутся из пула  
      ```
 
 2. **new String**:
