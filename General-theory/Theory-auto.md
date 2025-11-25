@@ -1499,7 +1499,7 @@ public class HeadlessChromeExample {
 
 ---
 
-## 🎭 Selenium <a id="selenium"></a>
+## 🎭 Selenium <a id="selenium"></a>  
 
 ### Что такое Selenium? <a id="что-такое-selenium"></a>
 
