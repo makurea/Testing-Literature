@@ -1479,7 +1479,7 @@ public class HeadlessChromeExample {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless"); // Без GUI
         options.addArguments("--disable-gpu"); // Отключить GPU
-        options.addArguments("--window-size=1920,1080"); // Размер окна
+        options.addArguments("--window-size=1920,1080"); // Размер окна  
 
         // Инициализация драйвера
         WebDriver driver = new ChromeDriver(options);
