@@ -817,7 +817,7 @@ pairs = [(x, y) for x in range(3) for y in range(2)]
 unique = {x % 3 for x in range(10)}
 ```
 
-**Генератор словаря (dict comprehension)**
+**Генератор словаря (dict comprehension)**  
 Удобен для формирования словарей.
 
 ```
