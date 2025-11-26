@@ -1123,7 +1123,7 @@ doubled = list(map(lambda x: x * 2, nums))
 even = list(filter(lambda x: x % 2 == 0, nums))
 ```
 
-**Лямбда внутри других функций**
+**Лямбда внутри других функций**  
 
 ```
 def make_multiplier(n):
