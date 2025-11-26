@@ -545,7 +545,7 @@ Python использует **ленивые вычисления**:
 
 ```python
 def hello():
-    print("Вызвано!")
+    print("Вызвано!")  
 
 False and hello()   # функция НЕ вызовется
 True or hello()     # функция НЕ вызовется
