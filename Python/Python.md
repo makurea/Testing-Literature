@@ -1264,7 +1264,121 @@ def log(func):
 
 ---
 
-### 🔸 Аннотации типов (type hints) <a id="type-hints"></a>
+### Аннотации типов (type hints) <a id="type-hints"></a>
+
+Аннотации типов помогают явно указывать типы переменных, аргументов и возвращаемых значений. Они не влияют на выполнение, но улучшают читаемость и работу линтеров/IDE.
+
+**Базовые примеры**
+
+```python
+a: int = 10
+b: str = "text"
+
+def add(x: int, y: int) -> int:
+    return x + y
+```
+
+**Коллекции**
+
+```python
+from typing import List, Tuple, Dict, Set
+
+nums: List[int] = [1, 2, 3]
+pair: Tuple[str, int] = ("age", 26)
+data: Dict[str, float] = {"x": 1.5}
+unique: Set[str] = {"a", "b"}
+```
+
+**Объединение типов**
+
+```python
+from typing import Union
+
+def parse(value: Union[int, str]) -> str:
+    return str(value)
+```
+
+В новых версиях можно короче:
+
+```python
+def parse(value: int | str) -> str:
+    return str(value)
+```
+
+**Необязательные параметры**
+
+```python
+from typing import Optional
+
+def get_name(name: Optional[str]) -> str:
+    return name or "Unknown"
+```
+
+**Any, None, NoReturn**
+
+```python
+from typing import Any, NoReturn
+
+value: Any = "что угодно"
+
+def empty() -> None:
+    pass
+
+def error() -> NoReturn:
+    raise RuntimeError()
+```
+
+**Функции как объекты**
+
+```python
+from typing import Callable
+
+def run(fn: Callable[[int, int], int]) -> int:
+    return fn(2, 3)
+```
+
+**TypedDict**
+Используется для структурированных словарей:
+
+```python
+from typing import TypedDict
+
+class User(TypedDict):
+    id: int
+    name: str
+```
+
+**Аннотации в классах**
+
+```python
+class Point:
+    x: float
+    y: float
+
+    def move(self, dx: float, dy: float) -> None:
+        self.x += dx
+        self.y += dy
+```
+
+**Генерики (Generic)**
+
+```python
+from typing import TypeVar, Generic
+
+T = TypeVar("T")
+
+class Box(Generic[T]):
+    def __init__(self, item: T):
+        self.item = item
+```
+
+**Аннотации без импорта (Python 3.9+)**
+
+```python
+nums: list[int] = [1, 2, 3]
+mapping: dict[str, str] = {"a": "b"}
+```
+
 
 [🔄 К содержанию - главы](#функции-глава)  
 [🔼 К содержанию](#content)  
