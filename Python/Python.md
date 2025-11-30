@@ -1765,7 +1765,7 @@ __mod__(self, other)      # %
 __pow__(self, other)      # **
 ```
 
-**Операторы in-place**
+**Операторы in-place**  
 
 ```python
 __iadd__(self, other)  # +=
