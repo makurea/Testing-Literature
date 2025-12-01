@@ -645,7 +645,7 @@ for char in "Hello":
     print(char)
 ```
 
-Использование range:
+Использование range:  
 
 ```
 for i in range(5):
