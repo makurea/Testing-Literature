@@ -370,6 +370,155 @@
 
 ---
 
+## 🌐 API Тестирование <a id="api-тестирование-python"></a>
+
+
+### Requests / HTTPX <a id="requests-httpx"></a>
+
+[🔄 К содержанию - главы](#api-тестирование-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### pytest + requests для API тестов <a id="pytest-requests"></a>
+
+[🔄 К содержанию - главы](#api-тестирование-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### JSON Schema validation <a id="json-schema-validation"></a>
+
+[🔄 К содержанию - главы](#api-тестирование-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Асинхронное API тестирование с aiohttp <a id="aiohttp"></a>
+
+[🔄 К содержанию - главы](#api-тестирование-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Postman / Newman интеграция с Python <a id="postman-python"></a>
+
+[🔄 К содержанию - главы](#api-тестирование-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+## 🏛 Архитектура фреймворка на Python <a id="архитектура-python"></a>
+
+
+### Page Object Model (POM) на Python <a id="pom-python"></a>
+
+[🔄 К содержанию - главы](#архитектура-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Screenplay / Pytest-BDD <a id="screenplay-bdd"></a>
+
+[🔄 К содержанию - главы](#архитектура-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Dependency Injection и фикстуры pytest <a id="di-fixtures"></a>
+
+[🔄 К содержанию - главы](#архитектура-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+## 📈 Логеры, репортеры, метрики <a id="логеры-python"></a>
+
+
+### logging модуль Python <a id="logging-python"></a>
+
+[🔄 К содержанию - главы](#логеры-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Allure + pytest <a id="allure-python"></a>
+
+[🔄 К содержанию - главы](#логеры-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Метрики: Prometheus + Python <a id="metrics-python"></a>
+
+[🔄 К содержанию - главы](#логеры-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+## 📱 Автоматизация тестирования мобильных приложений <a id="мобильная-автоматизация-python"></a>
+
+
+### Appium Python Client <a id="appium-python"></a>
+
+[🔄 К содержанию - главы](#мобильная-автоматизация-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Lokalise / MobileBy локаторы <a id="mobileby-python"></a>
+
+[🔄 К содержанию - главы](#мобильная-автоматизация-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Pytest + Appium интеграция <a id="pytest-appium"></a>
+
+[🔄 К содержанию - главы](#мобильная-автоматизация-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Параллельный запуск тестов с pytest-xdist <a id="parallel-appium"></a>
+
+[🔄 К содержанию - главы](#мобильная-автоматизация-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+## 💾 Работа с базами данных <a id="базы-данных-python"></a>
+
+
+### SQLAlchemy / ORM <a id="sqlalchemy"></a>
+
+[🔄 К содержанию - главы](#базы-данных-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### sqlite3 / PostgreSQL / MySQL <a id="db-python"></a>
+
+[🔄 К содержанию - главы](#базы-данных-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Мока базы данных для тестирования (pytest-mock, faker) <a id="mock-db"></a>
+
+[🔄 К содержанию - главы](#базы-данных-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Асинхронные базы данных: asyncpg, databases <a id="async-db"></a>
+
+[🔄 К содержанию - главы](#базы-данных-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+
 
 
 
