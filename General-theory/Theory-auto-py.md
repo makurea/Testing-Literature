@@ -1,0 +1,101 @@
+## Содержание 🐍 <a id="content"></a>
+
+## [🟢 Основы автоматизации на Python](#основы-автоматизации)  <a id="основы-автоматизации-глава"></a>
+
+* [Что такое автоматизированное тестирование на Python](#что-такое-тестирование-python)
+* [Что можно автоматизировать с Python, а что нет](#что-можно-python)
+* [Авторизация, аутентификация и управление сессиями в Python](#auth-python)
+
+## [🦊 Системы контроля версий и Python](#git-python)  <a id="git-python-глава"></a>
+
+* [Git для Python-разработчика](#git-python)
+* [Использование Git в проектах с virtualenv / poetry](#git-virtualenv)
+* [Интеграция Git с CI/CD для Python](#git-ci-cd)
+
+## [🚀 CI/CD для Python](#ci-cd-python)  <a id="ci-cd-python-глава"></a>
+
+* [Инструменты CI/CD для Python (GitHub Actions, GitLab CI, Jenkins)](#ci-cd-инструменты)
+* [Файл настройки CI/CD для Python проектов](#ci-cd-настройка)
+* [Виртуальные окружения и контейнеризация (venv, pipenv, Docker)](#виртуальные-окружения)
+
+## [🕵️ Тест-раннеры и фреймворки Python](#test-runners-python)  <a id="test-runners-python-глава"></a>
+
+* [pytest](#pytest)
+* [unittest](#unittest)
+* [nose / nose2](#nose)
+* [Сравнение pytest и unittest](#сравнение-pytest-unittest)
+* [Параметризация тестов в pytest](#pytest-параметризация)
+* [Фикстуры в pytest](#pytest-фикстуры)
+
+## [📦 Управление зависимостями и сборка](#сборка-python)  <a id="сборка-python-глава"></a>
+
+* [pip и requirements.txt](#pip)
+* [poetry](#poetry)
+* [virtualenv / venv](#venv)
+* [setuptools и wheel](#setuptools-wheel)
+
+## [🔎 Локаторы и взаимодействие с UI](#локаторы-python)  <a id="локаторы-python-глава"></a>
+
+* [Selenium для Python](#selenium-python)
+* [Selenoid / BrowserMob Proxy / Playwright](#selenium-advanced)
+* [WebDriverWait и Expected Conditions в Python](#explicit-wait-python)
+* [Playwright и Pyppeteer](#playwright-pyppeteer)
+
+## [🌍 Инициализация браузера и управление сессиями](#инициализация-браузера-python)  <a id="инициализация-браузера-python-глава"></a>
+
+* [Инициализация WebDriver в Python](#webdriver-init)
+* [Headless режим в Chrome и Firefox](#headless-python)
+* [Параллельные сессии с pytest-xdist](#parallel-sessions)
+* [Browser capabilities и options](#browser-capabilities-python)
+
+## [🎭 Selenium / Playwright / PyAutoGUI](#selenium-playwright-python)  <a id="selenium-playwright-python-глава"></a>
+
+* [Selenium WebDriver в Python](#selenium-python-driver)
+* [Playwright: синхронный и асинхронный режимы](#playwright-sync-async)
+* [PyAutoGUI для Desktop automation](#pyautogui)
+* [ActionsChains и JSExecutor](#actions-js-python)
+
+## [⏳ Ожидания и синхронизация](#ожидания-python)  <a id="ожидания-python-глава"></a>
+
+* [Implicit / Explicit Wait в Selenium Python](#waits-python)
+* [Fluent Wait аналог в Python](#fluent-wait-python)
+* [Асинхронные ожидания в Playwright / AsyncIO](#async-wait-python)
+
+## [🌐 API Тестирование](#api-тестирование-python)  <a id="api-тестирование-python-глава"></a>
+
+* [Requests / HTTPX](#requests-httpx)
+* [pytest + requests для API тестов](#pytest-requests)
+* [JSON Schema validation](#json-schema-validation)
+* [Асинхронное API тестирование с aiohttp](#aiohttp)
+* [Postman / Newman интеграция с Python](#postman-python)
+
+## [🏛 Архитектура фреймворка на Python](#архитектура-python)  <a id="архитектура-python-глава"></a>
+
+* [Page Object Model (POM) на Python](#pom-python)
+* [Screenplay / Pytest-BDD](#screenplay-bdd)
+* [Dependency Injection и фикстуры pytest](#di-fixtures)
+
+## [📈 Логеры, репортеры, метрики](#логеры-python)  <a id="логеры-python-глава"></a>
+
+* [logging модуль Python](#logging-python)
+* [Allure + pytest](#allure-python)
+* [Метрики: Prometheus + Python](#metrics-python)
+
+## [📱 Автоматизация тестирования мобильных приложений](#мобильная-автоматизация-python)  <a id="мобильная-автоматизация-python-глава"></a>
+
+* [Appium Python Client](#appium-python)
+* [Lokalise / MobileBy локаторы](#mobileby-python)
+* [Pytest + Appium интеграция](#pytest-appium)
+* [Параллельный запуск тестов с pytest-xdist](#parallel-appium)
+
+## [💾 Работа с базами данных](#базы-данных-python)  <a id="базы-данных-python-глава"></a>
+
+* [SQLAlchemy / ORM](#sqlalchemy)
+* [sqlite3 / PostgreSQL / MySQL](#db-python)
+* [Мока базы данных для тестирования (pytest-mock, faker)](#mock-db)
+* [Асинхронные базы данных: asyncpg, databases](#async-db)
+
+---
+
+
+Хочешь, чтобы я так сделал?
