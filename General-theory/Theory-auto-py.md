@@ -253,6 +253,125 @@
 
 ---
 
+## 🔎 Локаторы и взаимодействие с UI <a id="локаторы-python"></a>
+
+
+### Selenium для Python <a id="selenium-python"></a>
+
+[🔄 К содержанию - главы](#локаторы-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Selenoid / BrowserMob Proxy / Playwright <a id="selenium-advanced"></a>
+
+[🔄 К содержанию - главы](#локаторы-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### WebDriverWait и Expected Conditions в Python <a id="explicit-wait-python"></a>
+
+[🔄 К содержанию - главы](#локаторы-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Playwright и Pyppeteer <a id="playwright-pyppeteer"></a>
+
+[🔄 К содержанию - главы](#локаторы-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+## 🌍 Инициализация браузера и управление сессиями <a id="инициализация-браузера-python"></a>
+
+
+### Инициализация WebDriver в Python <a id="webdriver-init"></a>
+
+[🔄 К содержанию - главы](#инициализация-браузера-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Headless режим в Chrome и Firefox <a id="headless-python"></a>
+
+[🔄 К содержанию - главы](#инициализация-браузера-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Параллельные сессии с pytest-xdist <a id="parallel-sessions"></a>
+
+[🔄 К содержанию - главы](#инициализация-браузера-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Browser capabilities и options <a id="browser-capabilities-python"></a>
+
+[🔄 К содержанию - главы](#инициализация-браузера-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+## 🎭 Selenium / Playwright / PyAutoGUI <a id="selenium-playwright-python"></a>
+
+
+### Selenium WebDriver в Python <a id="selenium-python-driver"></a>
+
+[🔄 К содержанию - главы](#selenium-playwright-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Playwright: синхронный и асинхронный режимы <a id="playwright-sync-async"></a>
+
+[🔄 К содержанию - главы](#selenium-playwright-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### PyAutoGUI для Desktop automation <a id="pyautogui"></a>
+
+[🔄 К содержанию - главы](#selenium-playwright-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### ActionsChains и JSExecutor <a id="actions-js-python"></a>
+
+[🔄 К содержанию - главы](#selenium-playwright-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+## ⏳ Ожидания и синхронизация <a id="ожидания-python"></a>
+
+
+### Implicit / Explicit Wait в Selenium Python <a id="waits-python"></a>
+
+[🔄 К содержанию - главы](#ожидания-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Fluent Wait аналог в Python <a id="fluent-wait-python"></a>
+
+[🔄 К содержанию - главы](#ожидания-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Асинхронные ожидания в Playwright / AsyncIO <a id="async-wait-python"></a>
+
+[🔄 К содержанию - главы](#ожидания-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+
+
 
 
 
