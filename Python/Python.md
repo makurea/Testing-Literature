@@ -2204,7 +2204,40 @@ d.get('b')           # 2
 
 ---
 
-### 🔸 collections: Counter, deque, defaultdict, namedtuple <a id="collections-модуль"></a>
+### collections: Counter, deque, defaultdict, namedtuple <a id="collections-модуль"></a>
+
+**Модуль collections** — расширяет стандартные коллекции Python.
+
+| Класс       | Описание                                                      | Пример создания                                                                                      | Основные методы / особенности                                 |
+| ----------- | ------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Counter     | Счётчик объектов, словарь для подсчёта элементов              | `from collections import Counter`<br>`c = Counter([1,2,2,3])`                                        | `most_common(n)`, `elements()`, поддержка +, -                |
+| deque       | Двусторонняя очередь, быстрая вставка/удаление с обоих концов | `from collections import deque`<br>`d = deque([1,2,3])`                                              | `append()`, `appendleft()`, `pop()`, `popleft()`, `rotate(n)` |
+| defaultdict | Словарь с значением по умолчанию                              | `from collections import defaultdict`<br>`dd = defaultdict(int)`                                     | `dd[key]` вернёт default если ключ отсутствует                |
+| namedtuple  | Кортеж с именованными полями                                  | `from collections import namedtuple`<br>`Point = namedtuple('Point', ['x','y'])`<br>`p = Point(1,2)` | Доступ через `p.x`, `p.y`, неизменяемый                       |
+
+**Примеры использования**
+
+```python
+from collections import Counter, deque, defaultdict, namedtuple
+
+# Counter
+c = Counter('abracadabra')
+print(c.most_common(2))  # [('a', 5), ('b', 2)]
+
+# deque
+d = deque([1,2,3])
+d.appendleft(0)           # deque([0,1,2,3])
+d.pop()                   # deque([0,1,2])
+
+# defaultdict
+dd = defaultdict(int)
+dd['apples'] += 1         # defaultdict(int, {'apples': 1})
+
+# namedtuple
+Point = namedtuple('Point', ['x','y'])
+p = Point(10, 20)
+print(p.x, p.y)           # 10 20
+```
 
 [🔄 К содержанию - главы](#коллекции-глава)  
 [🔼 К содержанию](#content)  
