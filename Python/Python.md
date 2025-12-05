@@ -1360,7 +1360,7 @@ class Point:
         self.y += dy
 ```
 
-**Генерики (Generic)**
+**Генерики (Generic)**  
 
 ```python
 from typing import TypeVar, Generic
