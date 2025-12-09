@@ -2701,7 +2701,7 @@ if __name__ == "__main__":
 Файл `__main__.py` внутри пакета позволяет запускать пакет командой:
 
 ```
-python -m package_name
+python -m package_name  
 ```
 
 Пример `package_name/__main__.py`:
