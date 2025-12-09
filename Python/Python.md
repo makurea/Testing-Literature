@@ -2559,7 +2559,8 @@ match value:
     case _:
         print("Другое")
 
-# Сопоставление с кортежем
+*Сопоставление с кортежем*
+
 point = (0, 0)
 match point:
     case (0, 0):
@@ -2571,7 +2572,8 @@ match point:
     case (x, y):
         print(f"Точка ({x},{y})")
 
-# Сопоставление с классом
+*Сопоставление с классом*
+
 class Point:
     def __init__(self, x, y):
         self.x = x
