@@ -1677,7 +1677,7 @@ Selenoid идеально подходит для автоматизации UI-
 | `manage().cookies().addCookie(Cookie cookie)` | Добавляет cookie в браузер.        |
 | `manage().cookies().getCookies()` | Получает список всех cookies.                 |
 
-#### **WebElement** <a id="webelement"></a>
+#### **WebElement** <a id="webelement"></a>  
 `WebElement` представляет HTML-элемент и позволяет взаимодействовать с ним.
 
 | Метод                      | Описание                                                   |
