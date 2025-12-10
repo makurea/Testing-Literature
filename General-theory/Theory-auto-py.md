@@ -53,6 +53,7 @@
 
 * [Selenium WebDriver в Python](#selenium-python-driver)
 * [Playwright: синхронный и асинхронный режимы](#playwright-sync-async)
+* [Сравнение Selenium / Playwright](#сравнеиние-selenium-playwright)
 * [PyAutoGUI для Desktop automation](#pyautogui)
 * [ActionsChains и JSExecutor](#actions-js-python)
 
@@ -646,6 +647,13 @@ unittest — формальный и строгий фреймворк, близ
 ---
 
 ### Playwright: синхронный и асинхронный режимы <a id="playwright-sync-async"></a>
+
+[🔄 К содержанию - главы](#selenium-playwright-python-глава)
+[🔼 К содержанию](#content)
+
+---
+
+###   Сравнение Selenium / Playwright  <a id="сравнеиние-selenium-playwright"></a>
 
 [🔄 К содержанию - главы](#selenium-playwright-python-глава)
 [🔼 К содержанию](#content)
