@@ -475,21 +475,21 @@ def client(config):
 3) позволяют легко комбинировать подготовку данных
 
 
-[🔄 К содержанию - главы](#test-runners-python-глава)
+[🔄 К содержанию - главы](#test-runners-python-глава)  
 [🔼 К содержанию](#content)
 
 ---
 
 ### unittest <a id="unittest"></a>
 
-[🔄 К содержанию - главы](#test-runners-python-глава)
+[🔄 К содержанию - главы](#test-runners-python-глава)  
 [🔼 К содержанию](#content)
 
 ---
 
 ### nose / nose2 <a id="nose"></a>
 
-[🔄 К содержанию - главы](#test-runners-python-глава)
+[🔄 К содержанию - главы](#test-runners-python-глава)  
 [🔼 К содержанию](#content)
 
 ---
