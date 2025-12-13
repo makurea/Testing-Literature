@@ -2215,7 +2215,7 @@ d.get('b')           # 2
 | defaultdict | Словарь с значением по умолчанию                              | `from collections import defaultdict`<br>`dd = defaultdict(int)`                                     | `dd[key]` вернёт default если ключ отсутствует                |
 | namedtuple  | Кортеж с именованными полями                                  | `from collections import namedtuple`<br>`Point = namedtuple('Point', ['x','y'])`<br>`p = Point(1,2)` | Доступ через `p.x`, `p.y`, неизменяемый                       |
 
-**Примеры использования**
+**Примеры использования**  
 
 ```python
 from collections import Counter, deque, defaultdict, namedtuple
