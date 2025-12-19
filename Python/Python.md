@@ -46,7 +46,7 @@
 ## [🗂️ Коллекции и структуры данных](#коллекции) <a id="коллекции-глава"></a>  
 
 * [List, Tuple, Set, Dict](#list-tuple-set-dict)
-* [collections: Counter, deque, defaultdict, namedtuple](#collections-модуль)
+* [collections: Counter, deque, defaultdict, namedtuple](#collections-модуль) 
 * [Хэш-таблицы и уникальные ключи](#хэш-таблицы)
 * [Очереди и стеки](#очереди-и-стеки)
 
