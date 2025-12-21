@@ -1404,7 +1404,7 @@ Java Collections Framework предоставляет набор интерфе�
 
 
 # 🏆Структуры данных и обобщения (Generics) <a id="generics"></a>
-
+ 
 ## 🔹 hashCode и equals + Хеш-таблицы, buckets <a id="hashcode-и-equals-хеш-таблицы-buckets"></a>
 
 1. **Что такое hashCode?**  
