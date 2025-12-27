@@ -2080,6 +2080,428 @@ finally:
 
 ### Headless режим в Chrome и Firefox <a id="headless-python"></a>
 
+**Headless режим** — запуск браузера без графического интерфейса (GUI), что позволяет выполнять автоматизацию на серверах, в CI/CD и экономить ресурсы.
+
+#### Преимущества headless режима
+
+| Преимущество | Описание |
+|--------------|----------|
+| **Экономия ресурсов** | Меньшее потребление CPU и RAM |
+| **Работа на серверах** | Без GUI, без монитора |
+| **Скорость** | Быстрее запуск и выполнение |
+| **Стабильность** | Нет влияния графических сбоев |
+| **Масштабируемость** | Параллельный запуск множества экземпляров |
+
+#### Headless режим в Chrome/Chromium
+
+##### 1. Классический headless (старый)
+```python
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+
+options = Options()
+options.add_argument("--headless")  # Классический headless
+options.add_argument("--no-sandbox")
+options.add_argument("--disable-dev-shm-usage")
+
+driver = webdriver.Chrome(options=options)
+```
+
+##### 2. Новый headless (Chrome 96+)
+```python
+options = Options()
+options.add_argument("--headless=new")  # Новый headless режим
+# Или
+options.add_argument("--headless=chrome")
+```
+
+##### 3. Полная конфигурация headless Chrome
+```python
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+
+def create_headless_chrome():
+    options = Options()
+    
+    # Headless режим
+    options.add_argument("--headless=new")
+    
+    # Безопасность и стабильность
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-gpu")  # Для старых систем
+    
+    # Отключение ненужных функций
+    options.add_argument("--disable-extensions")
+    options.add_argument("--disable-software-rasterizer")
+    options.add_argument("--disable-features=VizDisplayCompositor")
+    
+    # Оптимизация производительности
+    options.add_argument("--disable-background-timer-throttling")
+    options.add_argument("--disable-backgrounding-occluded-windows")
+    options.add_argument("--disable-renderer-backgrounding")
+    
+    # Настройки окна
+    options.add_argument("--window-size=1920,1080")
+    
+    # Отключение логов
+    options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    
+    # Отключение автоматизации обнаружения
+    options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    options.add_experimental_option('useAutomationExtension', False)
+    
+    # User agent (опционально)
+    options.add_argument("user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36")
+    
+    return webdriver.Chrome(options=options)
+
+driver = create_headless_chrome()
+```
+
+#### Headless режим в Firefox
+
+##### 1. Базовый headless Firefox
+```python
+from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
+
+options = Options()
+options.add_argument("--headless")  # Headless для Firefox
+
+driver = webdriver.Firefox(options=options)
+```
+
+##### 2. Полная конфигурация headless Firefox
+```python
+def create_headless_firefox():
+    options = Options()
+    
+    # Headless режим
+    options.add_argument("--headless")
+    
+    # Настройки производительности
+    options.set_preference("dom.ipc.processCount", 8)
+    options.set_preference("browser.tabs.remote.autostart", True)
+    options.set_preference("browser.tabs.remote.autostart.2", True)
+    
+    # Отключение автоматических обновлений
+    options.set_preference("app.update.enabled", False)
+    options.set_preference("app.update.auto", False)
+    
+    # Отключение безопасного просмотра
+    options.set_preference("browser.safebrowsing.enabled", False)
+    options.set_preference("browser.safebrowsing.malware.enabled", False)
+    
+    # Настройки окна
+    options.set_preference("browser.startup.homepage", "about:blank")
+    options.set_preference("startup.homepage_welcome_url", "about:blank")
+    options.set_preference("startup.homepage_welcome_url.additional", "about:blank")
+    
+    # Размер окна
+    options.add_argument("--width=1920")
+    options.add_argument("--height=1080")
+    
+    # Отключение логов
+    options.log.level = "fatal"
+    
+    return webdriver.Firefox(options=options)
+
+driver = create_headless_firefox()
+```
+
+#### Сравнение headless режимов
+
+| Параметр | Chrome (classic) | Chrome (new) | Firefox |
+|----------|------------------|--------------|---------|
+| **Стабильность** | Высокая | Очень высокая | Высокая |
+| **Скорость** | Быстро | Быстрее | Средняя |
+| **Поддержка WebGL** | Нет | Да | Нет |
+| **Требуемая версия** | Все | Chrome 96+ | Все |
+| **Эмуляция устройства** | Да | Да | Ограничено |
+
+#### Особенности нового headless Chrome (--headless=new)
+
+```python
+# Новый headless режим имеет улучшения:
+options = Options()
+options.add_argument("--headless=new")
+
+# Поддерживает больше функций:
+# - WebGL и 3D графику
+# - Расширения (в ограниченном виде)
+# - Более точную эмуляцию обычного браузера
+# - Улучшенную производительность
+
+driver = webdriver.Chrome(options=options)
+
+# Проверка, что headless работает
+print(driver.execute_script("return navigator.userAgent"))
+# Должен содержать HeadlessChrome, но не всегда
+```
+
+#### Определение работы в headless режиме
+
+```python
+def is_headless(driver):
+    """Определяет, работает ли браузер в headless режиме"""
+    # Способ 1: Проверка userAgent
+    user_agent = driver.execute_script("return navigator.userAgent")
+    
+    # Способ 2: Проверка доступных свойств
+    try:
+        # В headless некоторые свойства недоступны
+        driver.get_window_size()
+        return False
+    except:
+        return True
+    
+    # Способ 3: JavaScript проверка
+    is_headless = driver.execute_script("""
+        return navigator.webdriver === true || 
+               window.chrome === undefined ||
+               /HeadlessChrome/.test(navigator.userAgent);
+    """)
+    
+    return is_headless
+
+# Использование
+driver = create_headless_chrome()
+print(f"Headless режим: {is_headless(driver)}")
+```
+
+#### Решение проблем в headless режиме
+
+##### Проблема: Элементы не кликаются
+```python
+# Решение: Явный клик через JavaScript
+element = driver.find_element("id", "button")
+driver.execute_script("arguments[0].click();", element)
+
+# Или через Actions
+from selenium.webdriver.common.action_chains import ActionChains
+actions = ActionChains(driver)
+actions.move_to_element(element).click().perform()
+```
+
+##### Проблема: Страница не загружается полностью
+```python
+# Решение: Ожидание полной загрузки
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+
+wait = WebDriverWait(driver, 30)
+wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
+
+# Или через JavaScript readyState
+driver.execute_script("return document.readyState") == "complete"
+```
+
+##### Проблема: Неправильный размер окна
+```python
+# Решение: Явная установка размера
+driver.set_window_size(1920, 1080)
+
+# Или через Chrome DevTools Protocol
+driver.execute_cdp_cmd("Emulation.setDeviceMetricsOverride", {
+    "width": 1920,
+    "height": 1080,
+    "deviceScaleFactor": 1,
+    "mobile": False
+})
+```
+
+#### Скриншоты в headless режиме
+
+```python
+def take_screenshot_in_headless(driver, filename="screenshot.png"):
+    """Делает скриншот в headless режиме"""
+    # Установка размера окна для скриншота
+    driver.set_window_size(1920, 1080)
+    
+    # Полноразмерный скриншот страницы
+    original_size = driver.get_window_size()
+    
+    # Получение высоты страницы
+    total_height = driver.execute_script("return document.body.scrollHeight")
+    
+    # Скриншот видимой области
+    driver.save_screenshot(filename)
+    
+    # Или полноразмерный скриншот
+    driver.get_screenshot_as_file(filename)
+    
+    # Скриншот конкретного элемента
+    element = driver.find_element("id", "content")
+    element.screenshot("element.png")
+
+# Использование
+driver = create_headless_chrome()
+driver.get("https://example.com")
+take_screenshot_in_headless(driver, "example.png")
+```
+
+#### Headless с эмуляцией мобильных устройств
+
+```python
+def mobile_headless_chrome():
+    """Headless Chrome с эмуляцией мобильного устройства"""
+    from selenium import webdriver
+    from selenium.webdriver.chrome.options import Options
+    
+    options = Options()
+    options.add_argument("--headless=new")
+    
+    # Эмуляция iPhone
+    mobile_emulation = {
+        "deviceMetrics": {"width": 375, "height": 812, "pixelRatio": 3.0},
+        "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15"
+    }
+    
+    options.add_experimental_option("mobileEmulation", mobile_emulation)
+    
+    return webdriver.Chrome(options=options)
+
+# Использование
+mobile_driver = mobile_headless_chrome()
+mobile_driver.get("https://m.example.com")
+print(f"Размер окна: {mobile_driver.get_window_size()}")
+```
+
+#### CI/CD оптимизация для headless
+
+```python
+def create_ci_headless_driver(browser="chrome"):
+    """Оптимизированный headless драйвер для CI/CD"""
+    if browser.lower() == "chrome":
+        from selenium.webdriver.chrome.options import Options
+        options = Options()
+        
+        # Максимальная оптимизация для CI
+        options.add_argument("--headless=new")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--disable-gpu")
+        options.add_argument("--disable-extensions")
+        options.add_argument("--disable-software-rasterizer")
+        options.add_argument("--disable-background-networking")
+        options.add_argument("--disable-default-apps")
+        options.add_argument("--disable-sync")
+        options.add_argument("--disable-translate")
+        options.add_argument("--metrics-recording-only")
+        options.add_argument("--mute-audio")
+        options.add_argument("--no-first-run")
+        options.add_argument("--disable-client-side-phishing-detection")
+        options.add_argument("--disable-component-update")
+        
+        # Отключение automation detection
+        options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        options.add_experimental_option('useAutomationExtension', False)
+        
+        # Блокировка ненужных функций
+        prefs = {
+            "profile.default_content_setting_values.notifications": 2,
+            "credentials_enable_service": False,
+            "profile.password_manager_enabled": False,
+            "profile.default_content_settings.popups": 0
+        }
+        options.add_experimental_option("prefs", prefs)
+        
+        return webdriver.Chrome(options=options)
+    
+    else:  # Firefox
+        from selenium.webdriver.firefox.options import Options
+        options = Options()
+        options.add_argument("--headless")
+        
+        # Оптимизации для Firefox
+        options.set_preference("network.http.phishy-userpass-length", 255)
+        options.set_preference("browser.cache.disk.enable", False)
+        options.set_preference("browser.cache.memory.enable", False)
+        options.set_preference("browser.cache.offline.enable", False)
+        
+        return webdriver.Firefox(options=options)
+```
+
+#### Тестирование headless функциональности
+
+```python
+import pytest
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+
+@pytest.fixture(params=[True, False])
+def headless_driver(request):
+    """Фикстура для тестирования в headless и обычном режиме"""
+    options = Options()
+    if request.param:
+        options.add_argument("--headless=new")
+    
+    driver = webdriver.Chrome(options=options)
+    yield driver, request.param  # Возвращаем драйвер и флаг headless
+    driver.quit()
+
+def test_headless_compatibility(headless_driver):
+    """Тест, который проверяет работу в обоих режимах"""
+    driver, is_headless = headless_driver
+    driver.get("https://example.com")
+    
+    title = driver.title
+    assert "Example" in title
+    
+    if is_headless:
+        print("Тест выполнен в headless режиме")
+    else:
+        print("Тест выполнен в обычном режиме")
+```
+
+#### Лучшие практики для headless режима
+
+1. **Всегда устанавливайте размер окна**
+   ```python
+   driver.set_window_size(1920, 1080)
+   ```
+
+2. **Используйте явные ожидания**
+   ```python
+   from selenium.webdriver.support.ui import WebDriverWait
+   wait = WebDriverWait(driver, 30)
+   ```
+
+3. **Делайте скриншоты при ошибках**
+   ```python
+   try:
+       # тестовые действия
+   except Exception as e:
+       driver.save_screenshot("error.png")
+       raise
+   ```
+
+4. **Мониторьте потребление ресурсов**
+   ```python
+   # Ограничение памяти для Chrome
+   options.add_argument("--max_old_space_size=4096")
+   ```
+
+5. **Используйте новые флаги headless**
+   ```python
+   # Вместо --headless используйте --headless=new
+   options.add_argument("--headless=new")
+   ```
+
+#### Ограничения headless режима
+
+| Ограничение | Chrome | Firefox | Решение |
+|-------------|--------|---------|---------|
+| **Расширения** | Частично | Нет | Использовать фоновые скрипты |
+| **WebRTC** | Да | Ограничено | Альтернативные библиотеки |
+| **Плагины** | Нет | Нет | Не использовать |
+| **Некоторые API** | Эмулируются | Эмулируются | Проверять совместимость |
+
+**Ключевой вывод:**
+Headless режим — обязательный инструмент для CI/CD и серверной автоматизации. Chrome с `--headless=new` предлагает лучшую совместимость и производительность. Всегда тестируйте функциональность в headless режиме, так как поведение может отличаться от обычного браузера.
+
 [🔄 К содержанию - главы](#инициализация-браузера-python-глава)  
 [🔼 К содержанию](#content)
 
