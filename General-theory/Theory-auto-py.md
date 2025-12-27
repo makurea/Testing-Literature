@@ -2509,6 +2509,578 @@ Headless режим — обязательный инструмент для CI/
 
 ### Параллельные сессии с pytest-xdist <a id="parallel-sessions"></a>
 
+**pytest-xdist** — плагин для параллельного запуска тестов, который позволяет значительно ускорить выполнение тестовой с помощью распределения нагрузки на несколько ядер CPU или машин.
+
+#### Основные возможности pytest-xdist
+
+| Возможность | Описание | Когда использовать |
+|-------------|----------|-------------------|
+| **Параллельный запуск** | Запуск тестов на нескольких ядрах CPU | Большие наборы тестов |
+| **Распределенный запуск** | Запуск на нескольких машинах | Кластерное тестирование |
+| **Балансировка нагрузки** | Автоматическое распределение тестов | Неравномерные тесты |
+| **Повторный запуск failed** | Только упавших тестов | После исправления проблем |
+
+#### Установка и базовое использование
+
+```bash
+# Установка
+pip install pytest-xdist
+
+# Базовый параллельный запуск
+pytest -n auto  # Использовать все доступные ядра
+pytest -n 4     # Использовать 4 worker'а
+pytest -n 2 --dist=loadscope  # Специальный режим распределения
+```
+
+#### Режимы распределения тестов
+
+| Режим | Команда | Описание |
+|-------|---------|----------|
+| **Каждый тест отдельно** | `--dist=load` | Каждый тест отправляется свободному worker'у |
+| **По модулям** | `--dist=loadscope` | Все тесты одного модуля запускаются на одном worker'е |
+| **По классам** | `--dist=loadscope` | Все тесты одного класса на одном worker'е |
+| **По файлам** | `--dist=loadfile` | Все тесты одного файла на одном worker'е |
+
+#### Параллельные UI-тесты с Selenium
+
+##### 1. Базовая настройка параллельных сессий
+
+```python
+# conftest.py
+import pytest
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+
+def pytest_addoption(parser):
+    """Добавление кастомных параметров запуска"""
+    parser.addoption("--browser", action="store", default="chrome")
+    parser.addoption("--headless", action="store_true", default=False)
+
+@pytest.fixture(scope="function")
+def driver(request):
+    """Фикстура драйвера с поддержкой параллелизма"""
+    browser = request.config.getoption("--browser")
+    headless = request.config.getoption("--headless")
+    
+    if browser == "chrome":
+        options = Options()
+        if headless:
+            options.add_argument("--headless=new")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+        driver = webdriver.Chrome(options=options)
+    
+    elif browser == "firefox":
+        from selenium.webdriver.firefox.options import Options as FirefoxOptions
+        options = FirefoxOptions()
+        if headless:
+            options.add_argument("--headless")
+        driver = webdriver.Firefox(options=options)
+    
+    # Уникальный идентификатор worker'а для изоляции
+    worker_id = getattr(request.config, "worker_id", "master")
+    print(f"Запуск теста в worker: {worker_id}")
+    
+    driver.maximize_window()
+    driver.implicitly_wait(10)
+    
+    yield driver
+    
+    # Закрытие драйвера после теста
+    if driver:
+        driver.quit()
+```
+
+##### 2. Параллельный запуск с разными браузерами
+
+```python
+# test_parallel_browsers.py
+import pytest
+
+@pytest.mark.parametrize("browser", ["chrome", "firefox", "edge"])
+def test_login_different_browsers(browser, request):
+    """Параметризованный тест для разных браузеров"""
+    # Динамическое создание драйвера
+    if browser == "chrome":
+        from selenium.webdriver.chrome.options import Options
+        options = Options()
+        driver = webdriver.Chrome(options=options)
+    elif browser == "firefox":
+        driver = webdriver.Firefox()
+    
+    driver.get("https://example.com/login")
+    # ... тестовые действия
+    
+    driver.quit()
+
+# Запуск: pytest test_parallel_browsers.py -n 3
+```
+
+#### Работа с изолированными сессиями
+
+##### 1. Использование worker_id для изоляции
+
+```python
+# conftest.py
+import pytest
+import os
+from selenium import webdriver
+
+@pytest.fixture(scope="session")
+def session_data(request):
+    """Сессионные данные с изоляцией по worker'ам"""
+    worker_id = getattr(request.config, "worker_id", "master")
+    
+    return {
+        "worker_id": worker_id,
+        "temp_dir": f"/tmp/pytest_{worker_id}",
+        "screenshots_dir": f"screenshots/{worker_id}"
+    }
+
+@pytest.fixture(scope="function")
+def isolated_driver(session_data, request):
+    """Изолированный драйвер для каждого worker'а"""
+    # Создание уникальных директорий для worker'а
+    os.makedirs(session_data["screenshots_dir"], exist_ok=True)
+    
+    # Создание драйвера с уникальными настройками
+    options = webdriver.ChromeOptions()
+    options.add_argument(f"--user-data-dir={session_data['temp_dir']}")
+    
+    driver = webdriver.Chrome(options=options)
+    
+    # Сохранение информации о worker'е
+    driver.worker_id = session_data["worker_id"]
+    driver.screenshots_dir = session_data["screenshots_dir"]
+    
+    yield driver
+    
+    driver.quit()
+    
+    # Очистка временных файлов (опционально)
+    import shutil
+    shutil.rmtree(session_data["temp_dir"], ignore_errors=True)
+
+def test_isolated_session(isolated_driver):
+    """Тест с изолированной сессией"""
+    driver = isolated_driver
+    print(f"Worker ID: {driver.worker_id}")
+    
+    driver.get("https://example.com")
+    
+    # Скриншот в изолированную директорию
+    driver.save_screenshot(f"{driver.screenshots_dir}/test.png")
+```
+
+##### 2. Параллельные тесты с разными пользователями
+
+```python
+import pytest
+from selenium import webdriver
+
+@pytest.fixture(scope="function")
+def user_session(request):
+    """Фикстура с уникальными пользовательскими данными"""
+    worker_id = getattr(request.config, "worker_id", "master")
+    
+    # Генерация уникальных данных для каждого worker'а
+    users = {
+        "gw0": {"username": "user1", "password": "pass1"},
+        "gw1": {"username": "user2", "password": "pass2"},
+        "gw2": {"username": "user3", "password": "pass3"},
+        "master": {"username": "admin", "password": "admin"}
+    }
+    
+    return users.get(worker_id, users["master"])
+
+def test_parallel_logins(user_session, isolated_driver):
+    """Параллельные логины разных пользователей"""
+    driver = isolated_driver
+    user = user_session
+    
+    driver.get("https://example.com/login")
+    
+    # Ввод уникальных учетных данных
+    driver.find_element("id", "username").send_keys(user["username"])
+    driver.find_element("id", "password").send_keys(user["password"])
+    driver.find_element("id", "submit").click()
+    
+    # Проверка успешного входа
+    welcome_text = driver.find_element("css selector", ".welcome").text
+    assert user["username"] in welcome_text
+```
+
+#### Расширенные техники параллельного тестирования
+
+##### 1. Балансировка тяжелых и легких тестов
+
+```python
+# marks.py - кастомные маркеры для балансировки
+import pytest
+
+# Маркировка тестов по сложности
+@pytest.mark.light  # Быстрые тесты (до 10 секунд)
+def test_quick_action():
+    pass
+
+@pytest.mark.medium  # Средние тесты (10-30 секунд)
+def test_normal_flow():
+    pass
+
+@pytest.mark.heavy  # Тяжелые тесты (30+ секунд)
+def test_complex_scenario():
+    pass
+
+# Запуск с группировкой по сложности
+# pytest -m "light" -n auto  # Только легкие тесты параллельно
+# pytest -m "heavy" -n 2     # Тяжелые тесты на 2 worker'ах
+```
+
+##### 2. Динамическое распределение тестов
+
+```python
+# conftest.py
+def pytest_xdist_make_scheduler(config, log):
+    """Кастомный планировщик для распределения тестов"""
+    from xdist.scheduler import LoadScheduling
+    
+    class BalancedScheduler(LoadScheduling):
+        """Балансировщик, учитывающий сложность тестов"""
+        
+        def schedule(self):
+            # Логика распределения тестов
+            # Можно учитывать маркеры, историю выполнения и т.д.
+            super().schedule()
+    
+    return BalancedScheduler(config, log)
+```
+
+##### 3. Параллельные API и UI тесты
+
+```python
+import pytest
+import requests
+from selenium import webdriver
+
+class TestParallelMixed:
+    """Смешанные параллельные тесты"""
+    
+    @pytest.fixture(scope="class")
+    def api_client(self):
+        """Фикстура API клиента"""
+        session = requests.Session()
+        session.headers.update({"Content-Type": "application/json"})
+        return session
+    
+    @pytest.fixture(scope="function")
+    def ui_driver(self):
+        """Фикстура UI драйвера"""
+        driver = webdriver.Chrome()
+        yield driver
+        driver.quit()
+    
+    def test_api_endpoint(self, api_client):
+        """API тест - может выполняться параллельно"""
+        response = api_client.get("https://api.example.com/users")
+        assert response.status_code == 200
+    
+    def test_ui_functionality(self, ui_driver):
+        """UI тест - выполняется параллельно с API тестами"""
+        ui_driver.get("https://example.com")
+        assert "Example" in ui_driver.title
+    
+    # Запуск: pytest TestParallelMixed -n 4
+```
+
+#### Мониторинг и отладка параллельных тестов
+
+##### 1. Логирование с идентификаторами worker'ов
+
+```python
+# conftest.py
+import logging
+import pytest
+
+@pytest.fixture(autouse=True)
+def setup_logging(request):
+    """Автоматическая настройка логирования для параллельных тестов"""
+    worker_id = getattr(request.config, "worker_id", "master")
+    
+    logger = logging.getLogger(f"worker_{worker_id}")
+    
+    # Формат логов с worker_id
+    formatter = logging.Formatter(
+        f'%(asctime)s [Worker-{worker_id}] %(levelname)s: %(message)s'
+    )
+    
+    handler = logging.StreamHandler()
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    
+    request.cls.logger = logger  # Для использования в тестовых классах
+    return logger
+
+class TestParallelWithLogs:
+    """Тесты с расширенным логированием"""
+    
+    def test_with_detailed_logs(self, setup_logging):
+        self.logger.info("Начало теста")
+        # ... тестовые действия
+        self.logger.info("Тест завершен")
+```
+
+##### 2. Сбор результатов и статистики
+
+```python
+# conftest.py
+import pytest
+import json
+import time
+
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    """Сбор статистики выполнения тестов"""
+    outcome = yield
+    report = outcome.get_result()
+    
+    if report.when == "call":
+        worker_id = getattr(item.config, "worker_id", "master")
+        
+        # Сохранение статистики
+        stats = {
+            "worker_id": worker_id,
+            "test_name": item.nodeid,
+            "duration": report.duration,
+            "outcome": report.outcome,
+            "timestamp": time.time()
+        }
+        
+        # Запись в файл (каждый worker в свой файл)
+        stats_file = f"test_stats_{worker_id}.json"
+        with open(stats_file, "a") as f:
+            f.write(json.dumps(stats) + "\n")
+```
+
+##### 3. Визуализация параллельного выполнения
+
+```python
+# monitor.py - скрипт для мониторинга
+import json
+from collections import defaultdict
+import time
+
+def monitor_parallel_execution():
+    """Мониторинг выполнения параллельных тестов"""
+    stats_by_worker = defaultdict(list)
+    
+    while True:
+        # Чтение статистики из файлов
+        for worker_id in ["gw0", "gw1", "gw2", "master"]:
+            try:
+                with open(f"test_stats_{worker_id}.json", "r") as f:
+                    lines = f.readlines()
+                    for line in lines:
+                        stats = json.loads(line)
+                        stats_by_worker[worker_id].append(stats)
+            except FileNotFoundError:
+                pass
+        
+        # Вывод статистики
+        print("\n" + "="*50)
+        print("Параллельное выполнение тестов:")
+        print("="*50)
+        
+        for worker_id, stats in stats_by_worker.items():
+            completed = len([s for s in stats if s["outcome"] in ["passed", "failed"]])
+            running = len([s for s in stats if s["outcome"] == "running"])
+            
+            print(f"Worker {worker_id}: {completed} завершено, {running} выполняется")
+        
+        time.sleep(5)  # Обновление каждые 5 секунд
+```
+
+#### Оптимизация производительности
+
+##### 1. Оптимальное количество worker'ов
+
+```python
+# calculate_workers.py
+import multiprocessing
+import os
+
+def calculate_optimal_workers():
+    """Расчет оптимального количества worker'ов"""
+    cpu_count = multiprocessing.cpu_count()
+    
+    # Эмпирическая формула для UI тестов
+    if os.getenv("CI"):  # В CI окружении
+        optimal = max(2, cpu_count - 1)  # Оставляем 1 ядро для системы
+    else:  # На локальной машине
+        optimal = max(1, cpu_count // 2)  # Используем половину ядер
+    
+    print(f"Доступно ядер CPU: {cpu_count}")
+    print(f"Рекомендуемое количество worker'ов: {optimal}")
+    
+    return optimal
+
+# Использование в командной строке
+# pytest -n $(python calculate_workers.py)
+```
+
+##### 2. Кэширование и общие ресурсы
+
+```python
+# conftest.py
+import pytest
+from selenium import webdriver
+import threading
+
+# Глобальный кэш для общих ресурсов
+_resource_cache = {}
+_cache_lock = threading.Lock()
+
+@pytest.fixture(scope="session")
+def shared_browser_pool():
+    """Пул общих браузеров для worker'ов"""
+    with _cache_lock:
+        if "browser_pool" not in _resource_cache:
+            # Инициализация пула браузеров
+            _resource_cache["browser_pool"] = BrowserPool(size=5)
+        
+        return _resource_cache["browser_pool"]
+
+class BrowserPool:
+    """Пул браузеров для переиспользования"""
+    def __init__(self, size=5):
+        self.size = size
+        self.browsers = []
+        self.lock = threading.Lock()
+    
+    def get_browser(self):
+        with self.lock:
+            if self.browsers:
+                return self.browsers.pop()
+            else:
+                return webdriver.Chrome()
+    
+    def return_browser(self, browser):
+        with self.lock:
+            if len(self.browsers) < self.size:
+                self.browsers.append(browser)
+            else:
+                browser.quit()
+```
+
+#### Работа с облачными Selenium Grid
+
+##### 1. Параллельный запуск на Selenium Grid
+
+```python
+# grid_parallel.py
+import pytest
+from selenium import webdriver
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+
+@pytest.fixture(scope="function")
+def grid_driver(request):
+    """Фикстура для параллельного запуска на Selenium Grid"""
+    worker_id = getattr(request.config, "worker_id", "master")
+    
+    # Динамические capabilities для каждого worker'а
+    caps = DesiredCapabilities.CHROME.copy()
+    caps['name'] = f'Test from worker {worker_id}'
+    
+    # Разные браузеры для разных worker'ов (пример)
+    if worker_id == "gw0":
+        caps['browserName'] = 'chrome'
+    elif worker_id == "gw1":
+        caps['browserName'] = 'firefox'
+    elif worker_id == "gw2":
+        caps['browserName'] = 'chrome'
+        caps['version'] = '90.0'
+    
+    driver = webdriver.Remote(
+        command_executor='http://selenium-grid:4444/wd/hub',
+        desired_capabilities=caps
+    )
+    
+    yield driver
+    driver.quit()
+
+# Запуск: pytest grid_parallel.py -n 3
+```
+
+#### Обработка ошибок в параллельном режиме
+
+##### 1. Перезапуск упавших тестов
+
+```bash
+# Перезапуск только упавших тестов
+pytest --lf -n auto  # --lf = last failed
+
+# Перезапуск упавших тестов до 3 раз
+pytest --reruns 3 -n auto
+
+# Сохранение результатов для анализа
+pytest -n auto --tb=short --junitxml=results.xml
+```
+
+##### 2. Изоляция сбоев worker'ов
+
+```python
+# conftest.py
+import pytest
+
+@pytest.hookimpl(tryfirst=True)
+def pytest_xdist_node_collection_finished(node, ids):
+    """Обработка завершения сбора тестов на node"""
+    print(f"Node {node.id} собрал {len(ids)} тестов")
+
+@pytest.hookimpl(tryfirst=True)
+def pytest_xdist_worker_dropout(workerid, node):
+    """Обработка отключения worker'а"""
+    print(f"Внимание: Worker {workerid} отключился!")
+    # Можно перезапустить тесты с этого worker'а на других
+```
+
+#### Лучшие практики pytest-xdist
+
+1. **Используйте `scope="function"` для изоляции тестов**
+2. **Избегайте общих глобальных состояний между тестами**
+3. **Используйте маркеры для группировки тестов**
+4. **Мониторьте использование ресурсов**
+5. **Тестируйте параллельность на разных конфигурациях**
+6. **Используйте `--dist=loadscope` для тестов с общими фикстурами**
+7. **Логируйте идентификаторы worker'ов для отладки**
+
+#### Пример полной конфигурации
+
+```python
+# pytest.ini
+[pytest]
+addopts = 
+    -n auto
+    --dist=loadscope
+    --tb=short
+    --strict-markers
+    --junitxml=results.xml
+    --html=report.html
+    --self-contained-html
+
+markers =
+    ui: UI тесты
+    api: API тесты
+    slow: Медленные тесты
+    fast: Быстрые тесты
+
+# Запуск с профилями
+# pytest -m "ui" -n 4  # Только UI тесты, 4 worker'а
+# pytest -m "fast" -n auto  # Быстрые тесты, все ядра
+```
+
+**Ключевой вывод:**
+pytest-xdist — мощный инструмент для ускорения выполнения тестов. Для UI-тестов особенно важно обеспечить изоляцию сессий между worker'ами. Правильная настройка параллелизма может ускорить выполнение тестов в 3-10 раз в зависимости от инфраструктуры.
+
 [🔄 К содержанию - главы](#инициализация-браузера-python-глава)    
 [🔼 К содержанию](#content)
 
