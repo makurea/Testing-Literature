@@ -1688,6 +1688,391 @@ with sync_playwright() as p:
 
 ### Инициализация WebDriver в Python <a id="webdriver-init"></a>
 
+**Инициализация WebDriver** — процесс создания и настройки экземпляра браузера для автоматизации тестирования.
+
+#### Основные способы инициализации
+
+| Способ | Описание | Когда использовать |
+|--------|----------|-------------------|
+| **Прямая инициализация** | Локальный запуск драйвера | Тестирование на локальной машине |
+| **Remote WebDriver** | Подключение к удаленному серверу | Selenium Grid, Selenoid, облачные сервисы |
+| **Service-классы** | Продвинутое управление драйвером | Тонкая настройка, логирование |
+
+#### 1. Прямая инициализация (Локальные драйверы)
+
+##### Chrome WebDriver
+```python
+from selenium import webdriver
+
+# Базовый запуск
+driver = webdriver.Chrome()
+
+# С опциями
+from selenium.webdriver.chrome.options import Options
+
+chrome_options = Options()
+chrome_options.add_argument("--start-maximized")
+chrome_options.add_argument("--disable-notifications")
+
+driver = webdriver.Chrome(options=chrome_options)
+```
+
+##### Firefox WebDriver
+```python
+from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
+
+firefox_options = Options()
+firefox_options.add_argument("--width=1920")
+firefox_options.add_argument("--height=1080")
+
+driver = webdriver.Firefox(options=firefox_options)
+```
+
+##### Edge WebDriver
+```python
+from selenium import webdriver
+from selenium.webdriver.edge.options import Options
+
+edge_options = Options()
+edge_options.add_argument("--inprivate")  # Режим инкогнито
+
+driver = webdriver.Edge(options=edge_options)
+```
+
+#### 2. Указание пути к драйверу
+
+```python
+from selenium import webdriver
+
+# Явное указание пути
+driver = webdriver.Chrome(
+    executable_path="/path/to/chromedriver"
+)
+
+# Использование менеджера драйверов
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
+
+service = Service(ChromeDriverManager().install())
+driver = webdriver.Chrome(service=service)
+```
+
+#### 3. Remote WebDriver (Selenium Grid/Selenoid)
+
+```python
+from selenium import webdriver
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+
+# Базовое подключение к Grid
+driver = webdriver.Remote(
+    command_executor='http://localhost:4444/wd/hub',
+    desired_capabilities=DesiredCapabilities.CHROME
+)
+
+# Расширенная конфигурация для Selenoid
+caps = {
+    "browserName": "chrome",
+    "version": "latest",
+    "enableVNC": True,
+    "enableVideo": False,
+    "screenResolution": "1920x1080x24"
+}
+
+driver = webdriver.Remote(
+    command_executor="http://localhost:4444/wd/hub",
+    desired_capabilities=caps
+)
+```
+
+#### 4. Service-классы для продвинутого управления
+
+```python
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+
+# Настройка сервиса с логами
+service = Service(
+    executable_path="chromedriver",
+    service_args=['--verbose'],  # Дополнительные аргументы
+    log_path="chromedriver.log"  # Логирование
+)
+
+# Кастомные capabilities
+caps = DesiredCapabilities.CHROME.copy()
+caps['pageLoadStrategy'] = 'eager'  # Стратегия загрузки
+caps['acceptInsecureCerts'] = True   # Принимать небезопасные сертификаты
+
+driver = webdriver.Chrome(service=service, desired_capabilities=caps)
+```
+
+#### 5. Использование контекстных менеджеров
+
+```python
+# Автоматическое закрытие драйвера
+with webdriver.Chrome() as driver:
+    driver.get("https://example.com")
+    # Действия с драйвером
+# Драйвер автоматически закроется здесь
+
+# Или ручное управление
+try:
+    driver = webdriver.Chrome()
+    driver.get("https://example.com")
+    # Тестовые действия
+except Exception as e:
+    print(f"Ошибка: {e}")
+finally:
+    if driver:
+        driver.quit()  # Всегда используйте quit(), а не close()
+```
+
+#### 6. Параметры инициализации для разных сценариев
+
+##### Headless-режим
+```python
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+
+options = Options()
+options.add_argument("--headless=new")  # Новый headless режим Chrome
+options.add_argument("--no-sandbox")
+options.add_argument("--disable-dev-shm-usage")
+
+driver = webdriver.Chrome(options=options)
+```
+
+##### Мобильная эмуляция
+```python
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+
+mobile_emulation = {
+    "deviceMetrics": {"width": 375, "height": 812, "pixelRatio": 3.0},
+    "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15"
+}
+
+options = Options()
+options.add_experimental_option("mobileEmulation", mobile_emulation)
+
+driver = webdriver.Chrome(options=options)
+```
+
+##### Профили пользователей
+```python
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+
+options = Options()
+options.add_argument("--user-data-dir=/path/to/profile")
+options.add_argument("--profile-directory=Profile 1")
+
+driver = webdriver.Chrome(options=options)
+```
+
+#### 7. Фабричный паттерн для создания драйвера
+
+```python
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from enum import Enum
+
+class Browser(Enum):
+    CHROME = "chrome"
+    FIREFOX = "firefox"
+    EDGE = "edge"
+
+class WebDriverFactory:
+    @staticmethod
+    def create_driver(browser=Browser.CHROME, headless=False, remote_url=None):
+        if remote_url:
+            return WebDriverFactory._create_remote_driver(browser, remote_url)
+        
+        if browser == Browser.CHROME:
+            options = ChromeOptions()
+            if headless:
+                options.add_argument("--headless=new")
+            return webdriver.Chrome(options=options)
+        
+        elif browser == Browser.FIREFOX:
+            options = FirefoxOptions()
+            if headless:
+                options.add_argument("--headless")
+            return webdriver.Firefox(options=options)
+        
+        elif browser == Browser.EDGE:
+            return webdriver.Edge()
+        
+        raise ValueError(f"Unsupported browser: {browser}")
+    
+    @staticmethod
+    def _create_remote_driver(browser, remote_url):
+        capabilities = {
+            Browser.CHROME: webdriver.DesiredCapabilities.CHROME,
+            Browser.FIREFOX: webdriver.DesiredCapabilities.FIREFOX,
+            Browser.EDGE: webdriver.DesiredCapabilities.EDGE
+        }
+        
+        return webdriver.Remote(
+            command_executor=remote_url,
+            desired_capabilities=capabilities[browser]
+        )
+
+# Использование фабрики
+driver = WebDriverFactory.create_driver(
+    browser=Browser.CHROME,
+    headless=True
+)
+```
+
+#### 8. Интеграция с pytest через фикстуры
+
+```python
+import pytest
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+
+@pytest.fixture(scope="function")
+def driver():
+    """Фикстура для создания драйвера на каждый тест"""
+    options = Options()
+    options.add_argument("--start-maximized")
+    
+    driver = webdriver.Chrome(options=options)
+    driver.implicitly_wait(10)
+    
+    yield driver
+    
+    # Очистка после теста
+    driver.quit()
+
+@pytest.fixture(scope="session")
+def session_driver():
+    """Фикстура для создания драйвера на всю сессию"""
+    driver = webdriver.Chrome()
+    yield driver
+    driver.quit()
+
+def test_example(driver):
+    driver.get("https://example.com")
+    assert "Example" in driver.title
+```
+
+#### 9. Обработка ошибок при инициализации
+
+```python
+from selenium import webdriver
+from selenium.common.exceptions import WebDriverException
+
+def safe_driver_init():
+    """Безопасная инициализация драйвера с обработкой ошибок"""
+    try:
+        driver = webdriver.Chrome()
+        return driver
+    except WebDriverException as e:
+        if "chromedriver" in str(e).lower():
+            print("Ошибка: ChromeDriver не найден или несовместим")
+            print("Решение: Установите корректную версию ChromeDriver")
+        elif "connection" in str(e).lower():
+            print("Ошибка: Не удается подключиться к браузеру")
+            print("Решение: Проверьте, что браузер закрыт")
+        else:
+            print(f"Неизвестная ошибка: {e}")
+        return None
+
+driver = safe_driver_init()
+if driver:
+    driver.get("https://example.com")
+```
+
+#### 10. Параметры инициализации для CI/CD
+
+```python
+def create_ci_driver():
+    """Настройка драйвера для CI/CD окружения"""
+    from selenium import webdriver
+    from selenium.webdriver.chrome.options import Options
+    
+    options = Options()
+    
+    # Оптимизации для CI
+    options.add_argument("--headless=new")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--disable-extensions")
+    options.add_argument("--disable-software-rasterizer")
+    
+    # Отключение features для стабильности
+    options.add_experimental_option("excludeSwitches", ["enable-logging"])
+    options.add_experimental_option('useAutomationExtension', False)
+    
+    # Настройки производительности
+    prefs = {
+        "profile.default_content_setting_values.notifications": 2,
+        "credentials_enable_service": False,
+        "profile.password_manager_enabled": False
+    }
+    options.add_experimental_option("prefs", prefs)
+    
+    return webdriver.Chrome(options=options)
+```
+
+#### Сравнение методов инициализации
+
+| Метод | Преимущества | Недостатки | Использование |
+|-------|--------------|------------|---------------|
+| **Прямая инициализация** | Простота, скорость | Зависит от локальной машины | Локальная разработка |
+| **Remote WebDriver** | Масштабируемость, изоляция | Требует инфраструктуры | CI/CD, параллельные тесты |
+| **Service классы** | Контроль над процессом | Сложнее настройка | Продвинутые сценарии |
+| **WebDriver Manager** | Автоуправление версиями | Дополнительная зависимость | Проекты с частыми обновлениями |
+
+#### Лучшие практики инициализации
+
+1. **Всегда используйте `driver.quit()`** вместо `driver.close()`
+2. **Устанавливайте таймауты** после инициализации:
+   ```python
+   driver.implicitly_wait(10)
+   driver.set_page_load_timeout(30)
+   driver.set_script_timeout(10)
+   ```
+3. **Используйте контекстные менеджеры** для автоматической очистки
+4. **Логируйте параметры инициализации** для отладки
+5. **Проверяйте версии совместимости** браузера и драйвера
+6. **Используйте фикстуры в pytest** для управления жизненным циклом
+
+#### Распространенные ошибки
+
+```python
+# ❌ НЕПРАВИЛЬНО: Несовместимые версии
+# Chrome 115 + ChromeDriver 114 = ошибка
+
+# ✅ ПРАВИЛЬНО: Проверка версий
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+
+# WebDriver Manager сам подберет версию
+driver = webdriver.Chrome(ChromeDriverManager().install())
+
+# ❌ НЕПРАВИЛЬНО: Пропуск очистки ресурсов
+driver = webdriver.Chrome()
+# ... тест падает с исключением
+# Драйвер остается висеть в памяти
+
+# ✅ ПРАВИЛЬНО: Гарантированная очистка
+try:
+    driver = webdriver.Chrome()
+    # тестовые действия
+finally:
+    if 'driver' in locals():
+        driver.quit()
+```
+
+**Ключевой вывод:**
+Правильная инициализация WebDriver — основа стабильных UI-тестов. Выбор метода зависит от окружения (локальное/CI), требований к изоляции и масштабируемости. Всегда используйте обработку ошибок и гарантируйте освобождение ресурсов.
+
 [🔄 К содержанию - главы](#инициализация-браузера-python-глава)
 [🔼 К содержанию](#content)
 
