@@ -2214,7 +2214,7 @@ void testString() {
 #### Работа с коллекциями
 
 ```java
-List<String> fruits = Arrays.asList("apple", "banana", "cherry");
+List<String> fruits = Arrays.asList("apple", "banana", "cherry"); 
 
 assertThat(fruits)
     .hasSize(3)
