@@ -2324,7 +2324,7 @@ def take_screenshot_in_headless(driver, filename="screenshot.png"):
     original_size = driver.get_window_size()
     
     # Получение высоты страницы
-    total_height = driver.execute_script("return document.body.scrollHeight")
+    total_height = driver.execute_script("return document.body.scrollHeight") 
     
     # Скриншот видимой области
     driver.save_screenshot(filename)
