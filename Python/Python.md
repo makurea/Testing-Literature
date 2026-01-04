@@ -4024,7 +4024,7 @@ Python позволяет создавать классы не только че
 ##### Page Object Model как паттерн
 | Компонент | Реализуемые паттерны | Преимущества |
 |-----------|----------------------|--------------|
-| **Page Objects** | Facade (для страницы), Builder (для данных) | Инкапсуляция деталей страницы |
+| **Page Objects** | Facade (для страницы), Builder (для данных) | Инкапсуляция деталей страницы | 
 | **Page Factory** | Factory Method, Abstract Factory | Создание page objects |
 | **Page Elements** | Composite, Proxy | Иерархия элементов |
 
