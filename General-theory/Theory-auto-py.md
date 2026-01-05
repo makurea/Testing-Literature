@@ -3612,7 +3612,7 @@ Explicit Wait с Expected Conditions — стандарт де-факто для
 
 ---
 
-### Fluent Wait аналог в Python <a id="fluent-wait-python"></a>
+### Fluent Wait аналог в Python <a id="fluent-wait-python"></a> 
 
 **Fluent Wait** — гибкий механизм ожидания с настраиваемыми интервалами проверки и обработкой исключений.
 
