@@ -3749,7 +3749,7 @@ User-Agent: Mozilla/5.0
 Accept: text/html
 ```
 
-Если это POST запрос, то тело может содержать данные:
+Если это POST запрос, то тело может содержать данные: 
 
 ```http
 POST /path/to/resource HTTP/1.1
