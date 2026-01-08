@@ -3197,7 +3197,7 @@ WSDL — это XML-документ, который описывает:
  - Где находится сервис? (Endpoint URL)
  - Какие методы можно вызывать? (Operations)
  - Какие параметры принимает метод? (Messages, Types)
- - Как вызывать методы? (Binding – SOAP over HTTP, SOAP over JMS и т. д.)
+ - Как вызывать методы? (Binding – SOAP over HTTP, SOAP over JMS и т. д.) 
 
 **Структура WSDL:**
 ```xml
