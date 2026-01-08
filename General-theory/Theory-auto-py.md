@@ -2453,7 +2453,7 @@ def test_headless_compatibility(headless_driver):
     if is_headless:
         print("Тест выполнен в headless режиме")
     else:
-        print("Тест выполнен в обычном режиме")
+        print("Тест выполнен в обычном режиме") 
 ```
 
 #### Лучшие практики для headless режима
