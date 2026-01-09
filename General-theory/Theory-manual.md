@@ -3457,7 +3457,7 @@ jobs:
       - name: Install Dredd
         run: npm install -g dredd
       - name: Run Dredd tests
-        run: dredd api.yaml http://localhost:8080
+        run: dredd api.yaml http://localhost:8080 
 ```
 [🔄 К содержанию - главы](#api-раздел-глава)   
 [🔼 К содержанию](#content)
