@@ -3685,7 +3685,7 @@ VPN используется для:
 
 ---
 
-## ▶️ HTTP  <a id="http-и-сети"></a>
+## ▶️ HTTP  <a id="http-и-сети"></a> 
 
 
 ###  HTTP и HTTPS <a id="http"></a>
