@@ -6394,6 +6394,514 @@ Allure с pytest создает профессиональную систему 
 
 ### Метрики: Prometheus + Python <a id="metrics-python"></a>
 
+**Prometheus + Python** — система мониторинга и сбора метрик для отслеживания производительности и состояния тестовых систем.
+
+#### Основные концепции Prometheus
+
+##### Компоненты экосистемы
+| Компонент | Назначение | Аналогия |
+|-----------|------------|----------|
+| **Prometheus Server** | Сбор и хранение метрик | База данных временных рядов |
+| **Client Libraries** | Инструменты для экспорта метрик | Библиотеки на разных языках |
+| **Exporters** | Конвертеры метрик из других систем | Адаптеры |
+| **Alertmanager** | Управление алертами | Система оповещений |
+| **Grafana** | Визуализация метрик | Дашборды и графики |
+
+##### Типы метрик
+| Тип метрики | Описание | Пример использования |
+|-------------|----------|----------------------|
+| **Counter** | Монотонно возрастающий счетчик | Количество запросов, ошибок |
+| **Gauge** | Значение, которое может увеличиваться и уменьшаться | Использование памяти, температура |
+| **Histogram** | Распределение значений в бакетах | Время ответа, размер запросов |
+| **Summary** | Процентили и сумма значений | Аналогично histogram, но на стороне клиента |
+
+#### Установка и настройка
+
+##### Библиотеки Python
+| Библиотека | Назначение | Установка |
+|------------|------------|-----------|
+| **prometheus-client** | Основная библиотека | `pip install prometheus-client` |
+| **prometheus-flask-exporter** | Для Flask приложений | `pip install prometheus-flask-exporter` |
+| **django-prometheus** | Для Django проектов | `pip install django-prometheus` |
+
+##### Базовый экспорт метрик
+```python
+from prometheus_client import start_http_server, Counter, Gauge, Histogram
+
+# Запуск HTTP сервера для экспорта метрик
+start_http_server(8000)
+
+# Определение метрик
+REQUEST_COUNT = Counter('http_requests_total', 'Total HTTP requests')
+ACTIVE_USERS = Gauge('active_users', 'Number of active users')
+REQUEST_LATENCY = Histogram('http_request_duration_seconds', 'HTTP request latency')
+
+# Использование в коде
+REQUEST_COUNT.inc()  # Увеличить счетчик
+ACTIVE_USERS.set(42)  # Установить значение
+with REQUEST_LATENCY.time():  # Измерение времени
+    process_request()
+```
+
+#### Метрики для тестовой автоматизации
+
+##### Метрики производительности тестов
+| Метрика | Тип | Что измеряет |
+|---------|-----|-------------|
+| **test_execution_duration** | Histogram | Время выполнения тестов |
+| **test_total** | Counter | Общее количество тестов |
+| **test_passed/failed/skipped** | Counter | Результаты тестов |
+| **test_retry_count** | Counter | Количество повторных запусков |
+
+##### Метрики инфраструктуры
+| Метрика | Тип | Что измеряет |
+|---------|-----|-------------|
+| **selenium_session_active** | Gauge | Активные сессии Selenium |
+| **api_request_duration** | Histogram | Время ответа API |
+| **memory_usage_bytes** | Gauge | Использование памяти |
+| **cpu_usage_percent** | Gauge | Использование CPU |
+
+#### Интеграция с pytest
+
+##### Кастомные метрики для тестов
+```python
+import pytest
+from prometheus_client import Counter, Histogram, Gauge
+import time
+
+# Определение метрик
+TESTS_TOTAL = Counter('pytest_tests_total', 'Total tests executed', ['result'])
+TEST_DURATION = Histogram('pytest_test_duration_seconds', 'Test execution duration')
+TESTS_RUNNING = Gauge('pytest_tests_running', 'Number of currently running tests')
+
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    """Сбор метрик о выполнении тестов"""
+    start_time = time.time()
+    TESTS_RUNNING.inc()
+    
+    outcome = yield
+    report = outcome.get_result()
+    
+    duration = time.time() - start_time
+    TEST_DURATION.observe(duration)
+    TESTS_RUNNING.dec()
+    
+    if report.when == "call":
+        result = report.outcome  # passed, failed, skipped
+        TESTS_TOTAL.labels(result=result).inc()
+```
+
+##### Фикстуры для метрик
+```python
+import pytest
+from prometheus_client import Counter
+
+@pytest.fixture
+def test_metrics(request):
+    """Фикстура для сбора метрик теста"""
+    test_name = request.node.name
+    test_module = request.node.module.__name__
+    
+    metrics = {
+        'start_time': time.time(),
+        'test_name': test_name,
+        'test_module': test_module
+    }
+    
+    yield metrics
+    
+    # После теста
+    duration = time.time() - metrics['start_time']
+    TEST_DURATION.labels(
+        test_name=test_name,
+        module=test_module
+    ).observe(duration)
+
+def test_example(test_metrics):
+    # Тест использует метрики
+    result = some_operation()
+    assert result == expected
+```
+
+#### Продвинутые техники
+
+##### Метрики для Selenium/Playwright тестов
+```python
+from selenium import webdriver
+from prometheus_client import Histogram, Counter
+
+class InstrumentedWebDriver:
+    """Обертка WebDriver с метриками"""
+    
+    def __init__(self, driver):
+        self.driver = driver
+        
+        # Метрики
+        self.page_load_time = Histogram(
+            'selenium_page_load_seconds',
+            'Page load time',
+            ['url']
+        )
+        self.element_find_time = Histogram(
+            'selenium_element_find_seconds',
+            'Element find time'
+        )
+        self.actions_count = Counter(
+            'selenium_actions_total',
+            'Total Selenium actions',
+            ['action_type']
+        )
+    
+    def get(self, url):
+        with self.page_load_time.labels(url=url).time():
+            self.driver.get(url)
+        self.actions_count.labels(action_type='navigate').inc()
+    
+    def find_element(self, by, value):
+        with self.element_find_time.time():
+            element = self.driver.find_element(by, value)
+        self.actions_count.labels(action_type='find_element').inc()
+        return element
+```
+
+##### Метрики для API тестирования
+```python
+import requests
+from prometheus_client import Histogram, Counter
+
+class InstrumentedAPIClient:
+    """API клиент с метриками"""
+    
+    def __init__(self):
+        self.session = requests.Session()
+        
+        # Метрики API
+        self.request_duration = Histogram(
+            'api_request_duration_seconds',
+            'API request duration',
+            ['method', 'endpoint', 'status']
+        )
+        self.request_total = Counter(
+            'api_requests_total',
+            'Total API requests',
+            ['method', 'endpoint', 'status']
+        )
+    
+    def request(self, method, url, **kwargs):
+        start_time = time.time()
+        
+        try:
+            response = self.session.request(method, url, **kwargs)
+            status = response.status_code
+        except Exception as e:
+            status = 'error'
+            raise
+        finally:
+            duration = time.time() - start_time
+            
+            # Извлечение endpoint из URL
+            endpoint = self._extract_endpoint(url)
+            
+            self.request_duration.labels(
+                method=method.upper(),
+                endpoint=endpoint,
+                status=status
+            ).observe(duration)
+            
+            self.request_total.labels(
+                method=method.upper(),
+                endpoint=endpoint,
+                status=status
+            ).inc()
+        
+        return response
+    
+    def _extract_endpoint(self, url):
+        """Извлечение endpoint из полного URL"""
+        # Упрощенная реализация
+        parsed = urlparse(url)
+        return parsed.path
+```
+
+#### Визуализация метрик
+
+##### Дашборды Grafana
+| Панель | Отображаемые метрики | Назначение |
+|--------|---------------------|------------|
+| **Общая статистика** | test_total, test_passed, test_failed | Обзор результатов тестирования |
+| **Время выполнения** | test_duration_seconds | Анализ производительности тестов |
+| **Инфраструктура** | selenium_sessions, memory_usage | Мониторинг тестовой среды |
+| **API производительность** | api_request_duration, api_requests_total | Мониторинг API |
+
+##### Пример запросов PromQL
+| Запрос | Что показывает | Использование |
+|--------|----------------|---------------|
+| `rate(test_total[5m])` | Скорость выполнения тестов | Нагрузка на тестовую систему |
+| `histogram_quantile(0.95, test_duration_seconds)` | 95-й перцентиль времени тестов | Целевые показатели производительности |
+| `sum(rate(test_failed[1h])) / sum(rate(test_total[1h]))` | Процент падений тестов | Стабильность тестовой базы |
+
+#### Интеграция с CI/CD
+
+##### Метрики в Jenkins/GitLab CI
+```python
+# Скрипт для экспорта метрик в CI
+import os
+from prometheus_client import push_to_gateway
+from prometheus_client.exposition import basic_auth_handler
+
+def push_ci_metrics():
+    """Отправка метрик в Prometheus PushGateway из CI"""
+    
+    job_name = os.getenv('CI_JOB_NAME', 'unknown')
+    pipeline_id = os.getenv('CI_PIPELINE_ID', '0')
+    
+    # Создание метрик CI
+    ci_duration = Histogram('ci_job_duration_seconds', 'CI job duration')
+    ci_duration.observe(get_job_duration())
+    
+    # Аутентификация
+    def auth_handler(url, method, timeout, headers, data):
+        username = os.getenv('PROMETHEUS_USER')
+        password = os.getenv('PROMETHEUS_PASSWORD')
+        return basic_auth_handler(url, method, timeout, headers, data, username, password)
+    
+    # Отправка метрик
+    push_to_gateway(
+        'prometheus-pushgateway:9091',
+        job=f'ci_job_{job_name}',
+        registry=REGISTRY,
+        handler=auth_handler
+    )
+```
+
+##### Метрики для параллельного тестирования
+```python
+from prometheus_client import Gauge, Counter
+import threading
+
+class ParallelTestMetrics:
+    """Метрики для параллельного выполнения тестов"""
+    
+    def __init__(self):
+        self.lock = threading.Lock()
+        
+        self.tests_running = Gauge(
+            'parallel_tests_running',
+            'Number of tests running in parallel'
+        )
+        self.workers_active = Gauge(
+            'test_workers_active',
+            'Number of active test workers'
+        )
+        self.queue_size = Gauge(
+            'test_queue_size',
+            'Size of test execution queue'
+        )
+    
+    def test_started(self):
+        with self.lock:
+            self.tests_running.inc()
+    
+    def test_finished(self):
+        with self.lock:
+            self.tests_running.dec()
+    
+    def update_queue(self, size):
+        self.queue_size.set(size)
+```
+
+#### Best Practices
+
+##### Организация метрик
+| Практика | Рекомендация | Пример |
+|----------|--------------|--------|
+| **Именование метрик** | Использовать snake_case | `http_requests_total` |
+| **Лейблы vs отдельные метрики** | Лейблы для измерений, отдельные метрики для разных сущностей | `api_requests_total{method="GET"}` |
+| **Документация метрик** | HELP текст для каждой метрики | Описание в Counter/Histogram |
+| **Избегать high cardinality** | Ограничивать количество уникальных лейблов | Не использовать user_id как лейбл |
+
+##### Производительность
+| Аспект | Рекомендация | Обоснование |
+|---------|--------------|-------------|
+| **Батчинг метрик** | Группировка обновлений | Снижение нагрузки |
+| **Асинхронный экспорт** | Отдельный поток для отправки | Не блокировать основной поток |
+| **Локальное агрегирование** | Агрегация перед экспортом | Уменьшение объема данных |
+
+##### Безопасность
+| Мера | Реализация | Защита от |
+|------|------------|-----------|
+| **Аутентификация** | Basic Auth, токены | Неавторизованного доступа |
+| **Firewall правила** | Ограничение доступа к порту | Сканирования сети |
+| **Шифрование** | HTTPS для удаленного доступа | Перехвата трафика |
+
+#### Мониторинг тестового окружения
+
+##### Комплексный мониторинг
+```python
+class TestEnvironmentMonitor:
+    """Мониторинг всей тестовой инфраструктуры"""
+    
+    def __init__(self):
+        # Метрики Selenium Grid/Selenoid
+        self.browser_sessions = Gauge(
+            'browser_sessions_active',
+            'Active browser sessions',
+            ['browser', 'version']
+        )
+        
+        # Метрики базы данных
+        self.db_connections = Gauge(
+            'database_connections',
+            'Database connections'
+        )
+        
+        # Метрики очереди тестов
+        self.test_queue = Gauge(
+            'test_queue_size',
+            'Pending tests in queue'
+        )
+        
+        # Запуск периодического обновления
+        self._start_monitoring()
+    
+    def _start_monitoring(self):
+        """Запуск фонового обновления метрик"""
+        import threading
+        
+        def update_metrics():
+            while True:
+                self._update_browser_metrics()
+                self._update_database_metrics()
+                self._update_queue_metrics()
+                time.sleep(30)  # Обновление каждые 30 секунд
+        
+        thread = threading.Thread(target=update_metrics, daemon=True)
+        thread.start()
+```
+
+#### Алертинг на основе метрик
+
+##### Правила алертинга Prometheus
+```yaml
+# alert_rules.yml
+groups:
+  - name: test_alerts
+    rules:
+      - alert: HighTestFailureRate
+        expr: rate(test_failed_total[5m]) / rate(test_total[5m]) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Высокий процент падений тестов"
+          description: "За последние 5 минут упало более 10% тестов"
+      
+      - alert: LongTestExecution
+        expr: histogram_quantile(0.95, test_duration_seconds) > 30
+        for: 10m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Долгое выполнение тестов"
+          description: "95% тестов выполняются дольше 30 секунд"
+      
+      - alert: SeleniumGridUnhealthy
+        expr: up{job="selenium-grid"} == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Selenium Grid недоступен"
+          description: "Selenium Grid не отвечает более 2 минут"
+```
+
+##### Интеграция с системами уведомлений
+```python
+from prometheus_client import Gauge
+import requests
+
+class AlertManagerIntegration:
+    """Интеграция с Alertmanager для кастомных алертов"""
+    
+    def __init__(self, alertmanager_url):
+        self.alertmanager_url = alertmanager_url
+        
+        # Метрика для кастомных алертов
+        self.custom_alerts = Gauge(
+            'custom_test_alerts',
+            'Custom test alerts',
+            ['alert_name', 'severity']
+        )
+    
+    def send_test_failure_alert(self, test_name, error_message, severity='warning'):
+        """Отправка алерта о падении теста"""
+        
+        alert_data = {
+            "labels": {
+                "alertname": "TestFailure",
+                "test": test_name,
+                "severity": severity
+            },
+            "annotations": {
+                "summary": f"Test {test_name} failed",
+                "description": error_message
+            }
+        }
+        
+        # Отправка в Alertmanager
+        response = requests.post(
+            f"{self.alertmanager_url}/api/v1/alerts",
+            json=[alert_data]
+        )
+        
+        # Обновление метрики
+        self.custom_alerts.labels(
+            alert_name='TestFailure',
+            severity=severity
+        ).inc()
+```
+
+#### Анализ и оптимизация на основе метрик
+
+##### Выявление проблемных тестов
+```python
+def analyze_test_performance(metrics_data):
+    """Анализ производительности тестов на основе метрик"""
+    
+    # Нахождение самых медленных тестов
+    slow_tests = metrics_data.query(
+        'metric_name == "test_duration_seconds"'
+    ).nlargest(10, 'value')
+    
+    # Нахождение нестабильных тестов
+    failure_rates = metrics_data.groupby('test_name').agg({
+        'passed': 'sum',
+        'failed': 'sum'
+    })
+    failure_rates['failure_rate'] = failure_rates['failed'] / (
+        failure_rates['passed'] + failure_rates['failed']
+    )
+    
+    unstable_tests = failure_rates.nlargest(10, 'failure_rate')
+    
+    return {
+        'slow_tests': slow_tests,
+        'unstable_tests': unstable_tests
+    }
+```
+
+##### Оптимизация на основе данных
+| Метрика | Анализ | Действие по оптимизации |
+|---------|--------|-------------------------|
+| **test_duration_seconds** | Перцентили времени выполнения | Параллелизация медленных тестов |
+| **selenium_element_find_time** | Время поиска элементов | Оптимизация локаторов, кэширование |
+| **api_request_duration** | Время ответа API | Кэширование, оптимизация запросов |
+| **memory_usage_bytes** | Использование памяти | Оптимизация фикстур, cleanup |
+
+**Ключевой вывод:**
+Prometheus с Python предоставляет мощную систему мониторинга для тестовой автоматизации. Сбор и анализ метрик позволяет не только отслеживать состояние тестовой инфраструктуры, но и оптимизировать производительность, повышать стабильность и прогнозировать проблемы до их возникновения.
+
 [🔄 К содержанию - главы](#логеры-python-глава)
 [🔼 К содержанию](#content)
 
