@@ -6912,6 +6912,557 @@ Prometheus с Python предоставляет мощную систему мо
 
 ### Appium Python Client <a id="appium-python"></a>
 
+**Appium Python Client** — библиотека для автоматизации мобильных приложений на iOS и Android через протокол WebDriver.
+
+#### Архитектура Appium
+
+| Компонент | Назначение | Аналогия в веб |
+|-----------|------------|----------------|
+| **Appium Server** | Сервер, управляющий устройствами | Selenium Grid/Hub |
+| **Appium Client** | Библиотека для отправки команд | Selenium WebDriver |
+| **XCUITest/UIAutomator2** | Нативные фреймворки автоматизации | Browser engines |
+| **ADB/Xcode** | Инструменты для работы с устройствами | Browser drivers |
+
+#### Установка и настройка
+
+##### Требуемые компоненты
+| Компонент | Назначение | Установка |
+|-----------|------------|-----------|
+| **Appium Python Client** | Клиентская библиотека | `pip install Appium-Python-Client` |
+| **Appium Server** | Сервер автоматизации | `npm install -g appium` |
+| **Android SDK/ADB** | Для Android устройств | Android Studio или standalone |
+| **Xcode** | Для iOS устройств | Mac App Store |
+| **Node.js** | Для запуска Appium Server | nodejs.org |
+
+##### Базовый скрипт запуска
+```python
+from appium import webdriver
+from appium.webdriver.common.appiumby import AppiumBy
+
+desired_caps = {
+    'platformName': 'Android',
+    'platformVersion': '11.0',
+    'deviceName': 'Android Emulator',
+    'app': '/path/to/app.apk',
+    'automationName': 'UiAutomator2'
+}
+
+driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
+```
+
+#### Capabilities для мобильных устройств
+
+##### Общие capabilities
+| Capability | Описание | Пример |
+|------------|----------|--------|
+| **platformName** | Платформа (Android/iOS) | `'Android'`, `'iOS'` |
+| **platformVersion** | Версия ОС | `'11.0'`, `'14.0'` |
+| **deviceName** | Имя устройства/эмулятора | `'Pixel 4'`, `'iPhone 12'` |
+| **app** | Путь к приложению | `'/path/app.apk'` |
+| **automationName** | Движок автоматизации | `'UiAutomator2'`, `'XCUITest'` |
+
+##### Android-specific capabilities
+| Capability | Назначение | Пример |
+|------------|------------|--------|
+| **appPackage** | Пакет приложения | `'com.example.app'` |
+| **appActivity** | Активность для запуска | `'.MainActivity'` |
+| **noReset** | Не сбрасывать данные приложения | `True`/`False` |
+| **fullReset** | Полный сброс приложения | `True`/`False` |
+| **adbPort** | Порт ADB сервера | `5037` |
+
+##### iOS-specific capabilities
+| Capability | Назначение | Пример |
+|------------|------------|--------|
+| **bundleId** | Bundle ID приложения | `'com.example.app'` |
+| **udid** | Уникальный ID устройства | `'abc123...'` |
+| **xcodeOrgId** | Team ID для подписи | `'ABC123DEF4'` |
+| **xcodeSigningId** | Signing ID | `'iPhone Developer'` |
+| **wdaLocalPort** | Порт WebDriverAgent | `8100` |
+
+#### Поиск элементов
+
+##### Типы локаторов
+| Локатор | Описание | Пример |
+|---------|----------|--------|
+| **ID** | По resource-id (Android) / accessibility-id (iOS) | `'com.example:id/button'` |
+| **Accessibility ID** | По accessibility identifier | `'login_button'` |
+| **Class Name** | По классу элемента | `'android.widget.Button'` |
+| **XPath** | XPath выражение | `'//android.widget.Button[@text="Login"]'` |
+| **Android UIAutomator** | UiAutomator селектор | `'new UiSelector().text("Login")'` |
+| **iOS Predicate String** | iOS предикат | `'label == "Login"'` |
+
+##### Примеры поиска
+```python
+from appium.webdriver.common.appiumby import AppiumBy
+
+# По ID (resource-id/accessibility-id)
+element = driver.find_element(AppiumBy.ID, 'login_button')
+
+# По accessibility-id
+element = driver.find_element(AppiumBy.ACCESSIBILITY_ID, 'Login')
+
+# По XPath
+element = driver.find_element(AppiumBy.XPATH, '//Button[@text="Login"]')
+
+# Android UiAutomator
+element = driver.find_element(
+    AppiumBy.ANDROID_UIAUTOMATOR,
+    'new UiSelector().text("Login")'
+)
+
+# iOS Predicate
+element = driver.find_element(
+    AppiumBy.IOS_PREDICATE,
+    'label == "Login"'
+)
+```
+
+#### Взаимодействие с элементами
+
+##### Базовые действия
+| Действие | Метод | Пример |
+|----------|-------|--------|
+| **Клик** | `click()` | `element.click()` |
+| **Ввод текста** | `send_keys()` | `field.send_keys('text')` |
+| **Очистка поля** | `clear()` | `field.clear()` |
+| **Получение текста** | `text` атрибут | `element.text` |
+| **Проверка видимости** | `is_displayed()` | `element.is_displayed()` |
+
+##### Мобильные жесты
+| Жест | Метод | Описание |
+|------|-------|----------|
+| **Tap** | `tap()` | Касание в точке |
+| **Swipe** | `swipe()` | Свайп по экрану |
+| **Scroll** | `scroll()` | Прокрутка к элементу |
+| **Drag and drop** | `drag_and_drop()` | Перетаскивание |
+| **Multi-touch** | `MultiAction()` | Мультитач жесты |
+
+##### Примеры жестов
+```python
+from appium.webdriver.common.touch_action import TouchAction
+
+# Tap по координатам
+action = TouchAction(driver)
+action.tap(x=100, y=200).perform()
+
+# Длинный tap (удержание)
+action.long_press(x=100, y=200, duration=2000).perform()
+
+# Свайп
+driver.swipe(start_x=100, start_y=500, 
+             end_x=100, end_y=100, duration=800)
+
+# Scroll к элементу
+driver.scroll(origin_el=element1, destination_el=element2)
+
+# Multi-touch
+from appium.webdriver.common.multi_action import MultiAction
+
+action1 = TouchAction(driver).tap(x=100, y=100)
+action2 = TouchAction(driver).tap(x=200, y=200)
+
+multi_action = MultiAction(driver)
+multi_action.add(action1, action2)
+multi_action.perform()
+```
+
+#### Работа с контекстами
+
+##### WebView и нативный контекст
+| Контекст | Описание | Когда используется |
+|----------|----------|-------------------|
+| **NATIVE_APP** | Нативный контекст приложения | Работа с нативными элементами |
+| **WEBVIEW_* ** | WebView контекст | Работа с веб-контентом в приложении |
+
+##### Переключение контекстов
+```python
+# Получение всех доступных контекстов
+contexts = driver.contexts
+print(f"Доступные контексты: {contexts}")
+
+# Текущий контекст
+current_context = driver.context
+print(f"Текущий контекст: {current_context}")
+
+# Переключение на WebView
+for context in contexts:
+    if 'WEBVIEW' in context:
+        driver.switch_to.context(context)
+        break
+
+# Возврат к нативному контексту
+driver.switch_to.context('NATIVE_APP')
+```
+
+#### Специфичные мобильные возможности
+
+##### Управление устройством
+| Возможность | Метод | Описание |
+|-------------|-------|----------|
+| **Ориентация** | `orientation` | Портрет/ландшафт |
+| **Скрытие клавиатуры** | `hide_keyboard()` | Скрытие клавиатуры |
+| **Скриншот** | `get_screenshot_as_file()` | Сохранение скриншота |
+| **Запуск приложения** | `launch_app()` | Запуск приложения |
+| **Закрытие приложения** | `close_app()` | Закрытие приложения |
+
+##### Примеры управления
+```python
+# Изменение ориентации
+driver.orientation = 'LANDSCAPE'
+driver.orientation = 'PORTRAIT'
+
+# Работа с клавиатурой
+element.send_keys('text')
+driver.hide_keyboard()  # Android
+driver.hide_keyboard('tapOutside')  # iOS
+
+# Скриншот
+driver.get_screenshot_as_file('screenshot.png')
+
+# Управление приложением
+driver.close_app()
+driver.launch_app()
+
+# Фоновый режим
+driver.background_app(5)  # Перевести в фон на 5 секунд
+```
+
+##### Работа с уведомлениями
+```python
+# Android уведомления
+driver.open_notifications()
+
+# iOS уведомления (через Siri)
+driver.execute_script('mobile: alert', {
+    'action': 'accept',
+    'buttonLabel': 'OK'
+})
+```
+
+#### Page Object Model для мобильных тестов
+
+##### Структура проекта
+```
+tests/
+├── pages/
+│   ├── base_page.py
+│   ├── login_page.py
+│   └── home_page.py
+├── locators/
+│   ├── android/
+│   │   ├── login_locators.py
+│   │   └── home_locators.py
+│   └── ios/
+│       ├── login_locators.py
+│       └── home_locators.py
+├── tests/
+│   ├── test_login.py
+│   └── test_home.py
+└── conftest.py
+```
+
+##### Пример Page Object
+```python
+from appium.webdriver.common.appiumby import AppiumBy
+from appium.webdriver.webdriver import WebDriver
+
+class LoginPage:
+    def __init__(self, driver: WebDriver):
+        self.driver = driver
+    
+    # Локаторы
+    USERNAME_FIELD = (AppiumBy.ACCESSIBILITY_ID, 'username_field')
+    PASSWORD_FIELD = (AppiumBy.ACCESSIBILITY_ID, 'password_field')
+    LOGIN_BUTTON = (AppiumBy.ACCESSIBILITY_ID, 'login_button')
+    ERROR_MESSAGE = (AppiumBy.ID, 'error_message')
+    
+    # Методы
+    def enter_username(self, username):
+        self.driver.find_element(*self.USERNAME_FIELD).send_keys(username)
+    
+    def enter_password(self, password):
+        self.driver.find_element(*self.PASSWORD_FIELD).send_keys(password)
+    
+    def click_login(self):
+        self.driver.find_element(*self.LOGIN_BUTTON).click()
+    
+    def get_error_message(self):
+        return self.driver.find_element(*self.ERROR_MESSAGE).text
+    
+    def login(self, username, password):
+        self.enter_username(username)
+        self.enter_password(password)
+        self.click_login()
+```
+
+#### Интеграция с pytest
+
+##### Фикстуры для Appium
+```python
+import pytest
+from appium import webdriver
+
+@pytest.fixture(scope="session")
+def appium_driver():
+    """Фикстура для создания драйвера Appium"""
+    
+    capabilities = {
+        'platformName': 'Android',
+        'platformVersion': '11.0',
+        'deviceName': 'Android Emulator',
+        'app': 'app/build/outputs/apk/debug/app-debug.apk',
+        'automationName': 'UiAutomator2',
+        'noReset': True
+    }
+    
+    driver = webdriver.Remote('http://localhost:4723/wd/hub', capabilities)
+    
+    yield driver
+    
+    driver.quit()
+
+@pytest.fixture
+def login_page(appium_driver):
+    """Фикстура для Page Object"""
+    from pages.login_page import LoginPage
+    return LoginPage(appium_driver)
+```
+
+##### Параметризация по платформам
+```python
+import pytest
+
+@pytest.fixture(params=['android', 'ios'])
+def platform_driver(request):
+    """Фикстура для тестирования на разных платформах"""
+    
+    if request.param == 'android':
+        capabilities = {
+            'platformName': 'Android',
+            'platformVersion': '11.0',
+            'deviceName': 'Android Emulator',
+            'app': 'app/android/app-debug.apk',
+            'automationName': 'UiAutomator2'
+        }
+    else:  # ios
+        capabilities = {
+            'platformName': 'iOS',
+            'platformVersion': '14.0',
+            'deviceName': 'iPhone 12',
+            'app': 'app/ios/app.app',
+            'automationName': 'XCUITest',
+            'udid': 'auto'
+        }
+    
+    driver = webdriver.Remote('http://localhost:4723/wd/hub', capabilities)
+    
+    yield driver, request.param
+    
+    driver.quit()
+
+def test_cross_platform_login(platform_driver):
+    driver, platform = platform_driver
+    # Тест будет запущен дважды: для Android и iOS
+    login_page = LoginPage(driver)
+    login_page.login('user', 'pass')
+    assert login_page.is_logged_in()
+```
+
+#### Best Practices
+
+##### Надежность тестов
+| Практика | Реализация | Преимущество |
+|----------|------------|--------------|
+| **Явные ожидания** | WebDriverWait для мобильных элементов | Стабильность тестов |
+| **Уникальные локаторы** | Использование accessibility-id и resource-id | Надежность поиска |
+| **Повторные попытки** | Retry декораторы для неустойчивых операций | Устойчивость к флаккам |
+| **Логирование действий** | Подробное логирование каждого шага | Упрощение отладки |
+
+##### Производительность
+| Оптимизация | Метод | Эффект |
+|-------------|-------|--------|
+| **Кэширование элементов** | Сохранение найденных элементов | Ускорение повторных операций |
+| **Оптимизация жестов** | Использование координат вместо поиска | Быстрое выполнение действий |
+| **Параллельный запуск** | Использование нескольких устройств | Сокращение времени тестирования |
+
+##### Поддержка разных устройств
+```python
+class DeviceAwareDriver:
+    """Драйвер с учетом особенностей устройства"""
+    
+    def __init__(self, driver, platform, device_info):
+        self.driver = driver
+        self.platform = platform
+        self.device_info = device_info
+        self.screen_size = driver.get_window_size()
+    
+    def tap(self, element):
+        """Tap с учетом плотности пикселей устройства"""
+        if self.platform == 'android':
+            # Android-specific tap
+            location = element.location
+            size = element.size
+            x = location['x'] + size['width'] // 2
+            y = location['y'] + size['height'] // 2
+            TouchAction(self.driver).tap(x=x, y=y).perform()
+        else:
+            # iOS tap
+            element.click()
+    
+    def swipe_up(self):
+        """Универсальный swipe up"""
+        width = self.screen_size['width']
+        height = self.screen_size['height']
+        
+        start_x = width // 2
+        start_y = height * 0.8
+        end_x = width // 2
+        end_y = height * 0.2
+        
+        self.driver.swipe(start_x, start_y, end_x, end_y, 1000)
+```
+
+#### Работа с эмуляторами/симуляторами
+
+##### Управление эмуляторами
+```python
+import subprocess
+import time
+
+class EmulatorManager:
+    """Управление Android эмуляторами"""
+    
+    def start_emulator(self, avd_name):
+        """Запуск эмулятора"""
+        cmd = f'emulator -avd {avd_name} -no-snapshot-load'
+        subprocess.Popen(cmd.split(), stdout=subprocess.DEVNULL)
+        
+        # Ожидание загрузки
+        time.sleep(30)
+        self.wait_for_boot_complete()
+    
+    def wait_for_boot_complete(self):
+        """Ожидание загрузки эмулятора"""
+        cmd = 'adb wait-for-device'
+        subprocess.run(cmd.split())
+        
+        # Проверка загрузки системы
+        while True:
+            result = subprocess.run(
+                ['adb', 'shell', 'getprop', 'sys.boot_completed'],
+                capture_output=True,
+                text=True
+            )
+            if result.stdout.strip() == '1':
+                break
+            time.sleep(5)
+    
+    def stop_emulator(self):
+        """Остановка эмулятора"""
+        subprocess.run(['adb', 'emu', 'kill'])
+```
+
+#### Расширенные возможности
+
+##### Работа с файлами на устройстве
+```python
+# Android - через ADB
+import subprocess
+
+def push_file_to_device(local_path, device_path):
+    """Копирование файла на устройство"""
+    subprocess.run(['adb', 'push', local_path, device_path])
+
+def pull_file_from_device(device_path, local_path):
+    """Копирование файла с устройства"""
+    subprocess.run(['adb', 'pull', device_path, local_path])
+
+# iOS - через WDA
+def ios_file_operations():
+    """Операции с файлами на iOS"""
+    # Установка файлов через iTunes (только для симулятора)
+    pass
+```
+
+##### Запись видео выполнения тестов
+```python
+class VideoRecorder:
+    """Запись видео выполнения тестов"""
+    
+    def __init__(self, driver, platform):
+        self.driver = driver
+        self.platform = platform
+        self.recording = False
+    
+    def start_recording(self, filename='test_recording.mp4'):
+        """Начало записи видео"""
+        if self.platform == 'android':
+            self.driver.start_recording_screen()
+        elif self.platform == 'ios':
+            self.driver.start_recording_screen(
+                videoType='libx264',
+                timeLimit=600
+            )
+        self.recording = True
+        self.filename = filename
+    
+    def stop_recording(self):
+        """Остановка записи и сохранение видео"""
+        if not self.recording:
+            return
+        
+        video_data = self.driver.stop_recording_screen()
+        
+        # Сохранение видео в файл
+        with open(self.filename, 'wb') as f:
+            f.write(base64.b64decode(video_data))
+        
+        self.recording = False
+```
+
+#### Отладка и логирование
+
+##### Appium Server логи
+```python
+import subprocess
+import threading
+
+class AppiumServer:
+    """Управление сервером Appium с логированием"""
+    
+    def start(self, port=4723):
+        """Запуск сервера Appium в отдельном потоке"""
+        cmd = f'appium --port {port} --log-timestamp --local-timezone'
+        
+        def run_server():
+            self.process = subprocess.Popen(
+                cmd.split(),
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True
+            )
+            
+            # Логирование вывода сервера
+            with open('appium_server.log', 'a') as log_file:
+                for line in iter(self.process.stdout.readline, ''):
+                    log_file.write(line)
+                    print(f"[Appium] {line.strip()}")
+        
+        thread = threading.Thread(target=run_server, daemon=True)
+        thread.start()
+        
+        # Ожидание запуска сервера
+        time.sleep(5)
+    
+    def stop(self):
+        """Остановка сервера Appium"""
+        if hasattr(self, 'process'):
+            self.process.terminate()
+```
+
+**Ключевой вывод:**
+Appium Python Client предоставляет мощный инструментарий для автоматизации мобильных приложений. Понимание специфики мобильной автоматизации, правильное использование capabilities и локаторов, а также интеграция с pytest позволяют создавать надежные и поддерживаемые мобильные тесты.
+
 [🔄 К содержанию - главы](#мобильная-автоматизация-python-глава)
 [🔼 К содержанию](#content)
 
