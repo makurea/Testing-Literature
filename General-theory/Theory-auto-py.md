@@ -9545,7 +9545,7 @@ student_course = Table('student_course', Base.metadata,
     Column('course_id', Integer, ForeignKey('courses.id'))
 )
 
-class Student(Base):
+class Student(Base): 
     __tablename__ = 'students'
     
     id = Column(Integer, primary_key=True)
