@@ -7944,6 +7944,607 @@ def test_complete_flow_multilingual(appium_driver, language):
 
 ### Pytest + Appium интеграция <a id="pytest-appium"></a>
 
+**Pytest + Appium интеграция** — комбинация для создания структурированных, поддерживаемых и масштабируемых тестов мобильных приложений.
+
+#### Архитектура интеграции
+
+##### Компоненты тестового фреймворка
+| Компонент | Назначение | Пример |
+|-----------|------------|--------|
+| **Фикстуры** | Подготовка драйвера, страниц, данных | `@pytest.fixture def appium_driver()` |
+| **Маркеры** | Группировка и фильтрация тестов | `@pytest.mark.android`, `@pytest.mark.ios` |
+| **Параметризация** | Запуск тестов с разными данными | `@pytest.mark.parametrize` |
+| **Хуки** | Кастомизация процесса тестирования | `pytest_configure`, `pytest_runtest_makereport` |
+
+##### Структура проекта
+```
+tests/
+├── conftest.py              # Глобальные фикстуры
+├── pages/                   # Page Objects
+│   ├── base_page.py
+│   ├── login_page.py
+│   └── home_page.py
+├── locators/               # Локаторы
+│   ├── android/
+│   └── ios/
+├── fixtures/               # Дополнительные фикстуры
+│   ├── users.py
+│   └── devices.py
+├── test_cases/             # Тестовые сценарии
+│   ├── authentication/
+│   └── shopping/
+└── utils/                  # Утилиты
+    ├── appium_utils.py
+    └── reporting.py
+```
+
+#### Базовые фикстуры Appium
+
+##### Фикстура драйвера
+```python
+import pytest
+from appium import webdriver
+from appium.options.android import UiAutomator2Options
+from appium.options.ios import XCUITestOptions
+
+@pytest.fixture(scope="function")
+def android_driver():
+    """Фикстура для Android драйвера"""
+    options = UiAutomator2Options()
+    options.platform_name = 'Android'
+    options.platform_version = '11.0'
+    options.device_name = 'Android Emulator'
+    options.app = 'app/build/outputs/apk/debug/app-debug.apk'
+    options.automation_name = 'UiAutomator2'
+    options.no_reset = True
+    options.full_reset = False
+    
+    driver = webdriver.Remote('http://localhost:4723', options=options)
+    
+    yield driver
+    
+    # Очистка после теста
+    driver.quit()
+
+@pytest.fixture(scope="function")
+def ios_driver():
+    """Фикстура для iOS драйвера"""
+    options = XCUITestOptions()
+    options.platform_name = 'iOS'
+    options.platform_version = '14.0'
+    options.device_name = 'iPhone 12'
+    options.app = 'app/build/app.ipa'
+    options.automation_name = 'XCUITest'
+    options.no_reset = True
+    
+    driver = webdriver.Remote('http://localhost:4723', options=options)
+    
+    yield driver
+    
+    driver.quit()
+```
+
+##### Динамическая фикстура с параметризацией
+```python
+import pytest
+
+@pytest.fixture(params=['android', 'ios'])
+def appium_driver(request):
+    """Универсальная фикстура для обеих платформ"""
+    
+    if request.param == 'android':
+        capabilities = {
+            'platformName': 'Android',
+            'platformVersion': '11.0',
+            'deviceName': 'Android Emulator',
+            'app': 'app/android/app.apk',
+            'automationName': 'UiAutomator2',
+            'noReset': True
+        }
+    else:  # ios
+        capabilities = {
+            'platformName': 'iOS',
+            'platformVersion': '14.0',
+            'deviceName': 'iPhone 12',
+            'app': 'app/ios/app.app',
+            'automation_name': 'XCUITest',
+            'noReset': True
+        }
+    
+    driver = webdriver.Remote('http://localhost:4723/wd/hub', capabilities)
+    
+    yield driver, request.param  # Возвращаем драйвер и тип платформы
+    
+    driver.quit()
+
+# Использование в тесте
+def test_cross_platform(appium_driver):
+    driver, platform = appium_driver
+    # Тест работает для Android и iOS
+    assert driver.capabilities['platformName'].lower() == platform
+```
+
+#### Page Object фикстуры
+
+##### Фикстуры для Page Objects
+```python
+import pytest
+from pages.login_page import LoginPage
+from pages.home_page import HomePage
+
+@pytest.fixture
+def login_page(appium_driver):
+    """Фикстура для страницы логина"""
+    driver, platform = appium_driver
+    return LoginPage(driver, platform)
+
+@pytest.fixture
+def home_page(appium_driver):
+    """Фикстура для домашней страницы"""
+    driver, platform = appium_driver
+    return HomePage(driver, platform)
+
+@pytest.fixture
+def logged_in_user(login_page, home_page):
+    """Фикстура для предварительно залогиненного пользователя"""
+    login_page.login("testuser", "password123")
+    assert home_page.is_visible()
+    return home_page
+```
+
+#### Маркеры для категоризации тестов
+
+##### Кастомные маркеры
+```python
+# pytest.ini
+[pytest]
+markers =
+    smoke: Smoke tests
+    regression: Regression tests
+    android: Android specific tests
+    ios: iOS specific tests
+    wip: Work in progress
+    slow: Slow running tests
+```
+
+##### Использование маркеров
+```python
+import pytest
+
+@pytest.mark.smoke
+@pytest.mark.android
+def test_android_smoke_login(android_driver):
+    """Smoke тест для Android"""
+    login_page = LoginPage(android_driver)
+    login_page.login("user", "pass")
+    assert login_page.is_logged_in()
+
+@pytest.mark.regression
+@pytest.mark.ios
+@pytest.mark.slow
+def test_ios_regression_shopping_flow(ios_driver):
+    """Медленный regression тест для iOS"""
+    # Сложный сценарий покупки
+    pass
+
+@pytest.mark.wip
+def test_new_feature(appium_driver):
+    """Тест в разработке"""
+    pytest.skip("Feature still in development")
+```
+
+#### Параметризация тестов
+
+##### Параметризация данных
+```python
+import pytest
+
+@pytest.mark.parametrize("username,password,expected", [
+    ("valid_user", "correct_pass", True),
+    ("invalid_user", "wrong_pass", False),
+    ("", "", False),
+    ("user", "", False),
+    ("", "pass", False),
+])
+def test_login_combinations(login_page, username, password, expected):
+    """Тест логина с разными комбинациями"""
+    login_page.login(username, password)
+    assert login_page.is_logged_in() == expected
+
+@pytest.mark.parametrize("device", [
+    {"name": "Pixel 4", "version": "11.0"},
+    {"name": "Galaxy S21", "version": "12.0"},
+    {"name": "OnePlus 9", "version": "13.0"},
+])
+def test_on_different_devices(device):
+    """Тест на разных устройствах"""
+    capabilities = {
+        'platformName': 'Android',
+        'platformVersion': device['version'],
+        'deviceName': device['name'],
+        'app': 'app.apk'
+    }
+    # Динамическое создание драйвера
+```
+
+##### Косвенная параметризация
+```python
+import pytest
+
+@pytest.fixture
+def user_data(request):
+    """Фикстура, зависящая от параметра"""
+    return {
+        'username': f"user_{request.param}",
+        'password': f"pass_{request.param}",
+        'email': f"user{request.param}@example.com"
+    }
+
+@pytest.mark.parametrize("user_data", [1, 2, 3], indirect=True)
+def test_multiple_users(login_page, user_data):
+    """Тест с разными пользователями"""
+    login_page.login(user_data['username'], user_data['password'])
+    assert login_page.is_logged_in()
+```
+
+#### Хуки и плагины
+
+##### Кастомные хуки для Appium
+```python
+# conftest.py
+import pytest
+import allure
+from appium.webdriver.webdriver import WebDriver
+
+def pytest_addoption(parser):
+    """Добавление кастомных опций командной строки"""
+    parser.addoption("--platform", action="store", default="android", 
+                     help="Platform: android or ios")
+    parser.addoption("--device", action="store", default="emulator",
+                     help="Device name or udid")
+    parser.addoption("--app-path", action="store", 
+                     help="Path to application file")
+
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    """Сбор информации о выполнении теста для отчетов"""
+    outcome = yield
+    report = outcome.get_result()
+    
+    if report.when == "call" and report.failed:
+        # Скриншот при падении теста
+        driver = None
+        for fixture_name in item.fixturenames:
+            if 'driver' in fixture_name:
+                driver = item.funcargs.get(fixture_name)
+                break
+        
+        if driver and isinstance(driver, WebDriver):
+            screenshot = driver.get_screenshot_as_png()
+            allure.attach(screenshot, name="failure_screenshot",
+                         attachment_type=allure.attachment_type.PNG)
+
+def pytest_configure(config):
+    """Конфигурация перед запуском тестов"""
+    # Регистрация кастомных маркеров
+    config.addinivalue_line(
+        "markers",
+        "appium: mark test as Appium mobile test"
+    )
+```
+
+#### Параллельный запуск тестов
+
+##### Настройка pytest-xdist для Appium
+```python
+# conftest.py
+import pytest
+
+def pytest_xdist_make_scheduler(config, log):
+    """Кастомный планировщик для параллельного запуска"""
+    from xdist.scheduler import LoadScheduling
+    
+    class AppiumScheduler(LoadScheduling):
+        """Планировщик с учетом ограничений Appium"""
+        
+        def schedule(self):
+            # Логика распределения тестов по устройствам
+            # Можно учитывать тип устройства, занятость и т.д.
+            super().schedule()
+    
+    return AppiumScheduler(config, log)
+
+@pytest.fixture(scope="session")
+def appium_server_pool():
+    """Пул серверов Appium для параллельного запуска"""
+    servers = [
+        'http://localhost:4723',
+        'http://localhost:4724',
+        'http://localhost:4725'
+    ]
+    return servers
+
+@pytest.fixture
+def appium_driver_with_pool(request, appium_server_pool):
+    """Фикстура с распределением по серверам"""
+    worker_id = getattr(request.config, 'worker_id', 'master')
+    
+    # Выбор сервера на основе worker_id
+    server_index = hash(worker_id) % len(appium_server_pool)
+    server_url = appium_server_pool[server_index]
+    
+    capabilities = {
+        'platformName': 'Android',
+        'platformVersion': '11.0',
+        'deviceName': f'emulator-{worker_id}',
+        'app': 'app.apk'
+    }
+    
+    driver = webdriver.Remote(f'{server_url}/wd/hub', capabilities)
+    yield driver
+    driver.quit()
+```
+
+#### Интеграция с Allure
+
+##### Allure шаги для Appium тестов
+```python
+import allure
+from allure_commons.types import AttachmentType
+
+@allure.step("Логин пользователя {username}")
+def login_with_allure(driver, username, password):
+    """Логин с шагами Allure"""
+    with allure.step("Ввод логина"):
+        username_field = driver.find_element('id', 'username')
+        username_field.send_keys(username)
+        allure.attach(driver.get_screenshot_as_png(),
+                     name="after_username",
+                     attachment_type=AttachmentType.PNG)
+    
+    with allure.step("Ввод пароля"):
+        password_field = driver.find_element('id', 'password')
+        password_field.send_keys(password)
+    
+    with allure.step("Нажатие кнопки входа"):
+        login_button = driver.find_element('id', 'login_button')
+        login_button.click()
+    
+    with allure.step("Проверка успешного входа"):
+        welcome_element = driver.find_element('id', 'welcome')
+        assert welcome_element.is_displayed()
+
+def test_login_with_allure_report(appium_driver):
+    """Тест с детальным Allure отчетом"""
+    driver, platform = appium_driver
+    
+    allure.dynamic.title(f"Логин на {platform}")
+    allure.dynamic.tag(platform)
+    
+    login_with_allure(driver, "testuser", "password123")
+```
+
+#### Mock и стабы для тестирования
+
+##### Mock внешних зависимостей
+```python
+import pytest
+from unittest.mock import Mock, patch
+from appium.webdriver.webdriver import WebDriver
+
+@pytest.fixture
+def mock_appium_driver():
+    """Мок драйвера Appium для unit тестов"""
+    driver = Mock(spec=WebDriver)
+    
+    # Настройка моков
+    driver.find_element.return_value = Mock(
+        text="Mocked Element",
+        click=Mock(),
+        send_keys=Mock(),
+        is_displayed=lambda: True
+    )
+    
+    driver.get_screenshot_as_png.return_value = b"fake_screenshot"
+    
+    return driver
+
+def test_page_object_with_mock(mock_appium_driver):
+    """Тест Page Object с моком драйвера"""
+    login_page = LoginPage(mock_appium_driver)
+    
+    login_page.login("user", "pass")
+    
+    # Проверка вызовов
+    mock_appium_driver.find_element.assert_called()
+    mock_appium_driver.find_element.return_value.send_keys.assert_called()
+```
+
+##### Стабы для API вызовов
+```python
+import pytest
+import responses
+
+@pytest.fixture
+def mock_backend_api():
+    """Mock бэкенд API для изолированного тестирования"""
+    with responses.RequestsMock() as rsps:
+        # Mock успешного логина
+        rsps.add(
+            responses.POST,
+            'https://api.example.com/login',
+            json={'token': 'fake_token', 'user_id': 123},
+            status=200
+        )
+        
+        # Mock получения профиля
+        rsps.add(
+            responses.GET,
+            'https://api.example.com/profile/123',
+            json={'name': 'Test User', 'email': 'test@example.com'},
+            status=200
+        )
+        
+        yield rsps
+
+def test_app_with_mocked_api(appium_driver, mock_backend_api):
+    """Тест приложения с замоканным API"""
+    driver, _ = appium_driver
+    
+    # Тестирование без реального бэкенда
+    login_page = LoginPage(driver)
+    login_page.login("user", "pass")
+    
+    # Проверка, что API вызывался
+    assert len(mock_backend_api.calls) == 1
+```
+
+#### Управление тестовыми данными
+
+##### Фикстуры для тестовых данных
+```python
+import pytest
+import json
+from faker import Faker
+
+fake = Faker()
+
+@pytest.fixture
+def test_user():
+    """Генерация тестового пользователя"""
+    return {
+        'username': fake.user_name(),
+        'password': fake.password(),
+        'email': fake.email(),
+        'first_name': fake.first_name(),
+        'last_name': fake.last_name()
+    }
+
+@pytest.fixture(scope="session")
+def test_products():
+    """Загрузка тестовых продуктов из файла"""
+    with open('tests/data/products.json') as f:
+        return json.load(f)
+
+@pytest.fixture
+def cart_with_items(home_page, test_products):
+    """Корзина с предварительно добавленными товарами"""
+    cart = []
+    for product in test_products[:3]:  # Добавляем первые 3 товара
+        home_page.add_to_cart(product['id'])
+        cart.append(product)
+    
+    return cart
+```
+
+#### Best Practices
+
+##### Организация тестов
+| Практика | Пример | Преимущество |
+|----------|--------|--------------|
+| **Разделение по фичам** | `tests/login/`, `tests/cart/` | Логическая группировка |
+| **Именование тестов** | `test_*`, описательные имена | Самодокументируемость |
+| **Использование классов** | `class TestLogin:` | Организация связанных тестов |
+| **Setup/teardown** | Фикстуры с yield | Правильное управление ресурсами |
+
+##### Надежность тестов
+| Техника | Реализация | Зачем нужно |
+|---------|------------|-------------|
+| **Явные ожидания** | WebDriverWait для мобильных элементов | Стабильность в медленных сетях |
+| **Retry для флакки тестов** | `@pytest.mark.flaky(reruns=3)` | Устойчивость к временным проблемам |
+| **Изоляция тестов** | Сброс приложения между тестами | Независимость тестов |
+| **Логирование** | Подробные логи каждого шага | Упрощение отладки |
+
+##### Производительность
+| Оптимизация | Метод | Эффект |
+|-------------|-------|--------|
+| **Session scope фикстуры** | Дорогие ресурсы на сессию | Снижение времени запуска |
+| **Параллельный запуск** | pytest-xdist с разными устройствами | Ускорение выполнения |
+| **Кэширование локаторов** | Сохранение найденных элементов | Повторное использование |
+
+#### Пример комплексного тестового сценария
+
+##### E2E тест с использованием всех возможностей
+```python
+import pytest
+import allure
+
+@allure.epic("Мобильное приложение")
+@allure.feature("Корзина покупок")
+class TestShoppingCart:
+    """Тесты корзины покупок"""
+    
+    @allure.story("Добавление товаров в корзину")
+    @allure.severity(allure.severity_level.CRITICAL)
+    @pytest.mark.smoke
+    @pytest.mark.parametrize("platform", ["android", "ios"])
+    def test_add_product_to_cart(self, appium_driver, test_products):
+        """Добавление товара в корзину"""
+        driver, platform = appium_driver
+        
+        with allure.step(f"Инициализация на {platform}"):
+            home_page = HomePage(driver, platform)
+            cart_page = CartPage(driver, platform)
+        
+        test_product = test_products[0]
+        
+        with allure.step("Поиск товара"):
+            home_page.search(test_product["name"])
+            allure.attach(driver.get_screenshot_as_png(),
+                         name="search_results",
+                         attachment_type=allure.attachment_type.PNG)
+        
+        with allure.step("Добавление в корзину"):
+            home_page.select_product(test_product["id"])
+            home_page.add_to_cart()
+        
+        with allure.step("Переход в корзину"):
+            home_page.go_to_cart()
+            assert cart_page.is_visible()
+        
+        with allure.step("Проверка содержимого корзины"):
+            cart_items = cart_page.get_items()
+            assert len(cart_items) == 1
+            assert cart_items[0]["name"] == test_product["name"]
+            assert cart_items[0]["price"] == test_product["price"]
+    
+    @allure.story("Оформление заказа")
+    @allure.severity(allure.severity_level.NORMAL)
+    @pytest.mark.regression
+    def test_checkout_flow(self, logged_in_user, cart_with_items):
+        """Полный сценарий оформления заказа"""
+        home_page = logged_in_user
+        
+        with allure.step("Переход к оформлению заказа"):
+            cart_page = home_page.go_to_cart()
+            checkout_page = cart_page.proceed_to_checkout()
+        
+        with allure.step("Заполнение адреса доставки"):
+            checkout_page.enter_shipping_address({
+                "address": "123 Main St",
+                "city": "Moscow",
+                "zip": "123456"
+            })
+        
+        with allure.step("Выбор способа оплаты"):
+            checkout_page.select_payment_method("credit_card")
+            checkout_page.enter_payment_details({
+                "card_number": "4111111111111111",
+                "expiry": "12/25",
+                "cvv": "123"
+            })
+        
+        with allure.step("Подтверждение заказа"):
+            confirmation_page = checkout_page.place_order()
+            assert confirmation_page.is_order_confirmed()
+            
+            order_id = confirmation_page.get_order_id()
+            allure.dynamic.title(f"Заказ оформлен: {order_id}")
+```
+
+**Ключевой вывод:**
+Интеграция pytest с Appium создает мощный, гибкий и поддерживаемый фреймворк для мобильного тестирования. Правильное использование фикстур, маркеров, параметризации и хуков позволяет создавать профессиональные тесты, которые легко масштабируются и поддерживаются.
+
 [🔄 К содержанию - главы](#мобильная-автоматизация-python-глава)
 [🔼 К содержанию](#content)
 
