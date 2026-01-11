@@ -7470,6 +7470,473 @@ Appium Python Client предоставляет мощный инструмен�
 
 ### Lokalise / MobileBy локаторы <a id="mobileby-python"></a>
 
+**Lokalise и MobileBy локаторы** — инструменты для работы с локализацией и поиска элементов в мобильной автоматизации с учетом мультиязычности.
+
+#### MobileBy: специализированные локаторы для мобильных приложений
+
+##### Класс MobileBy в Appium
+| Локатор | Описание | Когда использовать |
+|---------|----------|-------------------|
+| **ACCESSIBILITY_ID** | Уникальный идентификатор доступности | Кроссплатформенный поиск |
+| **ANDROID_UIAUTOMATOR** | UiAutomator селекторы | Сложные поиски в Android |
+| **IOS_PREDICATE** | iOS предикатные строки | Гибкий поиск в iOS |
+| **IOS_CLASS_CHAIN** | iOS Class Chain | Иерархический поиск в iOS |
+| **IMAGE** | Поиск по изображению | Когда другие локаторы недоступны |
+| **CUSTOM** | Пользовательские плагины | Расширенные сценарии |
+
+##### Примеры использования MobileBy
+```python
+from appium.webdriver.common.appiumby import AppiumBy
+from selenium.webdriver.common.by import By
+
+# Традиционный способ (устаревший)
+from appium.webdriver.common.mobileby import MobileBy
+
+# Modern Appium (рекомендуется)
+element = driver.find_element(AppiumBy.ACCESSIBILITY_ID, "login_button")
+element = driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, 'new UiSelector().text("Login")')
+element = driver.find_element(AppiumBy.IOS_PREDICATE, 'label == "Login"')
+
+# Совместимость с Selenium
+element = driver.find_element(By.ID, "element_id")  # Работает и в Appium
+```
+
+#### Lokalise: управление локализацией
+
+##### Что такое Lokalise
+| Аспект | Описание | Преимущество для тестирования |
+|--------|----------|-------------------------------|
+| **Платформа** | Cloud-based система управления локализацией | Централизованное хранение строк |
+| **Интеграция** | API, CLI, плагины для IDE | Автоматизация работы с переводами |
+| **Коллаборация** | Командная работа над переводами | Согласованность тестовых данных |
+
+##### Ключевые возможности Lokalise
+| Возможность | Назначение | Пример использования |
+|-------------|------------|----------------------|
+| **Ключи-значения** | Хранение переводов | `login_button: "Войти"` |
+| **Теги** | Группировка ключей | `android`, `ios`, `v1.0` |
+| **Комментарии** | Описание контекста | "Кнопка на экране логина" |
+| **Экспорт** | Разные форматы файлов | JSON, XML, Strings, CSV |
+
+#### Интеграция Lokalise с мобильной автоматизацией
+
+##### Архитектура интеграции
+```
+Lokalise (Cloud) → Экспорт переводов → Тестовое приложение → Appium тесты
+       ↓                    ↓                  ↓                ↓
+   Хранение всех      JSON/XML файлы   Загруженные       Поиск элементов
+   переводов командой                   локализации      по локализованным
+                                        для языка        текстам
+```
+
+##### Получение переводов из Lokalise
+```python
+import requests
+import json
+
+class LokaliseClient:
+    """Клиент для работы с Lokalise API"""
+    
+    def __init__(self, api_token, project_id):
+        self.api_token = api_token
+        self.project_id = project_id
+        self.base_url = "https://api.lokalise.com/api2"
+        self.headers = {
+            "X-Api-Token": api_token,
+            "Content-Type": "application/json"
+        }
+    
+    def get_translations(self, lang_code="ru"):
+        """Получение переводов для языка"""
+        url = f"{self.base_url}/projects/{self.project_id}/translations/{lang_code}"
+        response = requests.get(url, headers=self.headers)
+        
+        if response.status_code == 200:
+            return response.json()['translations']
+        else:
+            raise Exception(f"Ошибка получения переводов: {response.text}")
+    
+    def export_translations(self, format="json", lang_code="ru"):
+        """Экспорт переводов в файл"""
+        url = f"{self.base_url}/projects/{self.project_id}/files/download"
+        data = {
+            "format": format,
+            "filter_langs": [lang_code],
+            "original_filenames": False
+        }
+        
+        response = requests.post(url, json=data, headers=self.headers)
+        
+        if response.status_code == 200:
+            download_url = response.json()['bundle_url']
+            # Скачивание файла
+            file_response = requests.get(download_url)
+            return file_response.content
+        else:
+            raise Exception(f"Ошибка экспорта: {response.text}")
+
+# Использование
+lokalise = LokaliseClient(api_token="your_token", project_id="project_id")
+translations = lokalise.get_translations("ru")
+```
+
+#### Стратегии поиска с учетом локализации
+
+##### Динамические локаторы с переводом
+```python
+class LocalizedLocators:
+    """Хранилище локаторов с поддержкой локализации"""
+    
+    def __init__(self, language="en"):
+        self.language = language
+        self.translations = self._load_translations()
+    
+    def _load_translations(self):
+        """Загрузка переводов для языка"""
+        # Из файла или Lokalise API
+        with open(f"locales/{self.language}.json") as f:
+            return json.load(f)
+    
+    def get_locator(self, key, locator_type=AppiumBy.ACCESSIBILITY_ID):
+        """Получение локатора по ключу с учетом локализации"""
+        translated_text = self.translations.get(key, key)
+        
+        # Возвращаем кортеж (locator_type, value)
+        return (locator_type, translated_text)
+    
+    def get_xpath_by_text(self, key):
+        """Генерация XPath по переведенному тексту"""
+        translated_text = self.translations.get(key, key)
+        return (AppiumBy.XPATH, f'//*[@text="{translated_text}"]')
+
+# Использование
+locators = LocalizedLocators("ru")
+login_button_locator = locators.get_locator("login_button")
+search_field_locator = locators.get_xpath_by_text("search_placeholder")
+```
+
+##### Стратегия поиска по ключу перевода
+| Подход | Реализация | Преимущества | Недостатки |
+|--------|------------|--------------|------------|
+| **По accessibility-id** | Использовать ключи как accessibility-id | Кроссплатформенно, надежно | Требует настройки в приложении |
+| **По тексту** | Поиск по переведенному тексту | Не требует изменения приложения | Чувствительно к изменениям текста |
+| **Комбинированный** | Сначала accessibility-id, потом текст | Надежность + fallback | Сложнее реализация |
+
+#### Page Object с поддержкой локализации
+
+##### Мультиязычный Page Object
+```python
+from appium.webdriver.common.appiumby import AppiumBy
+
+class LocalizedLoginPage:
+    """Page Object с поддержкой локализации"""
+    
+    # Базовые локаторы (не зависящие от языка)
+    USERNAME_FIELD = (AppiumBy.ACCESSIBILITY_ID, "username_field")
+    PASSWORD_FIELD = (AppiumBy.ACCESSIBILITY_ID, "password_field")
+    
+    def __init__(self, driver, language="en"):
+        self.driver = driver
+        self.locators = LocalizedLocators(language)
+    
+    @property
+    def login_button(self):
+        """Динамический локатор кнопки логина"""
+        return self.locators.get_locator("login_button")
+    
+    @property
+    def error_message(self):
+        """Динамический локатор сообщения об ошибке"""
+        return self.locators.get_xpath_by_text("invalid_credentials")
+    
+    def login(self, username, password):
+        """Логин с использованием локализованных элементов"""
+        self.driver.find_element(*self.USERNAME_FIELD).send_keys(username)
+        self.driver.find_element(*self.PASSWORD_FIELD).send_keys(password)
+        self.driver.find_element(*self.login_button).click()
+    
+    def get_error_text(self):
+        """Получение текста ошибки"""
+        return self.driver.find_element(*self.error_message).text
+
+# Использование с разными языками
+def test_login_multilingual():
+    for language in ["en", "ru", "es", "fr"]:
+        locators = LocalizedLocators(language)
+        login_page = LocalizedLoginPage(driver, language)
+        
+        # Тест работает с любым языком
+        login_page.login("user", "pass")
+        error_text = login_page.get_error_text()
+        expected = locators.translations.get("invalid_credentials")
+        assert error_text == expected
+```
+
+#### Продвинутые техники поиска
+
+##### Поиск по части текста
+```python
+def find_by_partial_text(driver, partial_text):
+    """Поиск элемента по части текста (кроссплатформенно)"""
+    
+    if driver.capabilities['platformName'].lower() == 'android':
+        # Android: UiAutomator с contains
+        selector = f'new UiSelector().textContains("{partial_text}")'
+        return driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, selector)
+    
+    else:  # iOS
+        # iOS: Predicate с CONTAINS
+        predicate = f'label CONTAINS "{partial_text}"'
+        return driver.find_element(AppiumBy.IOS_PREDICATE, predicate)
+
+# Использование
+element = find_by_partial_text(driver, "Войти")
+```
+
+##### Поиск по нескольким атрибутам
+```python
+def find_element_by_attributes(driver, **attributes):
+    """Поиск элемента по нескольким атрибутам"""
+    
+    platform = driver.capabilities['platformName'].lower()
+    
+    if platform == 'android':
+        # Android: построение сложного селектора
+        selector = 'new UiSelector()'
+        for attr, value in attributes.items():
+            if attr == 'text':
+                selector += f'.text("{value}")'
+            elif attr == 'className':
+                selector += f'.className("{value}")'
+            elif attr == 'resourceId':
+                selector += f'.resourceId("{value}")'
+        
+        return driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, selector)
+    
+    else:  # iOS
+        # iOS: построение предиката
+        conditions = []
+        for attr, value in attributes.items():
+            if attr == 'label':
+                conditions.append(f'label == "{value}"')
+            elif attr == 'name':
+                conditions.append(f'name == "{value}"')
+            elif attr == 'value':
+                conditions.append(f'value == "{value}"')
+        
+        predicate = ' AND '.join(conditions)
+        return driver.find_element(AppiumBy.IOS_PREDICATE, predicate)
+```
+
+#### Интеграция с CI/CD
+
+##### Автоматическое обновление переводов
+```python
+import os
+import json
+from git import Repo
+
+class TranslationManager:
+    """Управление переводами в CI/CD пайплайне"""
+    
+    def __init__(self, lokalise_token, project_id):
+        self.lokalise = LokaliseClient(lokalise_token, project_id)
+    
+    def update_test_translations(self):
+        """Обновление файлов переводов для тестов"""
+        
+        # Список поддерживаемых языков
+        languages = ["en", "ru", "es", "fr", "de"]
+        
+        for lang in languages:
+            # Экспорт из Lokalise
+            translations_data = self.lokalise.export_translations(
+                format="json",
+                lang_code=lang
+            )
+            
+            # Сохранение в файл
+            filename = f"tests/translations/{lang}.json"
+            with open(filename, 'wb') as f:
+                f.write(translations_data)
+            
+            print(f"Updated translations for {lang}")
+        
+        # Коммит изменений в Git
+        self._commit_translation_files()
+    
+    def _commit_translation_files(self):
+        """Автоматический коммит обновленных файлов переводов"""
+        repo = Repo('.')
+        repo.git.add('tests/translations/*.json')
+        
+        if repo.is_dirty():
+            repo.index.commit("Update test translations from Lokalise")
+            repo.remote().pull()
+            repo.remote().push()
+```
+
+##### Конфигурация GitHub Actions
+```yaml
+name: Update Translations
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Ежедневно в полночь
+  workflow_dispatch:  # Ручной запуск
+
+jobs:
+  update-translations:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Setup Python
+      uses: actions/setup-python@v2
+    
+    - name: Install dependencies
+      run: pip install requests gitpython
+    
+    - name: Update translations from Lokalise
+      env:
+        LOKALISE_TOKEN: ${{ secrets.LOKALISE_TOKEN }}
+      run: |
+        python scripts/update_translations.py
+    
+    - name: Run localization tests
+      run: |
+        pytest tests/localization/ -v
+```
+
+#### Best Practices
+
+##### Организация локаторов
+| Практика | Реализация | Преимущество |
+|----------|------------|--------------|
+| **Ключи вместо текста** | Использовать ключи локализации | Независимость от языка |
+| **Слои абстракции** | Page Objects поверх локаторов | Переиспользование кода |
+| **Кэширование переводов** | Загрузка при старте тестов | Производительность |
+| **Фоллбек стратегии** | Несколько способов поиска | Надежность |
+
+##### Управление переводными строками
+| Правило | Пример | Обоснование |
+|---------|--------|-------------|
+| **Уникальные ключи** | `login_button_title` | Однозначная идентификация |
+| **Контекст в ключах** | `home_screen_welcome` | Понимание где используется |
+| **Описательные значения** | Ключи описывают функцию | Легкость поддержки |
+| **Версионирование** | `v2_login_button` | Поддержка разных версий |
+
+##### Отладка и логирование
+```python
+class LocalizationDebugger:
+    """Инструменты отладки для локализованных тестов"""
+    
+    @staticmethod
+    def find_all_text_elements(driver):
+        """Поиск всех текстовых элементов на экране"""
+        platform = driver.capabilities['platformName'].lower()
+        
+        if platform == 'android':
+            elements = driver.find_elements(
+                AppiumBy.ANDROID_UIAUTOMATOR,
+                'new UiSelector().text(".*")'
+            )
+        else:  # iOS
+            elements = driver.find_elements(
+                AppiumBy.IOS_PREDICATE,
+                'label != "" OR value != ""'
+            )
+        
+        # Сбор текстов
+        texts = []
+        for element in elements:
+            try:
+                text = element.text
+                if text:
+                    texts.append(text)
+            except:
+                pass
+        
+        return texts
+    
+    @staticmethod
+    def verify_translation_coverage(driver, language):
+        """Проверка покрытия переводами"""
+        screen_texts = LocalizationDebugger.find_all_text_elements(driver)
+        translations = LocalizedLocators(language).translations
+        
+        missing = []
+        for text in screen_texts:
+            if text not in translations.values():
+                missing.append(text)
+        
+        return {
+            'total_texts': len(screen_texts),
+            'translated': len(screen_texts) - len(missing),
+            'missing_translations': missing,
+            'coverage': (len(screen_texts) - len(missing)) / len(screen_texts) * 100
+        }
+```
+
+#### Пример комплексного теста
+
+##### Мультиязычный E2E тест
+```python
+import pytest
+import json
+
+@pytest.mark.parametrize("language", ["en", "ru", "es"])
+def test_complete_flow_multilingual(appium_driver, language):
+    """Полный сценарий на разных языках"""
+    
+    # Загрузка переводов
+    with open(f"translations/{language}.json") as f:
+        translations = json.load(f)
+    
+    # Инициализация Page Objects
+    login_page = LocalizedLoginPage(appium_driver, language)
+    home_page = LocalizedHomePage(appium_driver, language)
+    cart_page = LocalizedCartPage(appium_driver, language)
+    
+    # 1. Логин
+    login_page.login("test_user", "password123")
+    assert home_page.is_visible()
+    
+    # Проверка приветствия
+    welcome_text = home_page.get_welcome_text()
+    expected_welcome = translations["welcome_message"]
+    assert welcome_text == expected_welcome
+    
+    # 2. Поиск товара
+    search_query = translations["popular_product"]
+    home_page.search(search_query)
+    
+    # 3. Добавление в корзину
+    home_page.select_first_product()
+    home_page.add_to_cart()
+    
+    # 4. Переход в корзину
+    home_page.go_to_cart()
+    assert cart_page.is_visible()
+    
+    # Проверка текстов в корзине
+    cart_title = cart_page.get_title()
+    expected_title = translations["cart_title"]
+    assert cart_title == expected_title
+    
+    # 5. Оформление заказа
+    cart_page.checkout()
+    
+    # Проверка финального сообщения
+    success_message = cart_page.get_success_message()
+    expected_success = translations["order_success"]
+    assert success_message == expected_success
+```
+
+**Ключевой вывод:**
+Интеграция MobileBy локаторов с Lokalise создает мощную систему для мультиязычного тестирования мобильных приложений. Такой подход позволяет создавать устойчивые, поддерживаемые тесты, которые работают с любыми языками и легко адаптируются к изменениям в интерфейсе.
+
 [🔄 К содержанию - главы](#мобильная-автоматизация-python-глава)
 [🔼 К содержанию](#content)
 
