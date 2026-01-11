@@ -5363,7 +5363,7 @@ def verify_welcome_message(driver, message):
 
 #### Примеры реальных сценариев
 
-##### Screenplay: комплексный процесс
+##### Screenplay: комплексный процесс 
 ```python
 def test_purchase_flow():
     customer = Actor.named("Alice").who_can(
