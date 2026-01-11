@@ -8552,6 +8552,730 @@ class TestShoppingCart:
 
 ### Параллельный запуск тестов с pytest-xdist <a id="parallel-appium"></a>
 
+**pytest-xdist для Appium** — запуск мобильных тестов параллельно на нескольких устройствах или эмуляторах для ускорения выполнения.
+
+#### Архитектура параллельного запуска
+
+##### Компоненты системы
+| Компонент | Роль | Пример реализации |
+|-----------|------|-------------------|
+| **pytest-xdist** | Оркестратор параллельного выполнения | Распределение тестов по worker'ам |
+| **Appium Servers** | Серверы для разных устройств | Несколько экземпляров Appium |
+| **Device Pool** | Пул устройств/эмуляторов | Множество подключенных устройств |
+| **Test Scheduler** | Планировщик распределения тестов | Балансировка нагрузки |
+
+##### Схема работы
+```
+pytest master
+     ↓
+pytest-xdist (scheduler)
+     ↓           ↓
+  worker1    worker2    workerN
+     ↓           ↓          ↓
+Appium Server1  Server2    ServerN
+     ↓           ↓          ↓
+Device1        Device2     DeviceN
+```
+
+#### Настройка параллельного окружения
+
+##### Конфигурация множества серверов Appium
+```python
+# servers_config.py
+APPIUM_SERVERS = [
+    {
+        'url': 'http://localhost:4723',
+        'capabilities': {
+            'platformName': 'Android',
+            'platformVersion': '11.0',
+            'deviceName': 'emulator-5554'
+        }
+    },
+    {
+        'url': 'http://localhost:4724',
+        'capabilities': {
+            'platformName': 'Android',
+            'platformVersion': '12.0',
+            'deviceName': 'emulator-5556'
+        }
+    },
+    {
+        'url': 'http://localhost:4725',
+        'capabilities': {
+            'platformName': 'iOS',
+            'platformVersion': '15.0',
+            'deviceName': 'iPhone 13'
+        }
+    }
+]
+
+def get_available_server(worker_id=None):
+    """Получение доступного сервера Appium"""
+    if worker_id:
+        # Распределение по worker_id
+        index = int(worker_id.replace('gw', '')) % len(APPIUM_SERVERS)
+        return APPIUM_SERVERS[index]
+    else:
+        # Для непараллельного запуска
+        return APPIUM_SERVERS[0]
+```
+
+##### Запуск нескольких серверов Appium
+```python
+# start_servers.py
+import subprocess
+import time
+import threading
+
+def start_appium_servers():
+    """Запуск нескольких серверов Appium"""
+    ports = [4723, 4724, 4725, 4726]
+    processes = []
+    
+    for port in ports:
+        cmd = f'appium --port {port} --log-timestamp --local-timezone'
+        
+        def run_server(port, cmd):
+            """Запуск сервера в отдельном потоке"""
+            log_file = open(f'appium_server_{port}.log', 'w')
+            process = subprocess.Popen(
+                cmd.split(),
+                stdout=log_file,
+                stderr=subprocess.STDOUT,
+                text=True
+            )
+            processes.append(process)
+            print(f"Started Appium server on port {port}")
+        
+        thread = threading.Thread(target=run_server, args=(port, cmd))
+        thread.start()
+        time.sleep(2)  # Задержка между запусками
+    
+    return processes
+
+# Остановка всех серверов
+def stop_appium_servers(processes):
+    """Остановка всех серверов Appium"""
+    for process in processes:
+        process.terminate()
+    print("All Appium servers stopped")
+```
+
+#### Фикстуры для параллельного запуска
+
+##### Динамическая фикстура с worker_id
+```python
+# conftest.py
+import pytest
+from appium import webdriver
+
+@pytest.fixture(scope="function")
+def appium_driver(request):
+    """Фикстура драйвера с поддержкой параллельного запуска"""
+    
+    # Получение worker_id (если есть)
+    worker_id = getattr(request.config, 'worker_id', 'master')
+    
+    # Выбор конфигурации на основе worker_id
+    server_config = get_available_server(worker_id)
+    
+    # Динамические capabilities
+    capabilities = server_config['capabilities'].copy()
+    capabilities['name'] = f'Test from worker {worker_id}'
+    capabilities['deviceName'] = f'device_{worker_id}'
+    
+    # Создание драйвера
+    driver = webdriver.Remote(server_config['url'], capabilities)
+    
+    # Логирование
+    print(f"Worker {worker_id} using device: {capabilities['deviceName']}")
+    
+    yield driver
+    
+    # Очистка
+    driver.quit()
+
+def get_available_server(worker_id):
+    """Получение конфигурации сервера для worker"""
+    # Простая стратегия распределения
+    servers = [
+        {'url': 'http://localhost:4723', 'device': 'emulator-5554'},
+        {'url': 'http://localhost:4724', 'device': 'emulator-5556'},
+        {'url': 'http://localhost:4725', 'device': 'emulator-5558'},
+    ]
+    
+    if worker_id == 'master':
+        return servers[0]
+    
+    # Преобразование worker_id в индекс
+    worker_num = int(worker_id.replace('gw', ''))
+    server_index = worker_num % len(servers)
+    
+    return servers[server_index]
+```
+
+##### Фикстура для изолированных тестовых данных
+```python
+import pytest
+import uuid
+
+@pytest.fixture(scope="function")
+def unique_test_data(request):
+    """Создание уникальных тестовых данных для каждого worker"""
+    worker_id = getattr(request.config, 'worker_id', 'master')
+    
+    # Генерация уникальных данных на основе worker_id
+    unique_suffix = str(uuid.uuid4())[:8]
+    
+    return {
+        'username': f'user_{worker_id}_{unique_suffix}',
+        'email': f'user_{worker_id}_{unique_suffix}@example.com',
+        'password': f'pass_{worker_id}_{unique_suffix}'
+    }
+
+@pytest.fixture(scope="function")
+def isolated_user(appium_driver, unique_test_data):
+    """Создание изолированного пользователя для теста"""
+    driver = appium_driver
+    user_data = unique_test_data
+    
+    # Регистрация пользователя
+    register_page = RegisterPage(driver)
+    register_page.register(user_data)
+    
+    return user_data
+```
+
+#### Стратегии распределения тестов
+
+##### Балансировка нагрузки
+```python
+# conftest.py
+import pytest
+from xdist.scheduler import LoadScheduling
+
+class DeviceAwareScheduler(LoadScheduling):
+    """Кастомный планировщик с учетом устройств"""
+    
+    def __init__(self, config, log=None):
+        super().__init__(config, log)
+        self.device_assignments = {}
+    
+    def schedule(self):
+        """Распределение тестов с учетом типа устройств"""
+        for node in self.nodes:
+            # Определение возможностей устройства
+            device_type = self._get_device_type(node)
+            self.device_assignments[node.gateway.id] = device_type
+        
+        super().schedule()
+    
+    def _get_device_type(self, node):
+        """Определение типа устройства по worker"""
+        # Здесь можно получить информацию об устройстве
+        # из конфигурации или внешнего источника
+        return 'android'  # или 'ios'
+    
+    def _split_scope(self, nodeid):
+        """Разделение тестов по scope с учетом устройств"""
+        # Маркировка тестов для определенных устройств
+        if 'android' in nodeid:
+            return 'android'
+        elif 'ios' in nodeid:
+            return 'ios'
+        else:
+            return 'any'
+
+def pytest_xdist_make_scheduler(config, log):
+    """Создание кастомного планировщика"""
+    return DeviceAwareScheduler(config, log)
+```
+
+##### Группировка тестов для параллельного запуска
+```python
+# test_groups.py
+import pytest
+
+@pytest.mark.group('fast')
+def test_quick_operation():
+    """Быстрый тест"""
+    pass
+
+@pytest.mark.group('slow')
+@pytest.mark.timeout(120)
+def test_slow_operation():
+    """Медленный тест"""
+    pass
+
+@pytest.mark.group('android_only')
+@pytest.mark.android
+def test_android_specific():
+    """Только для Android"""
+    pass
+
+# Запуск по группам
+# pytest -m "fast" -n 4
+# pytest -m "slow" -n 2
+```
+
+#### Управление устройствами
+
+##### Пул устройств
+```python
+# device_pool.py
+import threading
+import time
+from queue import Queue
+
+class DevicePool:
+    """Пул устройств для параллельного тестирования"""
+    
+    def __init__(self):
+        self.devices = Queue()
+        self.lock = threading.Lock()
+        self._init_devices()
+    
+    def _init_devices(self):
+        """Инициализация пула устройств"""
+        devices = [
+            {'id': 'emulator-5554', 'type': 'android', 'busy': False},
+            {'id': 'emulator-5556', 'type': 'android', 'busy': False},
+            {'id': 'iPhone_13', 'type': 'ios', 'busy': False},
+            {'id': 'iPad_Pro', 'type': 'ios', 'busy': False},
+        ]
+        
+        for device in devices:
+            self.devices.put(device)
+    
+    def acquire_device(self, device_type='any'):
+        """Получение свободного устройства"""
+        with self.lock:
+            temp_queue = Queue()
+            device = None
+            
+            while not self.devices.empty():
+                dev = self.devices.get()
+                if (not dev['busy'] and 
+                    (device_type == 'any' or dev['type'] == device_type)):
+                    dev['busy'] = True
+                    device = dev
+                    break
+                temp_queue.put(dev)
+            
+            # Возврат неподходящих устройств в очередь
+            while not temp_queue.empty():
+                self.devices.put(temp_queue.get())
+            
+            return device
+    
+    def release_device(self, device_id):
+        """Освобождение устройства"""
+        with self.lock:
+            temp_queue = Queue()
+            
+            while not self.devices.empty():
+                dev = self.devices.get()
+                if dev['id'] == device_id:
+                    dev['busy'] = False
+                temp_queue.put(dev)
+            
+            # Возврат всех устройств в очередь
+            while not temp_queue.empty():
+                self.devices.put(temp_queue.get())
+```
+
+##### Интеграция пула устройств с фикстурами
+```python
+# conftest.py
+import pytest
+from device_pool import DevicePool
+
+# Глобальный пул устройств
+device_pool = DevicePool()
+
+@pytest.fixture(scope="function")
+def appium_driver_with_pool(request):
+    """Фикстура с использованием пула устройств"""
+    
+    # Определение типа устройства из маркера теста
+    device_type = 'any'
+    if request.node.get_closest_marker('android'):
+        device_type = 'android'
+    elif request.node.get_closest_marker('ios'):
+        device_type = 'ios'
+    
+    # Получение устройства из пула
+    device = device_pool.acquire_device(device_type)
+    if not device:
+        pytest.skip(f"No available {device_type} device")
+    
+    # Создание драйвера
+    capabilities = {
+        'platformName': device['type'].capitalize(),
+        'deviceName': device['id'],
+        'app': 'app.apk'
+    }
+    
+    driver = webdriver.Remote('http://localhost:4723/wd/hub', capabilities)
+    
+    yield driver
+    
+    # Очистка
+    driver.quit()
+    device_pool.release_device(device['id'])
+```
+
+#### Мониторинг и отчетность
+
+##### Сбор метрик параллельного выполнения
+```python
+# parallel_metrics.py
+import time
+from prometheus_client import Gauge, Counter, Histogram
+import threading
+
+class ParallelTestMetrics:
+    """Метрики для мониторинга параллельного выполнения"""
+    
+    def __init__(self):
+        self.active_workers = Gauge(
+            'parallel_active_workers',
+            'Number of active workers'
+        )
+        
+        self.tests_executing = Gauge(
+            'parallel_tests_executing',
+            'Number of tests currently executing'
+        )
+        
+        self.test_duration = Histogram(
+            'parallel_test_duration_seconds',
+            'Test execution duration',
+            ['worker_id']
+        )
+        
+        self.worker_utilization = Gauge(
+            'parallel_worker_utilization',
+            'Worker utilization percentage',
+            ['worker_id']
+        )
+        
+        self.start_times = {}
+    
+    def test_started(self, test_name, worker_id):
+        """Запись начала теста"""
+        self.tests_executing.inc()
+        self.start_times[test_name] = time.time()
+        
+        print(f"[{worker_id}] Started: {test_name}")
+    
+    def test_finished(self, test_name, worker_id, success=True):
+        """Запись завершения теста"""
+        self.tests_executing.dec()
+        
+        if test_name in self.start_times:
+            duration = time.time() - self.start_times[test_name]
+            self.test_duration.labels(worker_id=worker_id).observe(duration)
+            del self.start_times[test_name]
+        
+        status = "PASSED" if success else "FAILED"
+        print(f"[{worker_id}] {status}: {test_name}")
+
+# Глобальный объект метрик
+metrics = ParallelTestMetrics()
+
+# Интеграция с хуками pytest
+def pytest_runtest_logstart(nodeid, location):
+    """Хук для отслеживания начала теста"""
+    worker_id = getattr(nodeid.config, 'worker_id', 'master')
+    metrics.test_started(nodeid, worker_id)
+
+def pytest_runtest_logfinish(nodeid, location):
+    """Хук для отслеживания завершения теста"""
+    worker_id = getattr(nodeid.config, 'worker_id', 'master')
+    # Здесь нужно получить результат теста
+    metrics.test_finished(nodeid, worker_id)
+```
+
+#### Best Practices для параллельного запуска
+
+##### Изоляция тестов
+| Практика | Реализация | Зачем нужно |
+|----------|------------|-------------|
+| **Уникальные пользователи** | Генерация данных на основе worker_id | Предотвращение конфликтов |
+| **Изолированные хранилища** | Отдельные БД или namespaces | Независимость тестов |
+| **Очистка после тестов** | Автоматический сброс состояния | Подготовка для следующих тестов |
+| **Локальные файлы** | Уникальные пути для файлов | Предотвращение перезаписи |
+
+##### Оптимизация производительности
+| Оптимизация | Метод | Эффект |
+|-------------|-------|--------|
+| **Оптимальное количество worker'ов** | Формула: min(устройства, тесты/время) | Баланс нагрузки |
+| **Группировка быстрых/медленных тестов** | Разделение по времени выполнения | Равномерная загрузка |
+| **Кэширование приложений** | Предварительная установка app | Ускорение запуска |
+| **Подготовка данных заранее** | Предзагрузка тестовых данных | Снижение времени теста |
+
+##### Обработка ошибок
+```python
+# error_handling.py
+import pytest
+from appium.common.exceptions import NoSuchContextException
+
+@pytest.fixture
+def resilient_driver(appium_driver):
+    """Фикстура с обработкой ошибок соединения"""
+    driver = appium_driver
+    
+    def safe_find_element(locator):
+        """Безопасный поиск элемента с повторными попытками"""
+        for attempt in range(3):
+            try:
+                return driver.find_element(*locator)
+            except (NoSuchContextException, ConnectionError) as e:
+                if attempt == 2:
+                    raise
+                print(f"Retry {attempt + 1} after error: {e}")
+                time.sleep(1)
+    
+    # Замена стандартных методов
+    driver.safe_find_element = safe_find_element
+    
+    return driver
+
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    """Обработка отчетов с перезапуском упавших тестов"""
+    outcome = yield
+    report = outcome.get_result()
+    
+    if report.failed and call.excinfo:
+        # Проверка, нужно ли перезапускать тест
+        exc_type = call.excinfo.type
+        retryable_errors = (
+            ConnectionError,
+            TimeoutError,
+            NoSuchContextException
+        )
+        
+        if isinstance(call.excinfo.value, retryable_errors):
+            # Помечаем для перезапуска
+            item.add_marker(pytest.mark.flaky(reruns=2))
+```
+
+#### Пример конфигурации CI/CD
+
+##### GitHub Actions workflow
+```yaml
+name: Parallel Appium Tests
+on: [push, pull_request]
+
+jobs:
+  parallel-tests:
+    runs-on: macos-latest  # или ubuntu-latest для Android
+    strategy:
+      matrix:
+        worker: [1, 2, 3, 4]  # 4 параллельных worker'а
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+    
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install pytest-xdist
+    
+    - name: Start Appium servers
+      run: |
+        python scripts/start_appium_servers.py
+    
+    - name: Start Android emulators
+      if: matrix.worker <= 2  # Первые 2 worker'а для Android
+      run: |
+        echo "Starting Android emulator for worker ${{ matrix.worker }}"
+        emulator @Pixel_4_API_30 -no-window -no-audio &
+        sleep 30
+        adb wait-for-device
+    
+    - name: Start iOS simulators
+      if: matrix.worker > 2  # Остальные для iOS
+      run: |
+        echo "Starting iOS simulator for worker ${{ matrix.worker }}"
+        xcrun simctl boot "iPhone 13"
+    
+    - name: Run parallel tests
+      env:
+        WORKER_ID: gw${{ matrix.worker }}
+      run: |
+        pytest tests/ \
+          -n 4 \
+          --dist=loadscope \
+          --tb=short \
+          --junitxml=results-${{ matrix.worker }}.xml \
+          --html=report-${{ matrix.worker }}.html \
+          -o log_cli=true
+    
+    - name: Upload test results
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-results-worker-${{ matrix.worker }}
+        path: |
+          results-*.xml
+          report-*.html
+          appium_server_*.log
+    
+    - name: Merge test reports
+      run: |
+        python scripts/merge_reports.py results-*.xml
+```
+
+##### Скрипт объединения отчетов
+```python
+# merge_reports.py
+import xml.etree.ElementTree as ET
+import glob
+
+def merge_junit_reports(report_files, output_file='merged-results.xml'):
+    """Объединение JUnit отчетов от разных worker'ов"""
+    
+    testsuites = ET.Element('testsuites')
+    
+    for report_file in glob.glob(report_files):
+        try:
+            tree = ET.parse(report_file)
+            root = tree.getroot()
+            
+            # Добавление testsuite в общий отчет
+            for testsuite in root.findall('testsuite'):
+                # Добавляем worker_id как атрибут
+                worker_id = report_file.split('-')[1].split('.')[0]
+                testsuite.set('worker_id', worker_id)
+                testsuites.append(testsuite)
+                
+        except ET.ParseError as e:
+            print(f"Error parsing {report_file}: {e}")
+    
+    # Сохранение объединенного отчета
+    tree = ET.ElementTree(testsuites)
+    tree.write(output_file, encoding='utf-8', xml_declaration=True)
+    
+    # Статистика
+    total_tests = int(testsuites.get('tests', 0))
+    total_failures = int(testsuites.get('failures', 0))
+    
+    print(f"Merged {len(glob.glob(report_files))} reports")
+    print(f"Total tests: {total_tests}")
+    print(f"Total failures: {total_failures}")
+    
+    return total_failures == 0
+
+if __name__ == '__main__':
+    success = merge_junit_reports('results-*.xml')
+    exit(0 if success else 1)
+```
+
+#### Продвинутые техники
+
+##### Динамическое создание эмуляторов
+```python
+# emulator_manager.py
+import subprocess
+import time
+import threading
+
+class DynamicEmulatorManager:
+    """Динамическое управление Android эмуляторами"""
+    
+    def __init__(self, base_port=5554):
+        self.base_port = base_port
+        self.emulators = {}
+    
+    def create_emulator(self, worker_id, avd_name='Pixel_4_API_30'):
+        """Создание эмулятора для worker"""
+        port = self.base_port + int(worker_id.replace('gw', ''))
+        
+        # Создание AVD если не существует
+        self._create_avd_if_needed(avd_name)
+        
+        # Запуск эмулятора
+        cmd = f'emulator -avd {avd_name} -port {port} -no-window -no-audio -no-snapshot'
+        process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
+        
+        self.emulators[worker_id] = {
+            'port': port,
+            'process': process,
+            'device_name': f'emulator-{port}'
+        }
+        
+        # Ожидание загрузки
+        self._wait_for_emulator(port)
+        
+        return self.emulators[worker_id]['device_name']
+    
+    def cleanup(self):
+        """Очистка всех эмуляторов"""
+        for worker_id, emulator in self.emulators.items():
+            emulator['process'].terminate()
+            print(f"Stopped emulator for worker {worker_id}")
+```
+
+##### Интеллектуальное распределение тестов
+```python
+# intelligent_scheduler.py
+import time
+from collections import defaultdict
+
+class IntelligentTestScheduler:
+    """Интеллектуальный планировщик тестов"""
+    
+    def __init__(self):
+        self.test_history = defaultdict(list)
+        self.device_capabilities = {}
+    
+    def record_test_execution(self, test_name, device_id, duration, success):
+        """Запись истории выполнения теста"""
+        self.test_history[test_name].append({
+            'device': device_id,
+            'duration': duration,
+            'success': success,
+            'timestamp': time.time()
+        })
+    
+    def predict_best_device(self, test_name, available_devices):
+        """Предсказание лучшего устройства для теста"""
+        if test_name not in self.test_history:
+            # Нет истории - равномерное распределение
+            return available_devices[0]
+        
+        # Анализ истории
+        test_history = self.test_history[test_name]
+        
+        # Поиск устройства с лучшим временем выполнения
+        best_device = None
+        best_avg_time = float('inf')
+        
+        for device in available_devices:
+            device_times = [
+                h['duration'] for h in test_history 
+                if h['device'] == device and h['success']
+            ]
+            
+            if device_times:
+                avg_time = sum(device_times) / len(device_times)
+                if avg_time < best_avg_time:
+                    best_avg_time = avg_time
+                    best_device = device
+        
+        return best_device or available_devices[0]
+```
+
+**Ключевой вывод:**
+Параллельный запуск Appium тестов с pytest-xdist значительно ускоряет выполнение тестовой базы. Ключевые аспекты успеха: правильная настройка пула устройств, изоляция тестовых данных, интеллектуальное распределение нагрузки и надежная обработка ошибок.
+
 [🔄 К содержанию - главы](#мобильная-автоматизация-python-глава)
 [🔼 К содержанию](#content)
 
