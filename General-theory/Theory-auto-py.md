@@ -9286,6 +9286,696 @@ class IntelligentTestScheduler:
 
 ### SQLAlchemy / ORM <a id="sqlalchemy"></a>
 
+**SQLAlchemy и ORM** — библиотеки Python для работы с базами данных через объектно-реляционное отображение (Object-Relational Mapping).
+
+#### Основные концепции SQLAlchemy
+
+##### Компоненты SQLAlchemy
+| Компонент | Назначение | Аналогия |
+|-----------|------------|----------|
+| **Core** | Низкоуровневый SQL конструктор | Ручное написание SQL с преимуществами Python |
+| **ORM** | Высокоуровневое объектное отображение | Работа с БД как с Python объектами |
+| **Engine** | Движок подключения к БД | Драйвер соединения |
+| **Session** | Единица работы с БД | Транзакция, кэш объектов |
+| **Metadata** | Описание структуры БД | Схема таблиц и отношений |
+
+##### Подходы к работе с БД
+| Подход | SQLAlchemy Core | SQLAlchemy ORM |
+|--------|-----------------|----------------|
+| **Уровень абстракции** | Низкий (близко к SQL) | Высокий (объекты) |
+| **Производительность** | Выше | Ниже (но оптимизируемо) |
+| **Гибкость** | Полный контроль SQL | Автоматизация рутинных операций |
+| **Кривая обучения** | Высокая (нужно знать SQL) | Средняя |
+
+#### Установка и базовое подключение
+
+##### Установка
+```bash
+# Базовая установка
+pip install sqlalchemy
+
+# С драйверами БД
+pip install sqlalchemy psycopg2-binary  # PostgreSQL
+pip install sqlalchemy mysqlclient      # MySQL
+pip install sqlalchemy pymysql          # MySQL альтернатива
+pip install sqlalchemy asyncpg          # Async PostgreSQL
+```
+
+##### Создание engine
+```python
+from sqlalchemy import create_engine
+
+# PostgreSQL
+engine = create_engine('postgresql://user:pass@localhost/dbname')
+
+# MySQL
+engine = create_engine('mysql://user:pass@localhost/dbname')
+
+# SQLite
+engine = create_engine('sqlite:///database.db')  # Файловая БД
+engine = create_engine('sqlite:///:memory:')     # В памяти
+
+# Async
+from sqlalchemy.ext.asyncio import create_async_engine
+async_engine = create_async_engine('postgresql+asyncpg://user:pass@localhost/dbname')
+```
+
+#### Модели (Declarative Base)
+
+##### Определение моделей
+```python
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy.orm import declarative_base, relationship
+from datetime import datetime
+
+Base = declarative_base()
+
+class User(Base):
+    __tablename__ = 'users'
+    
+    id = Column(Integer, primary_key=True)
+    username = Column(String(50), unique=True, nullable=False)
+    email = Column(String(100), unique=True, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    
+    # Отношения
+    posts = relationship('Post', back_populates='author', cascade='all, delete-orphan')
+    profile = relationship('UserProfile', uselist=False, back_populates='user')
+    
+    def __repr__(self):
+        return f"<User(id={self.id}, username='{self.username}')>"
+
+class Post(Base):
+    __tablename__ = 'posts'
+    
+    id = Column(Integer, primary_key=True)
+    title = Column(String(200), nullable=False)
+    content = Column(String(5000))
+    created_at = Column(DateTime, default=datetime.utcnow)
+    author_id = Column(Integer, ForeignKey('users.id', ondelete='CASCADE'))
+    
+    # Отношения
+    author = relationship('User', back_populates='posts')
+    comments = relationship('Comment', back_populates='post')
+    
+    def __repr__(self):
+        return f"<Post(id={self.id}, title='{self.title}')>"
+```
+
+##### Типы данных Column
+| Тип SQLAlchemy | Python тип | SQL тип | Описание |
+|----------------|------------|---------|----------|
+| **Integer** | int | INTEGER | Целое число |
+| **String** | str | VARCHAR | Строка переменной длины |
+| **Text** | str | TEXT | Длинный текст |
+| **Boolean** | bool | BOOLEAN | Логическое значение |
+| **DateTime** | datetime | TIMESTAMP | Дата и время |
+| **Float** | float | FLOAT | Число с плавающей точкой |
+| **Numeric** | Decimal | NUMERIC | Точные десятичные числа |
+| **JSON** | dict/list | JSON | JSON данные |
+
+##### Опции Column
+| Опция | Описание | Пример |
+|-------|----------|--------|
+| **primary_key** | Первичный ключ | `primary_key=True` |
+| **nullable** | Может быть NULL | `nullable=False` |
+| **unique** | Уникальное значение | `unique=True` |
+| **default** | Значение по умолчанию | `default=datetime.utcnow` |
+| **index** | Создание индекса | `index=True` |
+| **ForeignKey** | Внешний ключ | `ForeignKey('users.id')` |
+
+#### Сессии и работа с данными
+
+##### Создание сессии
+```python
+from sqlalchemy.orm import sessionmaker
+
+# Создание фабрики сессий
+SessionLocal = sessionmaker(bind=engine)
+
+# Использование контекстного менеджера
+with SessionLocal() as session:
+    # Работа с БД
+    users = session.query(User).all()
+
+# Или явное управление
+session = SessionLocal()
+try:
+    # Работа с БД
+    session.commit()
+except:
+    session.rollback()
+    raise
+finally:
+    session.close()
+```
+
+##### CRUD операции
+
+###### Create (Создание)
+```python
+# Создание объектов
+new_user = User(username='john_doe', email='john@example.com')
+
+# Добавление в сессию
+session.add(new_user)
+session.commit()  # INSERT выполняется здесь
+
+# Пакетное добавление
+users = [
+    User(username='alice', email='alice@example.com'),
+    User(username='bob', email='bob@example.com')
+]
+session.add_all(users)
+session.commit()
+
+# Получение ID после commit
+print(f"New user ID: {new_user.id}")
+```
+
+###### Read (Чтение)
+```python
+# Получение всех записей
+all_users = session.query(User).all()
+
+# Получение одной записи по ID
+user = session.query(User).get(1)  # По первичному ключу
+user = session.get(User, 1)       # Альтернативный способ
+
+# Фильтрация
+active_users = session.query(User).filter(User.is_active == True).all()
+john = session.query(User).filter(User.username == 'john_doe').first()
+
+# Сложные фильтры
+from sqlalchemy import and_, or_
+users = session.query(User).filter(
+    or_(
+        User.username.like('j%'),
+        User.email.contains('example')
+    )
+).all()
+
+# Сортировка
+users = session.query(User).order_by(User.created_at.desc()).all()
+
+# Ограничение выборки
+recent_users = session.query(User).order_by(
+    User.created_at.desc()
+).limit(10).all()
+
+# Агрегатные функции
+from sqlalchemy import func
+user_count = session.query(func.count(User.id)).scalar()
+```
+
+###### Update (Обновление)
+```python
+# Получение и изменение объекта
+user = session.query(User).get(1)
+user.email = 'new_email@example.com'
+session.commit()  # UPDATE выполняется здесь
+
+# Прямое обновление
+session.query(User).filter(
+    User.username == 'john_doe'
+).update({'email': 'updated@example.com'})
+session.commit()
+
+# Обновление с возвратом
+updated_count = session.query(User).filter(
+    User.is_active == False
+).update({'is_active': True})
+session.commit()
+print(f"Activated {updated_count} users")
+```
+
+###### Delete (Удаление)
+```python
+# Удаление объекта
+user = session.query(User).get(1)
+session.delete(user)
+session.commit()
+
+# Прямое удаление
+deleted_count = session.query(User).filter(
+    User.created_at < datetime(2020, 1, 1)
+).delete()
+session.commit()
+print(f"Deleted {deleted_count} old users")
+```
+
+#### Отношения (Relationships)
+
+##### Типы отношений
+| Тип отношения | SQLAlchemy | Описание | Пример |
+|--------------|------------|----------|--------|
+| **One-to-Many** | `relationship()` + `ForeignKey` | Один ко многим | Пользователь → Посты |
+| **Many-to-One** | `relationship()` + `ForeignKey` | Многие к одному | Комментарии → Пост |
+| **One-to-One** | `relationship(uselist=False)` | Один к одному | Пользователь → Профиль |
+| **Many-to-Many** | `relationship()` + ассоциативная таблица | Многие ко многим | Студенты ↔ Курсы |
+
+##### Пример отношений
+```python
+# Many-to-Many через ассоциативную таблицу
+from sqlalchemy import Table
+
+# Ассоциативная таблица
+student_course = Table('student_course', Base.metadata,
+    Column('student_id', Integer, ForeignKey('students.id')),
+    Column('course_id', Integer, ForeignKey('courses.id'))
+)
+
+class Student(Base):
+    __tablename__ = 'students'
+    
+    id = Column(Integer, primary_key=True)
+    name = Column(String(100))
+    
+    courses = relationship('Course', secondary=student_course, back_populates='students')
+
+class Course(Base):
+    __tablename__ = 'courses'
+    
+    id = Column(Integer, primary_key=True)
+    title = Column(String(200))
+    
+    students = relationship('Student', secondary=student_course, back_populates='courses')
+
+# Работа с отношениями
+student = session.query(Student).get(1)
+course = Course(title='Mathematics')
+
+# Добавление отношения
+student.courses.append(course)
+session.commit()
+
+# Удаление отношения
+student.courses.remove(course)
+session.commit()
+```
+
+##### Параметры relationship
+| Параметр | Описание | Пример |
+|----------|----------|--------|
+| **back_populates** | Двусторонняя связь | `back_populates='posts'` |
+| **backref** | Автоматическое создание обратной ссылки | `backref='author'` |
+| **lazy** | Стратегия загрузки | `lazy='select'`, `'joined'`, `'subquery'` |
+| **cascade** | Каскадные операции | `cascade='all, delete-orphan'` |
+| **order_by** | Сортировка связанных объектов | `order_by='created_at.desc()'` |
+
+#### Запросы и Query API
+
+##### Базовые запросы
+```python
+# SELECT * FROM users
+users = session.query(User).all()
+
+# SELECT username, email FROM users
+results = session.query(User.username, User.email).all()
+
+# SELECT COUNT(*) FROM users
+count = session.query(func.count(User.id)).scalar()
+
+# SELECT * FROM users WHERE id = 1
+user = session.query(User).filter(User.id == 1).first()
+
+# SELECT * FROM users ORDER BY created_at DESC
+users = session.query(User).order_by(User.created_at.desc()).all()
+```
+
+##### Join запросы
+```python
+# INNER JOIN
+results = session.query(User, Post).join(Post, User.id == Post.author_id).all()
+
+# LEFT JOIN
+results = session.query(User).outerjoin(Post).all()
+
+# JOIN с условием
+results = session.query(User).join(
+    Post, and_(User.id == Post.author_id, Post.is_published == True)
+).all()
+
+# JOIN с relationship
+posts_with_authors = session.query(Post).join(Post.author).all()
+```
+
+##### Подзапросы
+```python
+from sqlalchemy import select
+
+# Создание подзапроса
+subq = select(func.count(Post.id)).where(
+    Post.author_id == User.id
+).label('post_count')
+
+# Использование в основном запросе
+users_with_counts = session.query(User, subq).all()
+
+# Подзапрос в FROM
+subq = select(User.id, User.username).where(
+    User.is_active == True
+).subquery()
+
+active_users = session.query(subq.c.username).all()
+```
+
+##### Группировка и агрегация
+```python
+from sqlalchemy import func
+
+# GROUP BY с COUNT
+post_counts = session.query(
+    User.username,
+    func.count(Post.id).label('post_count')
+).join(Post).group_by(User.id).all()
+
+# HAVING
+active_authors = session.query(
+    User.username,
+    func.count(Post.id).label('post_count')
+).join(Post).group_by(User.id).having(
+    func.count(Post.id) > 5
+).all()
+
+# Несколько агрегатных функций
+stats = session.query(
+    func.count(User.id).label('total_users'),
+    func.avg(func.length(User.username)).label('avg_name_length'),
+    func.max(User.created_at).label('latest_user')
+).first()
+```
+
+#### Интеграция с тестированием
+
+##### Фикстуры для тестирования БД
+```python
+import pytest
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.pool import StaticPool
+
+@pytest.fixture(scope="session")
+def test_engine():
+    """Engine для тестов (SQLite in-memory)"""
+    engine = create_engine(
+        'sqlite:///:memory:',
+        connect_args={'check_same_thread': False},
+        poolclass=StaticPool,
+        echo=False  # Включить для отладки SQL
+    )
+    return engine
+
+@pytest.fixture(scope="function")
+def test_session(test_engine):
+    """Сессия для каждого теста"""
+    # Создание таблиц
+    Base.metadata.create_all(test_engine)
+    
+    Session = sessionmaker(bind=test_engine)
+    session = Session()
+    
+    yield session
+    
+    # Откат и очистка
+    session.rollback()
+    session.close()
+    
+    # Удаление таблиц
+    Base.metadata.drop_all(test_engine)
+
+@pytest.fixture
+def test_data(test_session):
+    """Заполнение тестовыми данными"""
+    users = [
+        User(username='test1', email='test1@example.com'),
+        User(username='test2', email='test2@example.com')
+    ]
+    
+    test_session.add_all(users)
+    test_session.commit()
+    
+    return {'users': users}
+```
+
+##### Тесты с использованием БД
+```python
+def test_user_creation(test_session):
+    """Тест создания пользователя"""
+    user = User(username='test_user', email='test@example.com')
+    test_session.add(user)
+    test_session.commit()
+    
+    # Проверка, что пользователь создан
+    saved_user = test_session.query(User).filter_by(username='test_user').first()
+    assert saved_user is not None
+    assert saved_user.email == 'test@example.com'
+
+def test_user_relationships(test_session, test_data):
+    """Тест отношений пользователя"""
+    user = test_data['users'][0]
+    
+    # Создание поста для пользователя
+    post = Post(title='Test Post', content='Content', author=user)
+    test_session.add(post)
+    test_session.commit()
+    
+    # Проверка отношений
+    assert len(user.posts) == 1
+    assert user.posts[0].title == 'Test Post'
+    assert post.author.username == 'test1'
+```
+
+##### Mock и стабы для БД
+```python
+from unittest.mock import Mock, patch
+
+def test_with_mocked_session():
+    """Тест с замоканной сессией"""
+    mock_session = Mock()
+    
+    # Настройка мока
+    mock_user = User(id=1, username='mocked_user')
+    mock_session.query.return_value.filter.return_value.first.return_value = mock_user
+    
+    # Тестирование
+    result = get_user_by_id(mock_session, 1)
+    
+    assert result.username == 'mocked_user'
+    mock_session.query.assert_called_once_with(User)
+
+@patch('app.db.SessionLocal')
+def test_with_patched_session(mock_session_class):
+    """Тест с патченной сессией"""
+    mock_session = Mock()
+    mock_session_class.return_value = mock_session
+    
+    # Тестирование
+    create_user('test_user', 'test@example.com')
+    
+    # Проверка вызовов
+    mock_session.add.assert_called_once()
+    mock_session.commit.assert_called_once()
+```
+
+#### Асинхронная работа с SQLAlchemy
+
+##### Async SQLAlchemy
+```python
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+from sqlalchemy.orm import sessionmaker
+import asyncio
+
+# Async engine
+async_engine = create_async_engine(
+    'postgresql+asyncpg://user:pass@localhost/dbname',
+    echo=True
+)
+
+# Async session factory
+AsyncSessionLocal = sessionmaker(
+    async_engine,
+    class_=AsyncSession,
+    expire_on_commit=False
+)
+
+async def async_db_operations():
+    """Асинхронные операции с БД"""
+    async with AsyncSessionLocal() as session:
+        # Создание
+        new_user = User(username='async_user', email='async@example.com')
+        session.add(new_user)
+        await session.commit()
+        
+        # Чтение
+        result = await session.execute(
+            select(User).where(User.username == 'async_user')
+        )
+        user = result.scalar_one()
+        
+        # Обновление
+        user.email = 'updated@example.com'
+        await session.commit()
+        
+        # Удаление
+        await session.delete(user)
+        await session.commit()
+
+# Запуск
+asyncio.run(async_db_operations())
+```
+
+#### Миграции (Alembic)
+
+##### Настройка Alembic
+```bash
+# Установка
+pip install alembic
+
+# Инициализация
+alembic init alembic
+
+# Создание миграции
+alembic revision --autogenerate -m "Add users table"
+
+# Применение миграций
+alembic upgrade head
+
+# Откат миграции
+alembic downgrade -1
+```
+
+##### Конфигурация Alembic
+```python
+# alembic/env.py
+from logging.config import fileConfig
+from sqlalchemy import engine_from_config, pool
+from alembic import context
+
+# Импорт моделей
+from app.models import Base
+
+config = context.config
+
+# Настройка целевой метаданных
+target_metadata = Base.metadata
+
+def run_migrations_online():
+    """Запуск миграций в онлайн режиме"""
+    connectable = engine_from_config(
+        config.get_section(config.config_ini_section),
+        prefix='sqlalchemy.',
+        poolclass=pool.NullPool,
+    )
+    
+    with connectable.connect() as connection:
+        context.configure(
+            connection=connection,
+            target_metadata=target_metadata,
+            compare_type=True,  # Сравнивать типы столбцов
+            compare_server_default=True  # Сравнивать значения по умолчанию
+        )
+        
+        with context.begin_transaction():
+            context.run_migrations()
+```
+
+#### Best Practices
+
+##### Производительность
+| Практика | Реализация | Эффект |
+|----------|------------|--------|
+| **Пакетные операции** | `add_all()`, `bulk_insert_mappings()` | Ускорение массовых операций |
+| **Оптимальные запросы** | Использование `joinedload()` | Уменьшение N+1 проблем |
+| **Сессия на запрос** | Короткоживущие сессии | Предотвращение блокировок |
+| **Индексы** | Создание индексов для часто фильтруемых полей | Ускорение поиска |
+
+##### Безопасность
+| Аспект | Реализация | Защита от |
+|--------|------------|-----------|
+| **SQL инъекции** | Использование параметризованных запросов | SQL инъекций |
+| **Валидация данных** | Валидация на уровне моделей | Некорректных данных |
+| **Транзакции** | Использование транзакций | Частичных обновлений |
+| **Бэкапы** | Регулярные бэкапы | Потери данных |
+
+##### Архитектура
+| Паттерн | Реализация | Преимущество |
+|---------|------------|--------------|
+| **Repository** | Слой абстракции над ORM | Изоляция бизнес-логики |
+| **Unit of Work** | Session как единица работы | Консистентность данных |
+| **Data Mapper** | Отделение моделей от схемы БД | Гибкость |
+
+#### Примеры использования в тестовой автоматизации
+
+##### Проверка данных в БД после UI операций
+```python
+def test_registration_creates_user_in_db(appium_driver, test_session):
+    """Проверка, что регистрация создает пользователя в БД"""
+    driver = appium_driver
+    
+    # UI операция: регистрация
+    register_page = RegisterPage(driver)
+    username = 'test_user_' + str(uuid.uuid4())[:8]
+    email = f'{username}@example.com'
+    
+    register_page.register(username, email, 'password123')
+    
+    # Проверка в БД
+    user_in_db = test_session.query(User).filter_by(username=username).first()
+    
+    assert user_in_db is not None
+    assert user_in_db.email == email
+    assert user_in_db.created_at is not None
+```
+
+##### Очистка тестовых данных
+```python
+@pytest.fixture(autouse=True)
+def cleanup_test_data(test_session):
+    """Автоматическая очистка тестовых данных"""
+    yield
+    
+    # Удаление всех тестовых пользователей
+    test_session.query(User).filter(
+        User.username.like('test_%')
+    ).delete(synchronize_session=False)
+    
+    test_session.query(Post).filter(
+        Post.title.like('Test %')
+    ).delete(synchronize_session=False)
+    
+    test_session.commit()
+```
+
+##### Тестирование сложных бизнес-логики
+```python
+def test_order_processing(appium_driver, test_session):
+    """Тест обработки заказа с проверкой в БД"""
+    driver = appium_driver
+    
+    # UI: Создание заказа
+    cart_page = CartPage(driver)
+    order_id = cart_page.checkout_and_get_order_id()
+    
+    # Проверка в БД
+    order = test_session.query(Order).get(order_id)
+    
+    assert order is not None
+    assert order.status == 'processing'
+    assert len(order.items) > 0
+    
+    # Проверка бизнес-правил
+    total = sum(item.price * item.quantity for item in order.items)
+    assert order.total_amount == total
+    
+    # Проверка связанных данных
+    assert order.user is not None
+    assert order.shipping_address is not None
+```
+
+**Ключевой вывод:**
+SQLAlchemy предоставляет мощный и гибкий инструментарий для работы с базами данных в Python. Интеграция ORM с тестовой автоматизацией позволяет создавать комплексные тесты, которые проверяют не только UI, но и сохранение данных в БД, бизнес-логику и целостность данных.
+
 [🔄 К содержанию - главы](#базы-данных-python-глава)
 [🔼 К содержанию](#content)
 
