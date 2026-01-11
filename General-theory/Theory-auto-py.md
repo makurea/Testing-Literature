@@ -7254,7 +7254,7 @@ def platform_driver(request):
             'udid': 'auto'
         }
     
-    driver = webdriver.Remote('http://localhost:4723/wd/hub', capabilities)
+    driver = webdriver.Remote('http://localhost:4723/wd/hub', capabilities) 
     
     yield driver, request.param
     
