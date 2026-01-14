@@ -1885,7 +1885,7 @@ public class WaitExamples {
                 d.findElement(By.id("successMessage"))
         );
 
-        System.out.println("Текст сообщения: " + message.getText());
+        System.out.println("Текст сообщения: " + message.getText()); 
 
         driver.quit();
     }
