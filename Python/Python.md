@@ -5171,7 +5171,7 @@ print(counter())  # 3
 | **Built-in затеняется** | `list = [1, 2, 3]` | Переопределение встроенной функции |
 
 ```python
-list = "I'm not a list anymore"  # Опасно!
+list = "I'm not a list anymore"  # Опасно! 
 # Теперь list() не работает как встроенная функция
 ```
 
