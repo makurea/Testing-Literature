@@ -4243,7 +4243,7 @@ runner = container.resolve(TestRunner)
 ```python
 class APIClient:
     def __init__(self, http_client: HttpClient):
-        self.http_client = http_client  # DI для тестирования
+        self.http_client = http_client  # DI для тестирования 
     
     def get_user(self, user_id):
         return self.http_client.get(f"/users/{user_id}")
