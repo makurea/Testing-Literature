@@ -6212,7 +6212,7 @@ SELECT * FROM users WHERE age >= 18;
 SELECT * FROM users WHERE age <= 30;
 
 ```
-#### 🔗 Объединение запросов
+#### 🔗 Объединение запросов 
 ```sql
 -- UNION
 SELECT name FROM customers
