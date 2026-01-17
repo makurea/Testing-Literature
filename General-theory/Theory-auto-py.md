@@ -8897,7 +8897,7 @@ device_pool = DevicePool()
 def appium_driver_with_pool(request):
     """Фикстура с использованием пула устройств"""
     
-    # Определение типа устройства из маркера теста
+    # Определение типа устройства из маркера теста 
     device_type = 'any'
     if request.node.get_closest_marker('android'):
         device_type = 'android'
