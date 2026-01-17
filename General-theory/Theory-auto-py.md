@@ -4693,7 +4693,7 @@ import json
 
 def create_postman_collection(api_endpoints):
     collection = {
-        "info": {"name": "API Tests", "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"},
+        "info": {"name": "API Tests", "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"}, 
         "item": []
     }
     
