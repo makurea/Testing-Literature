@@ -5536,7 +5536,7 @@ def database():
     db.close()  # Очистка после всех тестов
 
 @pytest.fixture
-def user_repository(database):  # Зависит от database
+def user_repository(database):  # Зависит от database 
     return UserRepository(database)
 
 @pytest.fixture
