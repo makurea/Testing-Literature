@@ -4788,7 +4788,7 @@ def analyze_newman_report(report_path):
 | **Отчетность** | Генерация отчетов | HTML, Allure, JUnit |
 | **Уведомления** | Отправка результатов | Slack, Email, Teams |
 
-##### Конфигурация GitHub Actions
+##### Конфигурация GitHub Actions 
 ```yaml
 name: API Tests
 on: [push]
