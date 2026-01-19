@@ -5587,7 +5587,7 @@ def test_with_di(di_container):
     # ... использование драйвера
 ```
 
-#### Best Practices
+#### Best Practices 
 
 ##### Организация фикстур
 | Практика | Рекомендация | Пример |
