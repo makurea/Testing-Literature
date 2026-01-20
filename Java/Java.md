@@ -1013,7 +1013,7 @@ Stream API — это инструмент, введенный в Java 8, кот
 
 2. **Пример использования**:      
    ```java
-   List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+   List<String> names = Arrays.asList("Alice", "Bob", "Charlie"); 
    names.stream()
         .filter(name -> name.startsWith("A"))
         .map(String::toUpperCase)
