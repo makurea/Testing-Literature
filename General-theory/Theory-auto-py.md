@@ -4713,7 +4713,7 @@ def create_postman_collection(api_endpoints):
     return collection
 ```
 
-#### Интеграция в pytest
+#### Интеграция в pytest 
 
 ##### Фикстуры для Newman
 | Фикстура | Назначение | Реализация |
