@@ -4562,7 +4562,7 @@ async def test_websocket():
             assert response['status'] == 'pong'
 ```
 
-#### Best Practices 
+#### Best Practices  
 
 ##### Настройка клиента
 | Практика | Рекомендация | Пример |
