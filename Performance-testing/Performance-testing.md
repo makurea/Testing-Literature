@@ -11,11 +11,15 @@
 
 ## [📊 Основные виды тестирования](#основные-виды-тестирования) <a id="основные-виды-тестирования-глава"></a>   
 
-* [Load и Stress Testing](#load-stress-testing)
-* [Spike и Soak Testing](#spike-soak-testing)
-* [Baseline и Benchmark Testing](#baseline-benchmark)
-* [Regression Performance Testing](#performance-regression)
-* [Scalability и Volume Testing](#scalability-volume-testing)
+* [Load Testing](#load-testing)
+* [Stress Testing](#stress-testing)
+* [Spike Testing](#spike-testing)
+* [Soak (Endurance) Testing](#soak-testing)
+* [Baseline Testing](#baseline-testing)
+* [Benchmark Testing](#benchmark-testing)
+* [Performance Regression Testing](#performance-regression-testing)
+* [Scalability Testing](#scalability-testing)
+* [Volume Testing](#volume-testing)
 
 ## [🧩 Профили нагрузки и моделирование](#профили-нагрузки-и-моделирование) <a id="профили-нагрузки-и-моделирование-глава"></a>
 
