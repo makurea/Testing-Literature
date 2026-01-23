@@ -4,6 +4,7 @@
 
 * [Что такое Performance Testing](#что-такое-performance-testing) 
 * [Цели и когда проводить](#цели-и-когда)
+* [Нефункциональные требования (NFR)](#nfr)
 * [SLA / SLO / SLI и Performance Requirements](#sla-slo)
 * [Ключевые метрики (Response Time, TPS, Error Rate)](#ключевые-метрики)  
 * [Роль Performance-инженера](#роль-performance-инженера)
