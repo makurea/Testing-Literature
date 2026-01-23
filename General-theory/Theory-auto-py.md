@@ -6244,7 +6244,7 @@ import allure
     ("guest", "wrong", False),
     ("", "", False),
 ])
-def test_login_with_different_users(username, password, expected):
+def test_login_with_different_users(username, password, expected): 
     allure.dynamic.title(f"Логин пользователя {username}")
     
     with allure.step(f"Попытка входа с {username}"):
