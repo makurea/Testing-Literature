@@ -5908,7 +5908,7 @@ def test_with_logging(caplog):
     assert caplog.records[1].levelname == "ERROR"
 ```
 
-##### Кастомная конфигурация логирования в pytest
+##### Кастомная конфигурация логирования в pytest 
 ```python
 # conftest.py
 def pytest_configure(config):
