@@ -13,6 +13,7 @@
 
 * [Load и Stress Testing](#load-stress-testing)
 * [Spike и Soak Testing](#spike-soak-testing)
+* [Baseline и Benchmark Testing](#baseline-benchmark)
 * [Scalability и Volume Testing](#scalability-volume-testing)
 
 ## [🧩 Профили нагрузки и моделирование](#профили-нагрузки-и-моделирование) <a id="профили-нагрузки-и-моделирование-глава"></a>
