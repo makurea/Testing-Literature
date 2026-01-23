@@ -6705,7 +6705,7 @@ class ParallelTestMetrics:
     
     def test_finished(self):
         with self.lock:
-            self.tests_running.dec()
+            self.tests_running.dec() 
     
     def update_queue(self, size):
         self.queue_size.set(size)
