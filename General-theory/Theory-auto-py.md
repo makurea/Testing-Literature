@@ -12,7 +12,7 @@
 * [Использование Git в проектах с virtualenv / poetry](#git-virtualenv)
 * [Интеграция Git с CI/CD для Python](#git-ci-cd)
 
-## [🚀 CI/CD для Python](#ci-cd-python)  <a id="ci-cd-python-глава"></a> 
+## [🚀 CI/CD для Python](#ci-cd-python)  <a id="ci-cd-python-глава"></a>  
 
 * [Инструменты CI/CD для Python (GitHub Actions, GitLab CI, Jenkins)](#ci-cd-инструменты)
 * [Файл настройки CI/CD для Python проектов](#ci-cd-настройка)
