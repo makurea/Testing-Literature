@@ -5192,7 +5192,7 @@ Actor (Who) → Abilities (Can) → Tasks (Do) → Interactions (How) → System
      тестов                     (Login, Order)     действия       система
 ```
 
-##### Пример реализации
+##### Пример реализации 
 ```python
 from screenplay import Actor, Task, Question
 from screenplay.actions import Click, Enter, Open
