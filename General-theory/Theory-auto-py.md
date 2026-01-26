@@ -6816,7 +6816,7 @@ groups:
           description: "Selenium Grid не отвечает более 2 минут"
 ```
 
-##### Интеграция с системами уведомлений
+##### Интеграция с системами уведомлений 
 ```python
 from prometheus_client import Gauge
 import requests
