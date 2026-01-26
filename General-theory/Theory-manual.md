@@ -4706,7 +4706,7 @@ fetch('https://api.example.com/data')
 - Быстрая, не анализирует содержимое
 - ⚙️ Примеры: `AWS NLB`, `LVS`
 
-##### **L7 (Application Layer)**
+##### **L7 (Application Layer)** 
 - HTTP/HTTPS, gRPC
 - Маршрутизация по URL, заголовкам, кукам
 - ⚙️ Примеры: `NGINX`, `HAProxy`, `AWS ALB`
