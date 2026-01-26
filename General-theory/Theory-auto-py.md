@@ -2927,7 +2927,7 @@ def calculate_optimal_workers():
 # pytest -n $(python calculate_workers.py)
 ```
 
-##### 2. Кэширование и общие ресурсы
+##### 2. Кэширование и общие ресурсы 
 
 ```python
 # conftest.py
