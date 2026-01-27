@@ -498,7 +498,7 @@ System.out.println(str); // Вывод: Hello World!
 
 ---
 
-### 🔸 Final/finally/finalize <a id="final-finally-finalize"></a>
+### 🔸 Final/finally/finalize <a id="final-finally-finalize"></a> 
 
 
 | Ключевое слово | Описание                                                                                   |
