@@ -4448,7 +4448,7 @@ import aiohttp
 @pytest.mark.asyncio
 async def test_get_user(aiohttp_client):
     async with aiohttp.ClientSession() as session:
-        async with session.get('https://api.example.com/users/1') as response:
+        async with session.get('https://api.example.com/users/1') as response: 
             assert response.status == 200
             data = await response.json()
             assert data['id'] == 1
