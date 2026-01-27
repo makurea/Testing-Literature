@@ -6822,7 +6822,7 @@ from prometheus_client import Gauge
 import requests
 
 class AlertManagerIntegration:
-    """Интеграция с Alertmanager для кастомных алертов"""
+    """Интеграция с Alertmanager для кастомных алертов""" 
     
     def __init__(self, alertmanager_url):
         self.alertmanager_url = alertmanager_url
