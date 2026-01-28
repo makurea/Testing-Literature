@@ -3652,7 +3652,7 @@ jobs:
 
 --- 
 
-###  Модель OSI и TCP/IP <a id="модель-osi-и-tcp-ip"></a>
+###  Модель OSI и TCP/IP <a id="модель-osi-и-tcp-ip"></a> 
 
 Модель OSI (Open Systems Interconnection) — это теоретическая модель для понимания и стандартизации сетевых протоколов. В реальной жизни используется модель TCP/IP (Transmission Control Protocol/Internet Protocol).
 
