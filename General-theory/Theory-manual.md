@@ -5479,7 +5479,7 @@ kafka-topics --create --topic test --partitions 3 --replication-factor 2
 kafka-topics --list
 
 # Отправка сообщения
-kafka-console-producer --topic test --broker-list localhost:9092
+kafka-console-producer --topic test --broker-list localhost:9092 
 
 # Чтение сообщений
 kafka-console-consumer --topic test --from-beginning --bootstrap-server localhost:9092
