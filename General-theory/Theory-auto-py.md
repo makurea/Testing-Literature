@@ -7632,7 +7632,7 @@ class LocalizedLoginPage:
     """Page Object с поддержкой локализации"""
     
     # Базовые локаторы (не зависящие от языка)
-    USERNAME_FIELD = (AppiumBy.ACCESSIBILITY_ID, "username_field")
+    USERNAME_FIELD = (AppiumBy.ACCESSIBILITY_ID, "username_field") 
     PASSWORD_FIELD = (AppiumBy.ACCESSIBILITY_ID, "password_field")
     
     def __init__(self, driver, language="en"):
