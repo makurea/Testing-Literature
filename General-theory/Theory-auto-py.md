@@ -9803,7 +9803,7 @@ async def async_db_operations():
     """Асинхронные операции с БД"""
     async with AsyncSessionLocal() as session:
         # Создание
-        new_user = User(username='async_user', email='async@example.com')
+        new_user = User(username='async_user', email='async@example.com') 
         session.add(new_user)
         await session.commit()
         
