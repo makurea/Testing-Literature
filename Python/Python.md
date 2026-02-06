@@ -5012,7 +5012,7 @@ def calculate_sum(a, b):
 
 ```python
 def outer_function():
-    # enclosing область для inner_function
+    # enclosing область для inner_function 
     outer_var = "I'm from outer function"
     
     def inner_function():
