@@ -88,7 +88,7 @@
   - [📷 Screenshot tools (LightShot, Greenshot)](#screenshot-tools)
   - [📢 Mind Mapping tools (XMind, FreeMind)](#mind-mapping-tools) 
 
-## [📚 Контроль версий и IDE](#контроль-версий-и-ide) <a id="контроль-версий-и-ide-глава"></a>
+## [📚 Контроль версий и IDE](#контроль-версий-и-ide) <a id="контроль-версий-и-ide-глава"></a> 
 
   - [🐙 Git](#git)
   - [🔗 Bitbucket](#bitbucket)
