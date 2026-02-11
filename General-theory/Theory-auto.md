@@ -2106,7 +2106,7 @@ Jackson (аннотации):
 
 ---
 
-### RestAssured <a id="restassured"></a>
+### RestAssured <a id="restassured"></a> 
 
 **RestAssured** — это популярная библиотека для тестирования RESTful API в Java. Она предоставляет простой и удобный способ работы с HTTP-запросами и проверками ответов, поддерживает запросы GET, POST, PUT, DELETE и другие.
 
