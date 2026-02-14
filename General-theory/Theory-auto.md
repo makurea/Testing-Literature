@@ -2137,6 +2137,225 @@ page.route("**/api/**", route -> route.fulfill(
 
 ### Playwright Test Runner <a id="playwright-test-runner"></a>
 
+**Playwright Test Runner** — это встроенный исполнитель тестов, разработанный специально для end-to-end тестирования. В отличие от Selenium, который требует подключения сторонних тест-раннеров (JUnit, TestNG), Playwright предоставляет всё "из коробки" .
+
+Официальная документация: [playwright.dev/java/docs/test-runners](https://playwright.dev/java/docs/test-runners) | [Java API](https://playwright.dev/java/api/class-test)
+
+#### Ключевые возможности
+
+| Возможность | Описание |
+|-------------|----------|
+| **Мультибраузерность** | Запуск тестов в Chromium, Firefox и WebKit одновременно |
+| **Параллелизм** | Встроенная поддержка параллельного запуска тестов |
+| **Изоляция** | Каждый тест получает отдельный BrowserContext |
+| **Артефакты** | Скриншоты, видео и трассировка автоматически сохраняются |
+| **Фикстуры** | Система переиспользуемых компонентов для тестов |
+| **Репорты** | HTML, JSON, JUnit и другие форматы отчетов |
+
+🔗 [Возможности Test Runner](https://playwright.dev/java/docs/test-runners)
+
+#### Сравнение с традиционными подходами
+
+| Характеристика | Playwright Test Runner | JUnit + Selenium | TestNG + Selenium |
+|----------------|------------------------|------------------|-------------------|
+| **Конфигурация браузеров** | ✅ Встроенная | ❌ Ручная | ❌ Ручная |
+| **Параллельный запуск** | ✅ Нативный | ⚠️ Через настройки | ⚠️ Через настройки |
+| **Скриншоты при падении** | ✅ Автоматически | ❌ Ручная реализация | ❌ Ручная реализация |
+| **Трассировка** | ✅ Встроенная | ❌ Нет | ❌ Нет |
+| **BrowserContext изоляция** | ✅ Автоматически | ❌ Нет | ❌ Нет |
+| **Retry механизм** | ✅ Встроенный | ❌ Нет | ❌ Нет |
+| **Языки** | Java, JS, Python, .NET | Java | Java |
+
+#### Конфигурация (playwright.config)
+
+```java
+// playwright.config.java
+public class PlaywrightConfig {
+    public static void configure() {
+        Playwright playwright = Playwright.create();
+        
+        // Настройка проектов для разных браузеров
+        BrowserType chromium = playwright.chromium();
+        BrowserType firefox = playwright.firefox();
+        BrowserType webkit = playwright.webkit();
+        
+        // Общие настройки для всех тестов
+        TestOptions options = new TestOptions()
+            .setHeadless(true)
+            .setBaseURL("https://example.com")
+            .setScreenshot(ScreenshotOnFailure.ONLY)
+            .setVideo(VideoOnFailure.RETAIN);
+    }
+}
+```
+
+🔗 [Конфигурация Java](https://playwright.dev/java/docs/test-configuration)
+
+#### Структура теста
+
+```java
+import com.microsoft.playwright.junit.UsePlaywright;
+import com.microsoft.playwright.Page;
+import org.junit.jupiter.api.Test;
+
+@UsePlaywright
+public class ExampleTest {
+    
+    @Test
+    void shouldNavigateToPlaywright(Page page) {
+        page.navigate("https://playwright.dev");
+        
+        // Auto-waiting - не нужно писать ожидания
+        page.click("text=Get started");
+        
+        // Web-first assertions
+        assertThat(page).hasURL("https://playwright.dev/docs/intro");
+    }
+}
+```
+
+#### Параметры конфигурации
+
+| Параметр | Описание | Пример значения |
+|----------|----------|-----------------|
+| `testDir` | Директория с тестами | `./src/test/java` |
+| `timeout` | Таймаут на тест (мс) | `30000` |
+| `retries` | Количество повторов | `2` в CI, `0` локально |
+| `workers` | Количество параллельных процессов | `4` |
+| `fullyParallel` | Все тесты параллельно | `true` |
+| `forbidOnly` | Запрет `test.only` в CI | `true` |
+
+#### Репортеры
+
+| Тип репортера | Команда | Особенности |
+|---------------|---------|-------------|
+| **HTML** | `npx playwright show-report` | Интерактивный отчет с трассировкой |
+| **JSON** | `--reporter=json` | Для интеграции с CI/CD |
+| **JUnit** | `--reporter=junit` | Совместимость с Jenkins |
+| **Line** | `--reporter=line` | Консольный вывод |
+| **Allure** | `@Allure` аннотации | Интеграция с Allure Framework |
+
+🔗 [Репортеры](https://playwright.dev/java/docs/reporters)
+
+#### Фикстуры (Fixtures)
+
+Фикстуры — это механизм переиспользования настроек между тестами :
+
+```java
+import org.junit.jupiter.api.extension.ExtendWith;
+import com.microsoft.playwright.junit.UsePlaywright;
+import com.microsoft.playwright.Page;
+
+@ExtendWith(PlaywrightExtension.class)
+public class ShopTest {
+    
+    @Fixture
+    Page adminPage(Page page) {
+        page.navigate("/admin");
+        page.fill("#login", "admin");
+        page.fill("#password", "pass");
+        page.click("#submit");
+        return page;
+    }
+    
+    @Test
+    void adminCanAccessDashboard(Page adminPage) {
+        assertThat(adminPage).hasURL("/admin/dashboard");
+    }
+}
+```
+
+#### Запуск тестов
+
+```bash
+# Запуск всех тестов
+mvn test
+
+# Запуск конкретного теста
+mvn test -Dtest=LoginTest
+
+# Запуск в конкретном браузере
+mvn test -Dbrowser=firefox
+
+# Запуск с отладкой
+mvn test -Ddebug=true
+
+# Параллельный запуск
+mvn test -Dworkers=4
+```
+
+#### Trace Viewer
+
+Trace Viewer — инструмент для анализа упавших тестов :
+
+```java
+@Test
+void testWithTracing() {
+    // Трассировка сохраняется автоматически при падении
+    page.navigate("https://example.com");
+    page.click("#submit");
+}
+
+// Просмотр трассировки
+// npx playwright show-trace test-results/trace.zip
+```
+
+Trace Viewer показывает:
+- DOM до и после каждого действия
+- Скриншоты состояний страницы
+- Сетевые запросы
+- Консольные логи
+- Временную шкалу выполнения
+
+🔗 [Trace Viewer](https://playwright.dev/java/docs/trace-viewer)
+
+#### Интеграция с CI/CD
+
+```yaml
+# GitHub Actions example
+name: Playwright Tests
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+      - run: mvn test
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: target/playwright-report/
+```
+
+#### Сравнение с JUnit/TestNG
+
+| Критерий | Playwright Test Runner | JUnit 5 | TestNG |
+|----------|------------------------|---------|--------|
+| **Browser fixtures** | ✅ Встроенные | ❌ Нет | ❌ Нет |
+| **Parallel execution** | ✅ Автоматическая | ⚠️ Ручная | ⚠️ Ручная |
+| **Retry flaky tests** | ✅ Встроенный | ❌ Нет | ✅ Через listeners |
+| **Screenshots/video** | ✅ Нативно | ❌ Нет | ❌ Нет |
+| **Trace viewer** | ✅ Есть | ❌ Нет | ❌ Нет |
+| **Device emulation** | ✅ Встроенная | ❌ Нет | ❌ Нет |
+| **Network intercept** | ✅ Нативно | ❌ Нет | ❌ Нет |
+| **Setup complexity** | Низкая | Средняя | Средняя |
+
+#### Преимущества для Java-проектов
+
+1. **Единый стек** — не нужно настраивать JUnit + Selenium + отчеты отдельно
+2. **Меньше кода** — boilerplate сокращается на 40-50%
+3. **Стабильность** — auto-waiting уменьшает flaky тесты
+4. **Отладка** — trace viewer упрощает поиск проблем
+5. **CI интеграция** — готовые шаблоны для Jenkins, GitHub Actions
+
+🔗 [Java с Playwright Test Runner](https://playwright.dev/java/docs/intro)
+
 [🔄 К содержанию - главы](#playwright-глава)  
 [🔼 К содержанию](#content)
 
