@@ -2362,6 +2362,251 @@ jobs:
 
 ### Классы и объекты <a id="классы-и-объекты"></a>
 
+#### 🎬 Playwright
+
+Точка входа в библиотеку. Создает экземпляр Playwright и управляет запуском браузеров. Это основной фасад для всего фреймворка.
+
+🔗 [Официальная документация](https://playwright.dev/java/api/class-playwright)
+
+| Метод | Описание | Пример использования |
+| :--- | :--- | :--- |
+| `create()` | Статический метод для создания экземпляра Playwright | `Playwright playwright = Playwright.create();` |
+| `chromium()` | Возвращает объект для управления Chromium браузерами | `BrowserType chromium = playwright.chromium();` |
+| `firefox()` | Возвращает объект для управления Firefox браузерами | `BrowserType firefox = playwright.firefox();` |
+| `webkit()` | Возвращает объект для управления WebKit (Safari) браузерами | `BrowserType webkit = playwright.webkit();` |
+| `close()` | Завершает работу Playwright и освобождает ресурсы | `playwright.close();` |
+| `version()` | Возвращает версию Playwright | `String version = playwright.version();` |
+
+#### 🌐 Browser
+
+Представляет экземпляр запущенного браузера (Chromium, Firefox или WebKit). Управляет жизненным циклом браузера и создает изолированные контексты.
+
+🔗 [Официальная документация](https://playwright.dev/java/api/class-browser)
+
+| Метод | Описание | Пример использования |
+| :--- | :--- | :--- |
+| `launch()` | Запускает новый экземпляр браузера с указанными опциями | `Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));` |
+| `newContext()` | Создает новый изолированный контекст (инкогнито) | `BrowserContext context = browser.newContext();` |
+| `newPage()` | Создает новую страницу в новом контексте (упрощенный вариант) | `Page page = browser.newPage();` |
+| `contexts()` | Возвращает список всех открытых контекстов | `List<BrowserContext> contexts = browser.contexts();` |
+| `close()` | Закрывает браузер и все его контексты | `browser.close();` |
+| `version()` | Возвращает версию браузера | `String version = browser.version();` |
+| `isConnected()` | Проверяет, активен ли браузер | `boolean isConnected = browser.isConnected();` |
+
+#### 📦 BrowserContext
+
+Изолированная сессия внутри браузера (аналог режима инкогнито). Каждый контекст имеет свои cookies, localStorage и кеш. Идеален для изоляции тестов.
+
+🔗 [Официальная документация](https://playwright.dev/java/api/class-browsercontext)
+
+| Метод | Описание | Пример использования |
+| :--- | :--- | :--- |
+| `newPage()` | Создает новую страницу (вкладку) в текущем контексте | `Page page = context.newPage();` |
+| `cookies()` | Возвращает список cookies контекста | `List<Cookie> cookies = context.cookies();` |
+| `addCookies()` | Добавляет cookies в контекст | `context.addCookies(List.of(cookie));` |
+| `clearCookies()` | Очищает все cookies контекста | `context.clearCookies();` |
+| `setGeolocation()` | Устанавливает геолокацию для контекста | `context.setGeolocation(55.7558, 37.6176);` |
+| `grantPermissions()` | Разрешает доступ к функциям (камера, микрофон) | `context.grantPermissions(Arrays.asList("geolocation", "notifications"));` |
+| `clearPermissions()` | Очищает все выданные разрешения | `context.clearPermissions();` |
+| `setOffline()` | Включает/выключает офлайн-режим | `context.setOffline(true);` |
+| `storageState()` | Сохраняет состояние хранилища (cookies, localStorage) | `String state = context.storageState();` |
+| `pages()` | Возвращает список всех страниц в контексте | `List<Page> pages = context.pages();` |
+| `close()` | Закрывает контекст и все его страницы | `context.close();` |
+
+#### 📄 Page
+
+Представляет отдельную вкладку или всплывающее окно в браузере. Основная единица взаимодействия с веб-страницей.
+
+🔗 [Официальная документация](https://playwright.dev/java/api/class-page)
+
+| Метод | Описание | Пример использования |
+| :--- | :--- | :--- |
+| `navigate()` | Переходит по указанному URL | `page.navigate("https://example.com");` |
+| `locator()` | Создает локатор для поиска элементов | `Locator button = page.locator("#submit");` |
+| `getByRole()` | Поиск элемента по ARIA-роли | `Locator button = page.getByRole(AriaRole.BUTTON);` |
+| `getByText()` | Поиск элемента по тексту | `Locator link = page.getByText("Click me");` |
+| `getByLabel()` | Поиск элемента по label (для форм) | `Locator input = page.getByLabel("Email");` |
+| `getByPlaceholder()` | Поиск по placeholder атрибуту | `Locator input = page.getByPlaceholder("Enter name");` |
+| `getByTestId()` | Поиск по data-testid атрибуту | `Locator card = page.getByTestId("product-card");` |
+| `click()` | Кликает по элементу (упрощенный метод) | `page.click("#submit");` |
+| `fill()` | Заполняет поле текстом | `page.fill("#email", "user@example.com");` |
+| `type()` | Печатает текст с задержкой (эмуляция ввода) | `page.type("#search", "playwright");` |
+| `press()` | Нажимает клавишу | `page.press("#input", "Enter");` |
+| `check()` | Отмечает чекбокс или радиокнопку | `page.check("#agree");` |
+| `uncheck()` | Снимает отметку с чекбокса | `page.uncheck("#agree");` |
+| `selectOption()` | Выбирает опцию в выпадающем списке | `page.selectOption("#country", "USA");` |
+| `hover()` | Наводит курсор на элемент | `page.hover("#menu");` |
+| `screenshot()` | Делает скриншот страницы или элемента | `page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get("shot.png")));` |
+| `pdf()` | Сохраняет страницу как PDF | `page.pdf(new Page.PdfOptions().setPath(Paths.get("page.pdf")));` |
+| `title()` | Возвращает заголовок страницы | `String title = page.title();` |
+| `url()` | Возвращает текущий URL | `String url = page.url();` |
+| `content()` | Возвращает HTML-код страницы | `String html = page.content();` |
+| `evaluate()` | Выполняет JavaScript на странице | `Object result = page.evaluate("document.title");` |
+| `waitForSelector()` | Ждет появления элемента | `page.waitForSelector(".loaded");` |
+| `waitForLoadState()` | Ждет загрузки страницы | `page.waitForLoadState(LoadState.NETWORKIDLE);` |
+| `waitForTimeout()` | Пауза на указанное время (не рекомендуется) | `page.waitForTimeout(2000);` |
+| `onDialog()` | Обрабатывает диалоговое окно (alert, confirm) | `page.onDialog(dialog -> dialog.accept());` |
+| `frame()` | Получает фрейм по имени или URL | `Frame frame = page.frame("main");` |
+| `frames()` | Возвращает все фреймы на странице | `List<Frame> frames = page.frames();` |
+| `reload()` | Перезагружает страницу | `page.reload();` |
+| `goBack()` | Возврат на предыдущую страницу | `page.goBack();` |
+| `goForward()` | Переход на следующую страницу | `page.goForward();` |
+| `close()` | Закрывает страницу | `page.close();` |
+
+#### 🔍 Locator
+
+**Ленивый (lazy)** объект, представляющий стратегию поиска элемента(ов) на странице. Поиск элемента происходит только в момент выполнения действия.
+
+🔗 [Официальная документация](https://playwright.dev/java/api/class-locator)
+
+| Метод | Описание | Пример использования |
+| :--- | :--- | :--- |
+| `click()` | Кликает по найденному элементу | `locator.click();` |
+| `click(ClickOptions)` | Кликает с дополнительными опциями | `locator.click(new Locator.ClickOptions().setForce(true));` |
+| `fill()` | Заполняет поле текстом | `locator.fill("text");` |
+| `type()` | Печатает текст с задержкой | `locator.type("text");` |
+| `clear()` | Очищает поле | `locator.clear();` |
+| `textContent()` | Возвращает текстовое содержимое | `String text = locator.textContent();` |
+| `innerText()` | Возвращает внутренний текст | `String text = locator.innerText();` |
+| `innerHTML()` | Возвращает внутренний HTML | `String html = locator.innerHTML();` |
+| `getAttribute()` | Возвращает значение атрибута | `String value = locator.getAttribute("href");` |
+| `isVisible()` | Проверяет видимость элемента | `boolean isVisible = locator.isVisible();` |
+| `isHidden()` | Проверяет, скрыт ли элемент | `boolean isHidden = locator.isHidden();` |
+| `isEnabled()` | Проверяет, активен ли элемент | `boolean isEnabled = locator.isEnabled();` |
+| `isDisabled()` | Проверяет, отключен ли элемент | `boolean isDisabled = locator.isDisabled();` |
+| `isChecked()` | Проверяет, отмечен ли чекбокс | `boolean isChecked = locator.isChecked();` |
+| `count()` | Возвращает количество найденных элементов | `int count = locator.count();` |
+| `first()` | Возвращает первый элемент из списка | `Locator firstItem = locator.first();` |
+| `last()` | Возвращает последний элемент из списка | `Locator lastItem = locator.last();` |
+| `nth()` | Возвращает элемент по индексу | `Locator thirdItem = locator.nth(2);` |
+| `filter()` | Фильтрует локатор по тексту или атрибуту | `locator.filter(new Locator.FilterOptions().setHasText("Submit"));` |
+| `and()` | Логическое И для локаторов | `Locator combined = locator.and(otherLocator);` |
+| `or()` | Логическое ИЛИ для локаторов | `Locator combined = locator.or(otherLocator);` |
+| `locator()` | Поиск внутри текущего локатора | `Locator child = parentLocator.locator(".child");` |
+| `getByRole()` | Поиск по роли внутри локатора | `Locator button = card.getByRole(AriaRole.BUTTON);` |
+| `getByText()` | Поиск по тексту внутри локатора | `Locator price = product.getByText("$29.99");` |
+| `waitFor()` | Ждет, пока элемент не появится/исчезнет | `locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));` |
+| `all()` | Возвращает список всех найденных локаторов | `List<Locator> allItems = locator.all();` |
+| `allInnerTexts()` | Возвращает тексты всех элементов | `List<String> texts = locator.allInnerTexts();` |
+| `allTextContents()` | Возвращает содержимое всех элементов | `List<String> contents = locator.allTextContents();` |
+| `screenshot()` | Делает скриншот элемента | `locator.screenshot(new Locator.ScreenshotOptions().setPath(Paths.get("element.png")));` |
+| `hover()` | Наводит курсор на элемент | `locator.hover();` |
+| `focus()` | Устанавливает фокус на элемент | `locator.focus();` |
+| `blur()` | Убирает фокус с элемента | `locator.blur();` |
+| `dragTo()` | Перетаскивает элемент к другому | `locator.dragTo(target);` |
+| `scrollIntoViewIfNeeded()` | Скроллит до элемента, если нужно | `locator.scrollIntoViewIfNeeded();` |
+| `selectOption()` | Выбирает опцию в select | `locator.selectOption("option");` |
+| `check()` | Отмечает чекбокс | `locator.check();` |
+| `uncheck()` | Снимает отметку с чекбокса | `locator.uncheck();` |
+| `setInputFiles()` | Загружает файл(ы) | `locator.setInputFiles(Paths.get("file.txt"));` |
+| `evaluate()` | Выполняет JS на найденном элементе | `locator.evaluate("node => node.value");` |
+
+#### 🌍 APIRequestContext
+
+Позволяет выполнять HTTP-запросы напрямую из тестов, без использования браузера. Используется для тестирования API или подготовки данных для UI-тестов.
+
+🔗 [Официальная документация](https://playwright.dev/java/api/class-apirequestcontext)
+
+| Метод | Описание | Пример использования |
+| :--- | :--- | :--- |
+| `get()` | Выполняет GET-запрос | `APIResponse response = context.get("https://api.example.com/users");` |
+| `post()` | Выполняет POST-запрос | `APIResponse response = context.post("https://api.example.com/users", RequestOptions.create().setData(user));` |
+| `put()` | Выполняет PUT-запрос | `APIResponse response = context.put("https://api.example.com/users/1", RequestOptions.create().setData(updatedUser));` |
+| `delete()` | Выполняет DELETE-запрос | `APIResponse response = context.delete("https://api.example.com/users/1");` |
+| `patch()` | Выполняет PATCH-запрос | `APIResponse response = context.patch("https://api.example.com/users/1", RequestOptions.create().setData(partialUpdate));` |
+| `head()` | Выполняет HEAD-запрос | `APIResponse response = context.head("https://api.example.com/users");` |
+| `fetch()` | Выполняет запрос с полным контролем | `APIResponse response = context.fetch("https://api.example.com/users", RequestOptions.create().setMethod("OPTIONS"));` |
+| `dispose()` | Освобождает ресурсы контекста | `context.dispose();` |
+| `storageState()` | Сохраняет состояние (cookies, токены) | `String state = context.storageState();` |
+
+#### 🧩 ElementHandle
+
+**Низкоуровневый** дескриптор DOM-элемента. Используется, когда Locator не может решить задачу (например, для передачи элемента в `evaluate`). В 95% случаев лучше использовать Locator.
+
+🔗 [Официальная документация](https://playwright.dev/java/api/class-elementhandle)
+
+| Метод | Описание | Пример использования |
+| :--- | :--- | :--- |
+| `click()` | Кликает по элементу | `elementHandle.click();` |
+| `fill()` | Заполняет поле текстом | `elementHandle.fill("text");` |
+| `type()` | Печатает текст с задержкой | `elementHandle.type("text");` |
+| `getAttribute()` | Возвращает значение атрибута | `String value = elementHandle.getAttribute("href");` |
+| `innerHTML()` | Возвращает внутренний HTML | `String html = elementHandle.innerHTML();` |
+| `innerText()` | Возвращает внутренний текст | `String text = elementHandle.innerText();` |
+| `textContent()` | Возвращает текстовое содержимое | `String text = elementHandle.textContent();` |
+| `isVisible()` | Проверяет видимость | `boolean visible = elementHandle.isVisible();` |
+| `isHidden()` | Проверяет, скрыт ли элемент | `boolean hidden = elementHandle.isHidden();` |
+| `isEnabled()` | Проверяет, активен ли элемент | `boolean enabled = elementHandle.isEnabled();` |
+| `isDisabled()` | Проверяет, отключен ли элемент | `boolean disabled = elementHandle.isDisabled();` |
+| `isChecked()` | Проверяет, отмечен ли чекбокс | `boolean checked = elementHandle.isChecked();` |
+| `boundingBox()` | Возвращает координаты и размер элемента | `BoundingBox box = elementHandle.boundingBox();` |
+| `scrollIntoViewIfNeeded()` | Скроллит до элемента | `elementHandle.scrollIntoViewIfNeeded();` |
+| `hover()` | Наводит курсор | `elementHandle.hover();` |
+| `focus()` | Устанавливает фокус | `elementHandle.focus();` |
+| `selectOption()` | Выбирает опцию в select | `elementHandle.selectOption("value");` |
+| `check()` | Отмечает чекбокс | `elementHandle.check();` |
+| `uncheck()` | Снимает отметку | `elementHandle.uncheck();` |
+| `setInputFiles()` | Загружает файл | `elementHandle.setInputFiles(Paths.get("file.txt"));` |
+| `screenshot()` | Делает скриншот элемента | `elementHandle.screenshot(new ElementHandle.ScreenshotOptions().setPath(Paths.get("element.png")));` |
+| `evaluate()` | Выполняет JS на элементе | `Object result = elementHandle.evaluate("node => node.value");` |
+| `waitForElementState()` | Ждет определенного состояния | `elementHandle.waitForElementState(ElementState.STABLE);` |
+| `dispose()` | Освобождает ресурс | `elementHandle.dispose();` |
+
+#### 🖼️ Frame
+
+Представляет iframe на странице. Позволяет взаимодействовать с элементами внутри фрейма, как если бы это была отдельная страница.
+
+🔗 [Официальная документация](https://playwright.dev/java/api/class-frame)
+
+| Метод | Описание | Пример использования |
+| :--- | :--- | :--- |
+| `locator()` | Создает локатор внутри фрейма | `Locator button = frame.locator("#submit");` |
+| `getByRole()` | Поиск по роли внутри фрейма | `Locator button = frame.getByRole(AriaRole.BUTTON);` |
+| `getByText()` | Поиск по тексту внутри фрейма | `Locator text = frame.getByText("Welcome");` |
+| `click()` | Кликает по элементу во фрейме | `frame.click("#submit");` |
+| `fill()` | Заполняет поле во фрейме | `frame.fill("#email", "user@example.com");` |
+| `navigate()` | Загружает URL во фрейме | `frame.navigate("https://example.com");` |
+| `title()` | Возвращает заголовок фрейма | `String title = frame.title();` |
+| `url()` | Возвращает URL фрейма | `String url = frame.url();` |
+| `content()` | Возвращает HTML фрейма | `String html = frame.content();` |
+| `childFrames()` | Возвращает дочерние фреймы | `List<Frame> children = frame.childFrames();` |
+| `frameLocator()` | Создает локатор для вложенного iframe | `FrameLocator nested = frame.frameLocator("#inner-iframe");` |
+| `evaluate()` | Выполняет JS во фрейме | `Object result = frame.evaluate("document.title");` |
+| `waitForSelector()` | Ждет появления элемента во фрейме | `frame.waitForSelector(".loaded");` |
+| `isVisible()` | Проверяет видимость элемента | `boolean visible = frame.isVisible("#element");` |
+| `getAttribute()` | Получает атрибут элемента | `String attr = frame.getAttribute("#link", "href");` |
+
+#### ⚙️ Worker
+
+Представляет веб-воркер (Web Worker) — скрипт, выполняющийся в фоновом потоке, отдельно от основной страницы.
+
+🔗 [Официальная документация](https://playwright.dev/java/api/class-worker)
+
+| Метод | Описание | Пример использования |
+| :--- | :--- | :--- |
+| `url()` | Возвращает URL скрипта воркера | `String workerUrl = worker.url();` |
+| `evaluate()` | Выполняет JavaScript в контексте воркера | `Object result = worker.evaluate("self.someVariable");` |
+| `waitForClose()` | Ждет завершения работы воркера | `worker.waitForClose();` |
+| `onClose()` | Подписывается на событие закрытия | `worker.onClose(closedWorker -> System.out.println("Worker closed"));` |
+
+
+#### 🔌 WebSocket
+
+Представляет WebSocket-соединение, открытое страницей. Позволяет мониторить и взаимодействовать с WebSocket-трафиком.
+
+🔗 [Официальная документация](https://playwright.dev/java/api/class-websocket)
+
+| Метод | Описание | Пример использования |
+| :--- | :--- | :--- |
+| `url()` | Возвращает URL WebSocket соединения | `String wsUrl = webSocket.url();` |
+| `expectEvent()` | Ожидает определенное событие | `WebSocketFrame frame = webSocket.expectEvent();` |
+| `onFrameSent()` | Подписывается на отправку сообщений | `webSocket.onFrameSent(frame -> System.out.println("Sent: " + frame.text()));` |
+| `onFrameReceived()` | Подписывается на получение сообщений | `webSocket.onFrameReceived(frame -> System.out.println("Received: " + frame.text()));` |
+| `onClose()` | Подписывается на закрытие соединения | `webSocket.onClose(ws -> System.out.println("WebSocket closed"));` |
+| `close()` | Закрывает WebSocket соединение | `webSocket.close();` |
+| `isClosed()` | Проверяет, закрыто ли соединение | `boolean closed = webSocket.isClosed();` |
+
+
 [🔄 К содержанию - главы](#playwright-глава)  
 [🔼 К содержанию](#content)
 
