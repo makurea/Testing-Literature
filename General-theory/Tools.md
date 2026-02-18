@@ -23,7 +23,7 @@
   - [🤖 Android Studio](#android-studio)
   - [🍏 Xcode](#xcode)
 
-## [🔌 Тестирование API](#тестирование-апи) <a id="тестирование-апи-глава"></a>
+## [🔌 Тестирование API](#тестирование-апи) <a id="тестирование-апи-глава"></a> 
 
   - [🌐 REST API](#rest-api)
   - [📬 Postman](#postman)
