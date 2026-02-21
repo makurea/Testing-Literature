@@ -2637,13 +2637,7 @@ jobs:
 | `page.getByTitle()` | Поиск по title атрибуту | `page.getByTitle("Help tooltip")`<br>`page.getByTitle("Close").click()` | Для элементов с всплывающими подсказками | [🔗 getByTitle()](https://playwright.dev/java/api/class-page#page-get-by-title) |
 | `page.getByTestId()` | Поиск по data-testid атрибуту | `page.getByTestId("product-card")`<br>`page.getByTestId("submit-button").click()` | Для тестовых идентификаторов — **самый надежный способ**, не зависит от изменений в UI | [🔗 getByTestId()](https://playwright.dev/java/api/class-page#page-get-by-test-id) |
 
-**[🔄 К содержанию - главы](#playwright-глава)** &nbsp;&nbsp; **[🔼 К содержанию](#content)**
-
----
-
-### Локаторы
-
-#### Основные методы создания локаторов
+**Основные методы создания локаторов**
 
 | Метод | Описание | Пример использования | Когда применять | Официальная документация |
 | :--- | :--- | :--- | :--- | :--- |
@@ -2704,6 +2698,47 @@ Locator expensiveProduct = page
 ---
 
 ### Действия <a id="действия"></a>
+
+**[🔄 К содержанию - главы](#playwright-глава)** &nbsp;&nbsp; **[🔼 К содержанию](#content)**
+
+---
+
+### Действия
+
+**Действия**
+
+| Метод | Описание | Пример использования | Особенности | Официальная документация |
+| :--- | :--- | :--- | :--- | :--- |
+| `click()` | Клик по элементу | `page.click("#submit")`<br>`locator.click()`<br>`page.click("#button", new Page.ClickOptions().setButton(MouseButton.RIGHT))` | Поддерживает правый/левый клик, модификаторы (Ctrl, Shift), двойной клик через опции | [🔗 click()](https://playwright.dev/java/api/class-page#page-click) |
+| `dblclick()` | Двойной клик | `locator.dblclick()`<br>`page.dblclick("#file")` | Для выделения текста, открытия файлов, специальных интерфейсов | [🔗 dblclick()](https://playwright.dev/java/api/class-page#page-dblclick) |
+| `hover()` | Наведение курсора | `locator.hover()`<br>`page.hover("#menu")` | Для появления выпадающих меню, тултипов, дополнительных элементов | [🔗 hover()](https://playwright.dev/java/api/class-page#page-hover) |
+| `dragTo()` | Перетаскивание элемента | `source.dragTo(target)`<br>`page.dragTo("#source", "#target")` | Drag-and-drop элементов с автоматическим ожиданием | [🔗 dragTo()](https://playwright.dev/java/api/class-locator#locator-drag-to) |
+| `focus()` | Установка фокуса на элемент | `locator.focus()`<br>`page.focus("#input")` | Для подготовки поля к вводу, триггера событий фокуса | [🔗 focus()](https://playwright.dev/java/api/class-page#page-focus) |
+| `blur()` | Снятие фокуса с элемента | `locator.blur()`<br>`page.blur("#input")` | Для триггера событий onblur, валидации при потере фокуса | [🔗 blur()](https://playwright.dev/java/api/class-locator#locator-blur) |
+| `fill()` | Заполнение поля текстом | `locator.fill("John Doe")`<br>`page.fill("#email", "user@example.com")` | Очищает поле перед вводом (быстро), поддерживает загрузку файлов через path | [🔗 fill()](https://playwright.dev/java/api/class-page#page-fill) |
+| `type()` | Печать текста с задержкой | `locator.type("John", new Locator.TypeOptions().setDelay(100))` | Эмулирует реальный ввод пользователя (посимвольно) | [🔗 type()](https://playwright.dev/java/api/class-page#page-type) |
+| `press()` | Нажатие клавиши | `page.press("#search", "Enter")`<br>`page.press("body", "Control+Shift+T")` | Для специальных клавиш и комбинаций | [🔗 press()](https://playwright.dev/java/api/class-page#page-press) |
+| `pressSequentially()` | Последовательное нажатие клавиш | `locator.pressSequentially("text")`<br>`locator.pressSequentially("slow", new Locator.PressSequentiallyOptions().setDelay(200))` | Альтернатива type() с контролем задержки | [🔗 pressSequentially()](https://playwright.dev/java/api/class-locator#locator-press-sequentially) |
+| `clear()` | Очистка поля | `locator.clear()`<br>`page.clear("#search")` | Удаляет весь текст из поля | [🔗 clear()](https://playwright.dev/java/api/class-page#page-clear) |
+| `check()` | Отметить чекбокс/радио | `page.check("#agree")`<br>`locator.check()` | Ничего не делает, если уже отмечено | [🔗 check()](https://playwright.dev/java/api/class-page#page-check) |
+| `uncheck()` | Снять отметку с чекбокса | `page.uncheck("#agree")`<br>`locator.uncheck()` | Только для чекбоксов | [🔗 uncheck()](https://playwright.dev/java/api/class-page#page-uncheck) |
+| `selectOption()` | Выбрать в выпадающем списке | `page.selectOption("#country", "USA")`<br>`page.selectOption("#country", new SelectOption().setLabel("United States"))`<br>`locator.selectOption("value")` | По value, label, индексу или множественный выбор | [🔗 selectOption()](https://playwright.dev/java/api/class-page#page-select-option) |
+| `setInputFiles()` | Загрузить файл(ы) | `locator.setInputFiles(Paths.get("file.txt"))`<br>`page.setInputFiles("#upload", new Path[]{Paths.get("f1.txt"), Paths.get("f2.txt")})` | Для input type="file", поддерживает множественную загрузку | [🔗 setInputFiles()](https://playwright.dev/java/api/class-page#page-set-input-files) |
+| `evaluate()` | Выполнить JS на элементе | `locator.evaluate("node => node.value = 'test'")`<br>`locator.evaluate("node => node.style.backgroundColor = 'red'")` | Для сложных манипуляций, недоступных через стандартные действия | [🔗 evaluate()](https://playwright.dev/java/api/class-locator#locator-evaluate) |
+| `dispatchEvent()` | Отправить событие | `locator.dispatchEvent("change")`<br>`page.dispatchEvent("#select", "input")` | Для триггера событий, которые не возникают при обычных действиях | [🔗 dispatchEvent()](https://playwright.dev/java/api/class-page#page-dispatch-event) |
+| `scrollIntoViewIfNeeded()` | Проскроллить до элемента | `locator.scrollIntoViewIfNeeded()`<br>`page.locator("#footer").scrollIntoViewIfNeeded()` | Когда элемент вне зоны видимости, но нужно с ним взаимодействовать | [🔗 scrollIntoViewIfNeeded()](https://playwright.dev/java/api/class-locator#locator-scroll-into-view-if-needed) |
+| `screenshot()` | Сделать скриншот элемента | `locator.screenshot(new Locator.ScreenshotOptions().setPath(Paths.get("element.png")))` | Для визуального сравнения, отладки, документации | [🔗 screenshot()](https://playwright.dev/java/api/class-locator#locator-screenshot) |
+
+**Поддерживаемые клавиши для `press()`**
+
+| Группа | Клавиши |
+| :--- | :--- |
+| **Управляющие** | `Enter`, `Tab`, `Escape`, `Backspace`, `Delete`, `Insert`, `Home`, `End`, `PageUp`, `PageDown`, `Space` |
+| **Стрелки** | `ArrowUp`, `ArrowDown`, `ArrowLeft`, `ArrowRight` |
+| **Функциональные** | `F1` - `F12` |
+| **Модификаторы** | `Control`, `Alt`, `Shift`, `Meta` (Windows/Command) |
+| **Комбинации** | `Control+Shift+T`, `Alt+F4`, `Control+A`, `Control+C`, `Control+V` |
+
 
 [🔄 К содержанию - главы](#playwright-глава)  
 [🔼 К содержанию](#content)
