@@ -3122,6 +3122,223 @@ page.context().browser().newBrowserCDPSession().send("Network.emulateNetworkCond
 
 ### Отладка <a id="отладка"></a>
 
+Playwright предоставляет мощные встроенные инструменты для отладки тестов: от генерации тестов записью действий до детального просмотра трассировки упавших тестов.
+
+🔗 [Официальная документация по отладке](https://playwright.dev/java/docs/debug)
+
+**Основные инструменты отладки**
+
+| Инструмент | Описание | Запуск | Когда использовать | Официальная документация |
+| :--- | :--- | :--- | :--- | :--- |
+| **Trace Viewer** | Просмотр трассировки теста с DOM, скриншотами, сетью и временной шкалой | `mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="show-trace trace.zip"` | Для анализа упавших тестов, пошагового просмотра действий | [🔗 Trace Viewer](https://playwright.dev/java/docs/trace-viewer) |
+| **Codegen** | Генерация тестов записью действий пользователя | `mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="codegen example.com"` | Для быстрого создания тестов, изучения локаторов | [🔗 Codegen](https://playwright.dev/java/docs/codegen) |
+| **Inspector** | Интерактивный инспектор для отладки | `PWDEBUG=1 mvn test` или `page.pause();` | Для пошагового выполнения теста, проверки локаторов | [🔗 Inspector](https://playwright.dev/java/docs/inspector) |
+| **UI Mode** | Интерактивный режим с визуальным интерфейсом | `npx playwright test --ui` (для JS, в Java через отдельный скрипт) | Для запуска и отладки отдельных тестов в UI | [🔗 UI Mode](https://playwright.dev/java/docs/ui-mode) |
+
+**Trace Viewer (Просмотр трассировки)**
+
+Trace Viewer — это веб-интерфейс для анализа записанных трассировок тестов.
+
+| Возможность | Описание | Как использовать |
+| :--- | :--- | :--- |
+| **Временная шкала** | Просмотр всех действий по времени | Клик по действию для перехода к нему |
+| **DOM-снимки** | Состояние страницы до и после действия | Переключение вкладок "Before" / "After" |
+| **Скриншоты** | Визуальное состояние страницы | Вкладка "Snapshot" показывает скриншот |
+| **Сетевые запросы** | Все запросы, сделанные во время теста | Вкладка "Network" с фильтрацией |
+| **Консольные логи** | Выводы в консоль браузера | Вкладка "Console" |
+| **Исходный код** | Код, который выполнял действие | Вкладка "Source" |
+
+**Запись трассировки в тесте:**
+
+```java
+BrowserContext context = browser.newContext();
+
+// Начать трассировку
+context.tracing().start(new Tracing.StartOptions()
+    .setScreenshots(true)     // записывать скриншоты
+    .setSnapshots(true)       // записывать DOM-снимки
+    .setSources(true));       // включать исходный код
+
+try {
+    // Выполнение теста
+    Page page = context.newPage();
+    page.navigate("https://example.com");
+    page.click("#submit");
+    
+    // Сохранить трассировку (даже при успехе)
+    context.tracing().stop(new Tracing.StopOptions()
+        .setPath(Paths.get("trace.zip")));
+} catch (Exception e) {
+    // При ошибке сохраняем трассировку для анализа
+    context.tracing().stop(new Tracing.StopOptions()
+        .setPath(Paths.get("trace-failed.zip")));
+    throw e;
+} finally {
+    context.close();
+}
+```
+
+**Автоматическая трассировка при падении:**
+
+```java
+import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
+
+public class TraceExtension implements AfterTestExecutionCallback {
+    @Override
+    public void afterTestExecution(ExtensionContext context) {
+        if (context.getExecutionException().isPresent()) {
+            // Тест упал - сохраняем трассировку
+            PlaywrightManager.getContext().tracing().stop(new Tracing.StopOptions()
+                .setPath(Paths.get("target/traces/" + context.getDisplayName() + ".zip")));
+        }
+    }
+}
+```
+
+**Codegen (Генератор тестов)**
+
+Codegen записывает действия пользователя в браузере и генерирует готовый код теста.
+
+| Команда | Описание | Пример |
+| :--- | :--- | :--- |
+| `codegen <url>` | Открыть браузер и начать запись | `mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="codegen https://example.com"` |
+| `codegen --output test.java` | Сохранить код в файл | `mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="codegen --output src/test/java/LoginTest.java https://example.com"` |
+| `codegen --target java` | Генерация Java-кода | `mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="codegen --target java https://example.com"` |
+
+**Возможности Codegen:**
+- ✅ Генерация точных локаторов (getByRole, getByText, getByTestId)
+- ✅ Запись кликов, ввода текста, навигации
+- ✅ Подсветка элементов при наведении
+- ✅ Копирование локаторов в буфер обмена
+
+**Inspector (Инспектор)**
+
+Inspector позволяет пошагово выполнять тест и исследовать элементы.
+
+**Активация:**
+```bash
+# Запуск теста в режиме отладки
+PWDEBUG=1 mvn test
+
+# Или через код
+page.pause(); // тест остановится здесь и откроется Inspector
+```
+
+**Возможности Inspector:**
+| Функция | Описание |
+| :--- | :--- |
+| **Step Over** | Выполнить следующее действие |
+| **Resume** | Продолжить выполнение до следующей паузы |
+| **Toggle breakpoint** | Установить точку остановки в коде |
+| **Explore** | Исследовать элементы на странице |
+| **Locator picker** | Выбрать элемент и получить его локатор |
+
+**Скриншоты**
+
+| Метод | Описание | Пример использования | Официальная документация |
+| :--- | :--- | :--- | :--- |
+| `page.screenshot()` | Скриншот всей страницы | `page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get("page.png")));` | [🔗 page.screenshot()](https://playwright.dev/java/api/class-page#page-screenshot) |
+| `locator.screenshot()` | Скриншот конкретного элемента | `locator.screenshot(new Locator.ScreenshotOptions().setPath(Paths.get("element.png")));` | [🔗 locator.screenshot()](https://playwright.dev/java/api/class-locator#locator-screenshot) |
+| `screenshot()` с маской | Скриншот с сокрытием элементов | `page.screenshot(new Page.ScreenshotOptions().setMask(Arrays.asList(page.locator(".secret"))));` | [🔗 mask option](https://playwright.dev/java/api/class-page#page-screenshot-option-mask) |
+
+**Примеры скриншотов:**
+
+```java
+// Полностраничный скриншот
+page.screenshot(new Page.ScreenshotOptions()
+    .setPath(Paths.get("fullpage.png"))
+    .setFullPage(true));
+
+// Скриншот с таймаутом ожидания стабильности
+page.screenshot(new Page.ScreenshotOptions()
+    .setPath(Paths.get("page.png"))
+    .setTimeout(5000)
+    .setAnimations(ScreenshotAnimations.DISABLED));
+
+// Скриншот с скрытием конфиденциальных данных
+page.screenshot(new Page.ScreenshotOptions()
+    .setPath(Paths.get("page-with-mask.png"))
+    .setMask(Arrays.asList(
+        page.locator(".credit-card"),
+        page.locator(".personal-data")
+    )));
+```
+
+**Видео**
+
+Playwright может записывать видео прохождения тестов.
+
+| Метод | Описание | Пример использования | Официальная документация |
+| :--- | :--- | :--- | :--- |
+| `setRecordVideoDir()` | Включить запись видео при создании контекста | `BrowserContext context = browser.newContext(new Browser.NewContextOptions().setRecordVideoDir(Paths.get("videos/")));` | [🔗 recordVideo](https://playwright.dev/java/api/class-browser#browser-new-context-option-record-video-dir) |
+| `video().path()` | Получить путь к видео | `Path videoPath = page.video().path();` | [🔗 video()](https://playwright.dev/java/api/class-page#page-video) |
+| `video().delete()` | Удалить видео | `page.video().delete();` | [🔗 video.delete()](https://playwright.dev/java/api/class-video#video-delete) |
+| `video().saveAs()` | Сохранить видео под другим именем | `page.video().saveAs(Paths.get("test1.webm"));` | [🔗 video.saveAs()](https://playwright.dev/java/api/class-video#video-save-as) |
+
+**Пример записи видео:**
+
+```java
+// Включение записи видео для контекста
+BrowserContext context = browser.newContext(new Browser.NewContextOptions()
+    .setRecordVideoDir(Paths.get("target/videos/"))
+    .setRecordVideoSize(1280, 720)); // опционально
+
+Page page = context.newPage();
+page.navigate("https://example.com");
+// ... действия теста
+
+context.close(); // видео сохранится автоматически
+```
+
+**Логирование и отладочный вывод**
+
+| Метод | Описание | Пример |
+| :--- | :--- | :--- |
+| `System.out.println()` | Вывод в консоль | `System.out.println("Current URL: " + page.url());` |
+| `page.onConsoleMessage()` | Логирование консоли браузера | `page.onConsoleMessage(msg -> System.out.println("Console: " + msg.text()));` |
+| `page.onPageError()` | Логирование ошибок на странице | `page.onPageError(error -> System.err.println("Page error: " + error));` |
+| `setLogLevel()` | Уровень логирования Playwright | `System.setProperty("playwright.log", "DEBUG");` |
+
+**Режимы запуска для отладки**
+
+| Режим | Команда/Настройка | Описание |
+| :--- | :--- | :--- |
+| **Headful режим** | `new BrowserType.LaunchOptions().setHeadless(false)` | Видеть браузер во время выполнения теста |
+| **Замедление действий** | `new BrowserType.LaunchOptions().setSlowMo(1000)` | Замедлить каждое действие на 1000 мс |
+| **DevTools открыт** | `new BrowserType.LaunchOptions().setDevtools(true)` | Открыть инструменты разработчика |
+| **PWDEBUG** | `PWDEBUG=1 mvn test` | Режим отладки с Inspector |
+| **Отладка в IDEA** | Точки останова в коде | Стандартная отладка Java-кода |
+
+```java
+// Запуск браузера для отладки
+Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions()
+    .setHeadless(false)      // видимый браузер
+    .setSlowMo(500)          // замедление 500ms
+    .setDevtools(true));     // открыть DevTools
+```
+
+**Сравнение инструментов отладки**
+
+| Инструмент | Для чего лучше | Когда использовать |
+| :--- | :--- | :--- |
+| **Trace Viewer** | Анализ упавших тестов, регрессий | После прогона тестов в CI |
+| **Codegen** | Написание новых тестов, поиск локаторов | В начале разработки теста |
+| **Inspector** | Пошаговая отладка, проверка состояний | Когда тест падает локально |
+| **Скриншоты** | Визуальная проверка, регрессии | В тестах для сравнения |
+| **Видео** | Общий обзор прохождения теста | Для длинных тестов, CI |
+
+**Практические советы по отладке**
+
+| Проблема | Решение |
+| :--- | :--- |
+| **Тест падает, но локально проходит** | Включить трассировку в CI и проанализировать |
+| **Не могу найти элемент** | Использовать Inspector или Codegen для получения точного локатора |
+| **Тест слишком быстрый, не вижу что происходит** | Включить `setSlowMo()` или `setHeadless(false)` |
+| **Сложный сценарий с несколькими шагами** | Поставить `page.pause()` перед проблемным местом |
+| **Проблемы с сетью/API** | Использовать `page.onRequest()`/`onResponse()` для логирования |
+| **Консольные ошибки в браузере** | Добавить `page.onConsoleMessage()` и `page.onPageError()` |
+
 [🔄 К содержанию - главы](#playwright-глава)  
 [🔼 К содержанию](#content)
 
