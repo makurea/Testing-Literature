@@ -2911,6 +2911,7 @@ BrowserContext mobileContext = browser.newContext(new Browser.NewContextOptions(
 
 **Создание контекста с предустановками**
 
+```java
 // Создание контекста с различными настройками
 BrowserContext context = browser.newContext(new Browser.NewContextOptions()
     // Базовый URL (page.navigate() будет использовать относительные пути)
