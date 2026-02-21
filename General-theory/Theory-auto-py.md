@@ -48,7 +48,7 @@
 * [Параллельные сессии с pytest-xdist](#parallel-sessions)
 * [Browser capabilities и options](#browser-capabilities-python)
 
-## [🎭 Selenium / Playwright / PyAutoGUI](#selenium-playwright-python)  <a id="selenium-playwright-python-глава"></a>   
+## [🎭 Selenium / Playwright / PyAutoGUI](#selenium-playwright-python)  <a id="selenium-playwright-python-глава"></a>    
 
 * [Selenium WebDriver в Python](#selenium-python-driver)
 * [Playwright: синхронный и асинхронный режимы](#playwright-sync-async)
