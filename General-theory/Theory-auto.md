@@ -2812,6 +2812,133 @@ Playwright автоматически ожидает готовности эле
 
 ### Работа с контекстом <a id="работа-с-контекстом"></a>
 
+BrowserContext предоставляет изолированную сессию внутри браузера (аналог режима инкогнито). Каждый контекст имеет свои cookies, localStorage, кеш и разрешения. Идеален для изоляции тестов.
+
+🔗 [Официальная документация по BrowserContext](https://playwright.dev/java/api/class-browsercontext)
+
+**Управление страницами и вкладками**
+
+| Метод | Описание | Пример использования | Когда использовать | Официальная документация |
+| :--- | :--- | :--- | :--- | :--- |
+| `newPage()` | Создает новую страницу (вкладку) в текущем контексте | `Page page2 = context.newPage();`<br>`page2.navigate("https://example.com");` | Когда нужно открыть дополнительную вкладку в том же контексте | [🔗 newPage()](https://playwright.dev/java/api/class-browsercontext#browser-context-new-page) |
+| `pages()` | Возвращает список всех страниц в контексте | `List<Page> allPages = context.pages();`<br>`Page firstPage = context.pages().get(0);` | Для управления несколькими страницами, проверки количества открытых вкладок | [🔗 pages()](https://playwright.dev/java/api/class-browsercontext#browser-context-pages) |
+| `close()` | Закрывает контекст и все его страницы | `context.close();` | В конце теста для очистки ресурсов | [🔗 close()](https://playwright.dev/java/api/class-browsercontext#browser-context-close) |
+| `waitForPage()` | Ожидает появления новой страницы | `Page newPage = context.waitForPage(() -> page.click("#open-new-tab"));` | При клике, открывающем новую вкладку/окно | [🔗 waitForPage()](https://playwright.dev/java/api/class-browsercontext#browser-context-wait-for-page) |
+
+**Cookies и Storage**
+
+| Метод | Описание | Пример использования | Когда использовать | Официальная документация |
+| :--- | :--- | :--- | :--- | :--- |
+| `cookies()` | Возвращает все cookies контекста | `List<Cookie> cookies = context.cookies();`<br>`cookies.forEach(c -> System.out.println(c.name + "=" + c.value));` | Для проверки установленных cookies, отладки | [🔗 cookies()](https://playwright.dev/java/api/class-browsercontext#browser-context-cookies) |
+| `addCookies()` | Добавляет cookies в контекст | `Cookie cookie = new Cookie("sessionId", "12345").setDomain("example.com");`<br>`context.addCookies(List.of(cookie));` | Для установки сессии перед тестом, тестирования авторизации | [🔗 addCookies()](https://playwright.dev/java/api/class-browsercontext#browser-context-add-cookies) |
+| `clearCookies()` | Очищает все cookies контекста | `context.clearCookies();` | Между тестами для изоляции | [🔗 clearCookies()](https://playwright.dev/java/api/class-browsercontext#browser-context-clear-cookies) |
+| `storageState()` | Сохраняет состояние (cookies, localStorage, sessionStorage) | `String state = context.storageState();`<br>`Files.write(Paths.get("state.json"), state.getBytes());` | Для сохранения сессии после логина и восстановления в других тестах | [🔗 storageState()](https://playwright.dev/java/api/class-browsercontext#browser-context-storage-state) |
+
+**Пример сохранения и восстановления сессии:**
+
+```java
+// Сохраняем состояние после логина
+BrowserContext context = browser.newContext();
+Page page = context.newPage();
+page.navigate("https://example.com/login");
+page.fill("#username", "user");
+page.fill("#password", "pass");
+page.click("#login");
+page.waitForURL("**/dashboard");
+
+String storageState = context.storageState();
+Files.write(Paths.get("state.json"), storageState.getBytes());
+context.close();
+
+// В другом тесте восстанавливаем
+BrowserContext newContext = browser.newContext(new Browser.NewContextOptions()
+    .setStorageStatePath(Paths.get("state.json")));
+Page newPage = newContext.newPage();
+newPage.navigate("https://example.com/dashboard"); // Уже авторизован!
+```
+
+**Эмуляция окружения**
+
+| Метод | Описание | Пример использования | Когда использовать | Официальная документация |
+| :--- | :--- | :--- | :--- | :--- |
+| `setGeolocation()` | Устанавливает геолокацию для контекста | `context.setGeolocation(55.7558, 37.6176);`<br>`context.setGeolocation(new Geolocation(40.7128, -74.0060));` | Для тестирования приложений, использующих геолокацию | [🔗 setGeolocation()](https://playwright.dev/java/api/class-browsercontext#browser-context-set-geolocation) |
+| `setOffline()` | Включает/выключает офлайн-режим | `context.setOffline(true);`<br>`// тест без интернета`<br>`context.setOffline(false);` | Для тестирования поведения приложения без сети | [🔗 setOffline()](https://playwright.dev/java/api/class-browsercontext#browser-context-set-offline) |
+| `grantPermissions()` | Выдает разрешения на доступ к функциям | `context.grantPermissions(Arrays.asList("geolocation", "notifications", "camera"));` | Для тестирования функционала, требующего разрешений | [🔗 grantPermissions()](https://playwright.dev/java/api/class-browsercontext#browser-context-grant-permissions) |
+| `clearPermissions()` | Очищает все выданные разрешения | `context.clearPermissions();` | Для сброса разрешений между тестами | [🔗 clearPermissions()](https://playwright.dev/java/api/class-browsercontext#browser-context-clear-permissions) |
+| `setExtraHTTPHeaders()` | Добавляет HTTP-заголовки для всех запросов | `context.setExtraHTTPHeaders(Map.of("X-Test-Token", "12345", "X-Client", "playwright"));` | Для добавления заголовков авторизации, тестовых маркеров | [🔗 setExtraHTTPHeaders()](https://playwright.dev/java/api/class-browsercontext#browser-context-set-extra-http-headers) |
+| `setDefaultTimeout()` | Устанавливает таймаут по умолчанию для всех действий | `context.setDefaultTimeout(30000);` | Для глобальной настройки таймаутов | [🔗 setDefaultTimeout()](https://playwright.dev/java/api/class-browsercontext#browser-context-set-default-timeout) |
+| `setDefaultNavigationTimeout()` | Устанавливает таймаут для навигации | `context.setDefaultNavigationTimeout(45000);` | Для глобальной настройки таймаутов навигации | [🔗 setDefaultNavigationTimeout()](https://playwright.dev/java/api/class-browsercontext#browser-context-set-default-navigation-timeout) |
+
+**Мобильная эмуляция**
+
+| Опция контекста | Описание | Пример использования | Официальная документация |
+| :--- | :--- | :--- | :--- |
+| `setViewportSize()` | Устанавливает размер окна | `context.setViewportSize(375, 812);` | Для эмуляции мобильных устройств | [🔗 setViewportSize()](https://playwright.dev/java/api/class-browsercontext#browser-context-set-viewport-size) |
+| `setUserAgent()` | Устанавливает User-Agent | `context.setUserAgent("Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X)");` | Для эмуляции браузера устройства | [🔗 setUserAgent()](https://playwright.dev/java/api/class-browsercontext#browser-context-set-user-agent) |
+| `deviceScaleFactor()` | Устанавливает масштаб пикселей | `new Browser.NewContextOptions().setDeviceScaleFactor(3.0)` | Для эмуляции Retina-дисплеев | [🔗 deviceScaleFactor()](https://playwright.dev/java/api/class-browser#browser-new-context-options) |
+| `hasTouch()` | Включает поддержку touch-событий | `new Browser.NewContextOptions().setHasTouch(true)` | Для эмуляции сенсорных экранов | [🔗 hasTouch()](https://playwright.dev/java/api/class-browser#browser-new-context-options) |
+| `isMobile()` | Включает мобильный режим | `new Browser.NewContextOptions().setIsMobile(true)` | Для эмуляции мобильного браузера | [🔗 isMobile()](https://playwright.dev/java/api/class-browser#browser-new-context-options) |
+
+**Пример эмуляции iPhone 13:**
+
+```java
+BrowserContext mobileContext = browser.newContext(new Browser.NewContextOptions()
+    .setViewportSize(390, 844)
+    .setUserAgent("Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X)")
+    .setDeviceScaleFactor(3.0)
+    .setHasTouch(true)
+    .setIsMobile(true));
+```
+
+**Трассировка и отладка**
+
+| Метод | Описание | Пример использования | Когда использовать | Официальная документация |
+| :--- | :--- | :--- | :--- | :--- |
+| `tracing().start()` | Начинает запись трассировки | `context.tracing().start(new Tracing.StartOptions().setScreenshots(true).setSnapshots(true));` | Для записи всех действий теста | [🔗 tracing.start()](https://playwright.dev/java/api/class-tracing#tracing-start) |
+| `tracing().stop()` | Останавливает запись трассировки | `context.tracing().stop(new Tracing.StopOptions().setPath(Paths.get("trace.zip")));` | После выполнения теста для сохранения трассировки | [🔗 tracing.stop()](https://playwright.dev/java/api/class-tracing#tracing-stop) |
+| `tracing().stopChunk()` | Останавливает текущий чанк | `context.tracing().stopChunk(new Tracing.StopChunkOptions().setPath(Paths.get("chunk.zip")));` | Для сохранения части трассировки | [🔗 tracing.stopChunk()](https://playwright.dev/java/api/class-tracing#tracing-stop-chunk) |
+
+**События контекста**
+
+| Событие | Описание | Пример использования |
+| :--- | :--- | :--- |
+| `onPage()` | Срабатывает при создании новой страницы | `context.onPage(page -> System.out.println("New page: " + page.url()));` |
+| `onClose()` | Срабатывает при закрытии контекста | `context.onClose(ctx -> System.out.println("Context closed"));` |
+| `onRequest()` | Срабатывает при отправке запроса | `context.onRequest(request -> System.out.println("Request: " + request.url()));` |
+| `onResponse()` | Срабатывает при получении ответа | `context.onResponse(response -> System.out.println("Response: " + response.status()));` |
+| `onRequestFailed()` | Срабатывает при ошибке запроса | `context.onRequestFailed(request -> System.out.println("Request failed: " + request.url()));` |
+
+
+**Создание контекста с предустановками**
+
+// Создание контекста с различными настройками
+BrowserContext context = browser.newContext(new Browser.NewContextOptions()
+    // Базовый URL (page.navigate() будет использовать относительные пути)
+    .setBaseURL("https://example.com")
+    
+    // Размер окна
+    .setViewportSize(1920, 1080)
+    
+    // Геолокация
+    .setGeolocation(55.7558, 37.6176)
+    .setPermissions(Arrays.asList("geolocation"))
+    
+    // HTTP-заголовки
+    .setExtraHTTPHeaders(Map.of("Authorization", "Bearer token123"))
+    
+    // Cookies
+    .setStorageStatePath(Paths.get("state.json"))
+    
+    // Мобильная эмуляция
+    .setHasTouch(true)
+    .setIsMobile(false)
+    .setDeviceScaleFactor(1.0)
+    
+    // Язык и временная зона
+    .setLocale("ru-RU")
+    .setTimezoneId("Europe/Moscow"));
+```
+
 [🔄 К содержанию - главы](#playwright-глава)  
 [🔼 К содержанию](#content)
 
