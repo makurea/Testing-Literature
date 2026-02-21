@@ -2624,6 +2624,18 @@ jobs:
 
 ### Локаторы <a id="локаторы-pl"></a>
 
+| Метод | Описание | Пример использования | Когда применять | Официальная документация |
+| :--- | :--- | :--- | :--- | :--- |
+| `page.locator()` | Универсальный метод поиска по CSS или XPath | `page.locator("#submit")`<br>`page.locator("//button[@id='submit']")` | Для сложных селекторов или когда нужно использовать CSS/XPath | [🔗 locator()](https://playwright.dev/java/api/class-page#page-locator) |
+| `page.getByRole()` | Поиск по ARIA-роли и доступному имени | `page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Submit"))` | Для поиска семантических элементов (кнопки, ссылки, заголовки) — **рекомендуемый способ** | [🔗 getByRole()](https://playwright.dev/java/api/class-page#page-get-by-role) |
+| `page.getByText()` | Поиск по текстовому содержимому | `page.getByText("Welcome back!")`<br>`page.getByText("Total:", new Page.GetByTextOptions().setExact(true))` | Для поиска элементов по видимому тексту на странице | [🔗 getByText()](https://playwright.dev/java/api/class-page#page-get-by-text) |
+| `page.getByLabel()` | Поиск по label (для элементов форм) | `page.getByLabel("Email address")`<br>`page.getByLabel("Agree to terms").check()` | Для полей ввода, чекбоксов, связанных с label | [🔗 getByLabel()](https://playwright.dev/java/api/class-page#page-get-by-label) |
+| `page.getByPlaceholder()` | Поиск по placeholder атрибуту | `page.getByPlaceholder("Enter your name")`<br>`page.getByPlaceholder("Search...").fill("playwright")` | Для полей ввода с placeholder текстом | [🔗 getByPlaceholder()](https://playwright.dev/java/api/class-page#page-get-by-placeholder) |
+| `page.getByAltText()` | Поиск по alt атрибуту (для изображений) | `page.getByAltText("Company logo")`<br>`page.getByAltText("Product image").click()` | Для изображений и медиа-элементов с alt текстом | [🔗 getByAltText()](https://playwright.dev/java/api/class-page#page-get-by-alt-text) |
+| `page.getByTitle()` | Поиск по title атрибуту | `page.getByTitle("Help tooltip")`<br>`page.getByTitle("Close").click()` | Для элементов с всплывающими подсказками | [🔗 getByTitle()](https://playwright.dev/java/api/class-page#page-get-by-title) |
+| `page.getByTestId()` | Поиск по data-testid атрибуту | `page.getByTestId("product-card")`<br>`page.getByTestId("submit-button").click()` | Для тестовых идентификаторов — **самый надежный способ**, не зависит от изменений в UI | [🔗 getByTestId()](https://playwright.dev/java/api/class-page#page-get-by-test-id) |
+
+
 [🔄 К содержанию - главы](#playwright-глава)  
 [🔼 К содержанию](#content)
 
