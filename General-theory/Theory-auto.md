@@ -2741,6 +2741,70 @@ Locator expensiveProduct = page
 
 ### Ожидания <a id="ожидания-pl"></a>
 
+**Auto-waiting (автоматические ожидания)**
+
+Playwright автоматически ожидает готовности элемента перед выполнением действия. Это встроенный механизм, который значительно уменьшает количество flaky-тестов.
+
+| Условие | Описание | Для каких действий | Официальная документация |
+| :--- | :--- | :--- | :--- |
+| **Visible** | Элемент видим на странице (имеет размеры и не скрыт CSS) | `click`, `fill`, `hover`, `dragTo`, `check`, `uncheck` | [🔗 Visible](https://playwright.dev/java/docs/actionability#visible) |
+| **Stable** | Элемент не анимирован (не двигается в течение как минимум двух кадров) | `click`, `dblclick`, `check`, `uncheck` | [🔗 Stable](https://playwright.dev/java/docs/actionability#stable) |
+| **Enabled** | Элемент активен (не имеет атрибута disabled) | `click`, `fill`, `selectOption`, `check`, `uncheck` | [🔗 Enabled](https://playwright.dev/java/docs/actionability#enabled) |
+| **Editable** | Поле доступно для редактирования (не disabled, не readonly) | `fill`, `type`, `clear`, `press` | [🔗 Editable](https://playwright.dev/java/docs/actionability#editable) |
+| **Attached** | Элемент присутствует в DOM | все действия | [🔗 Attached](https://playwright.dev/java/docs/actionability#attached) |
+
+🔗 [Подробнее об actionability](https://playwright.dev/java/docs/actionability)
+
+**Явные ожидания**
+
+| Метод | Описание | Пример использования | Когда использовать | Официальная документация |
+| :--- | :--- | :--- | :--- | :--- |
+| `waitForSelector()` | Ожидание появления элемента в DOM | `page.waitForSelector(".loaded", new Page.WaitForSelectorOptions().setTimeout(5000))` | Когда элемент появляется с задержкой после какого-либо действия | [🔗 waitForSelector()](https://playwright.dev/java/api/class-page#page-wait-for-selector) |
+| `waitForFunction()` | Ожидание выполнения JS-условия | `page.waitForFunction("() => document.title === 'Dashboard'")`<br>`page.waitForFunction("selector => document.querySelector(selector)", ".done")` | Для сложных условий, не покрытых стандартными ожиданиями | [🔗 waitForFunction()](https://playwright.dev/java/api/class-page#page-wait-for-function) |
+| `waitForLoadState()` | Ожидание состояния загрузки страницы | `page.waitForLoadState(LoadState.DOMCONTENTLOADED)`<br>`page.waitForLoadState(LoadState.NETWORKIDLE)` | После `navigate()` или клика, вызывающего переход | [🔗 waitForLoadState()](https://playwright.dev/java/api/class-page#page-wait-for-load-state) |
+| `waitForURL()` | Ожидание определенного URL | `page.waitForURL("**/dashboard", new Page.WaitForURLOptions().setTimeout(3000))`<br>`page.waitForURL(url -> url.contains("success"))` | Для проверки навигации после отправки формы или клика | [🔗 waitForURL()](https://playwright.dev/java/api/class-page#page-wait-for-url) |
+| `waitForTimeout()` | Пауза на указанное время (не рекомендуется) | `page.waitForTimeout(2000)` | **Только для отладки**. В тестах использовать явные ожидания | [🔗 waitForTimeout()](https://playwright.dev/java/api/class-page#page-wait-for-timeout) |
+| `waitFor()` | Универсальное ожидание для локатора | `locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.DETACHED))`<br>`locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN))` | Для разных состояний элемента (видимый, скрытый, прикрепленный, отсоединенный) | [🔗 waitFor()](https://playwright.dev/java/api/class-locator#locator-wait-for) |
+
+**Состояния для waitForSelector и waitFor()**
+
+| Состояние | Описание | Значение |
+| :--- | :--- | :--- |
+| `WaitForSelectorState.ATTACHED` | Элемент присутствует в DOM | Для проверки наличия элемента в DOM (даже если скрыт) |
+| `WaitForSelectorState.DETACHED` | Элемент отсутствует в DOM | Для ожидания исчезновения элемента |
+| `WaitForSelectorState.VISIBLE` | Элемент видим на странице | Для ожидания появления видимого элемента |
+| `WaitForSelectorState.HIDDEN` | Элемент скрыт или отсутствует | Для ожидания скрытия элемента |
+
+**Ожидание сетевых событий**
+
+| Метод | Описание | Пример использования | Когда использовать | Официальная документация |
+| :--- | :--- | :--- | :--- | :--- |
+| `waitForResponse()` | Ожидание ответа сервера | `APIResponse response = page.waitForResponse("**/api/users", () -> page.click("#load"))`<br>`page.waitForResponse(resp -> resp.url().contains("/api") && resp.status() == 200, () -> page.click("#submit"))` | После отправки формы, загрузки данных через AJAX | [🔗 waitForResponse()](https://playwright.dev/java/api/class-page#page-wait-for-response) |
+| `waitForRequest()` | Ожидание запроса к серверу | `Request request = page.waitForRequest("**/api/log", () -> page.click("#log"))`<br>`page.waitForRequest(req -> req.method().equals("POST"), () -> page.click("#save"))` | Для отслеживания, что запрос был отправлен | [🔗 waitForRequest()](https://playwright.dev/java/api/class-page#page-wait-for-request) |
+| `waitForNavigation()` | Ожидание навигации (устаревший) | `page.waitForNavigation(() -> page.click("#link"))` | **Устаревший**. Рекомендуется использовать `waitForURL()` | [🔗 waitForNavigation()](https://playwright.dev/java/api/class-page#page-wait-for-navigation) |
+
+**Глобальные настройки таймаутов**
+
+| Метод | Описание | Пример | По умолчанию |
+| :--- | :--- | :--- | :--- |
+| `setDefaultTimeout()` | Таймаут по умолчанию для всех действий | `page.setDefaultTimeout(30000);`<br>`context.setDefaultTimeout(30000);` | 30 секунд |
+| `setDefaultNavigationTimeout()` | Таймаут для навигации | `page.setDefaultNavigationTimeout(45000);`<br>`context.setDefaultNavigationTimeout(45000);` | 30 секунд |
+
+**Expected Conditions (аналогия с Selenium)**
+
+| Selenium Expected Condition | Playwright аналог |
+| :--- | :--- |
+| `visibilityOfElementLocated` | `locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE))` |
+| `elementToBeClickable` | `locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.ATTACHED))` + auto-waiting |
+| `presenceOfElementLocated` | `locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.ATTACHED))` |
+| `invisibilityOfElementLocated` | `locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN))` |
+| `textToBePresentInElement` | `page.waitForFunction("selector => document.querySelector(selector).includes('text')", selector)` |
+| `elementToBeSelected` | `locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.ATTACHED))` + `locator.isChecked()` |
+| `alertIsPresent` | `page.waitForCondition(() -> { page.onDialog(...); return true; })` |
+| `titleContains` | `page.waitForFunction("document.title.includes('title')")` |
+| `urlContains` | `page.waitForURL(url -> url.contains("pattern"))` |
+
+
 [🔄 К содержанию - главы](#playwright-глава)  
 [🔼 К содержанию](#content)
 
