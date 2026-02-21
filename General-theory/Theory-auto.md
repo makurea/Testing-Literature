@@ -2947,6 +2947,174 @@ BrowserContext context = browser.newContext(new Browser.NewContextOptions()
 
 ### Сетевые возможности <a id="сетевые-возможности"></a>
 
+Playwright предоставляет мощные инструменты для работы с сетью: перехват запросов, мокирование ответов, мониторинг трафика и эмуляцию сетевых условий.
+
+🔗 [Официальная документация по сети](https://playwright.dev/java/docs/network)
+
+**Перехват и модификация запросов (Routing)**
+
+| Метод | Описание | Пример использования | Когда использовать | Официальная документация |
+| :--- | :--- | :--- | :--- | :--- |
+| `route()` | Перехватывает запросы, соответствующие паттерну | `page.route("**/api/**", route -> route.continue_());`<br>`page.route("**/*.png", Route::abort);` | Для мокирования API, блокировки ресурсов, модификации запросов | [🔗 route()](https://playwright.dev/java/api/class-page#page-route) |
+| `unroute()` | Удаляет ранее установленный перехват | `page.unroute("**/api/**");`<br>`page.unroute("**/*.png", handler);` | Для отмены перехвата после выполнения теста | [🔗 unroute()](https://playwright.dev/java/api/class-page#page-unroute) |
+| `routeFromHAR()` | Воспроизводит запросы из HAR-файла | `page.routeFromHAR(Paths.get("archive.har"), new Page.RouteFromHAROptions().setUpdate(false));` | Для использования записанных сессий в тестах | [🔗 routeFromHAR()](https://playwright.dev/java/api/class-page#page-route-from-har) |
+
+**Действия с перехваченными запросами**
+
+| Метод Route | Описание | Пример использования | Когда использовать |
+| :--- | :--- | :--- | :--- |
+| `continue_()` | Продолжить запрос без изменений | `route.continue_();` | Когда нужно просто отследить, но не менять запрос |
+| `continue_(options)` | Продолжить с модификацией | `route.continue_(new Route.ContinueOptions().setHeaders(Map.of("X-Test", "true")));` | Для добавления/изменения заголовков |
+| `fulfill()` | Ответить своим ответом (мок) | `route.fulfill(new Route.FulfillOptions().setBody("{\"data\":\"mock\"}").setStatus(200));` | Для мокирования API, тестирования разных ответов |
+| `abort()` | Прервать запрос (ошибка) | `route.abort();`<br>`route.abort("Failed");` | Для блокировки ресурсов, тестирования ошибок |
+| `fetch()` | Выполнить запрос и получить ответ | `APIResponse response = route.fetch();` | Для получения реального ответа и его модификации |
+
+**Примеры мокирования**
+
+**Мокирование API-ответа:**
+```java
+// Перехват запроса к API и возврат мок-данных
+page.route("**/api/users", route -> {
+    route.fulfill(new Route.FulfillOptions()
+        .setStatus(200)
+        .setContentType("application/json")
+        .setBody("{\"users\": [{\"id\":1,\"name\":\"Mock User\"}]}"));
+});
+
+page.navigate("https://example.com");
+// Страница получит мок-данные вместо реального API
+```
+
+**Блокировка ресурсов для ускорения:**
+```java
+// Блокировка изображений, стилей, шрифтов
+page.route("**/*.{png,jpg,jpeg,gif,css,woff2,ttf}", Route::abort);
+
+// Блокировка аналитики
+page.route("**/analytics.js", Route::abort);
+page.route("**/google-analytics.com/**", Route::abort);
+```
+
+**Модификация запроса:**
+```java
+// Добавление заголовка авторизации ко всем запросам API
+page.route("**/api/**", route -> {
+    Map<String, String> headers = new HashMap<>(route.request().headers());
+    headers.put("Authorization", "Bearer test-token");
+    route.continue_(new Route.ContinueOptions().setHeaders(headers));
+});
+```
+
+**Динамический мок на основе реальных данных:**
+```java
+// Получить реальный ответ и изменить его
+page.route("**/api/data", route -> {
+    APIResponse response = route.fetch(); // реальный запрос
+    String json = response.text();
+    
+    // Модифицируем JSON
+    json = json.replace("original", "modified");
+    
+    route.fulfill(new Route.FulfillOptions()
+        .setStatus(response.status())
+        .setContentType(response.headers().get("content-type"))
+        .setBody(json));
+});
+```
+
+**Мониторинг сети**
+
+| Метод/Событие | Описание | Пример использования | Когда использовать | Официальная документация |
+| :--- | :--- | :--- | :--- | :--- |
+| `onRequest()` | Событие при отправке запроса | `page.onRequest(request -> System.out.println("→ " + request.method() + " " + request.url()));` | Для логирования, отладки, сбора статистики | [🔗 onRequest()](https://playwright.dev/java/api/class-page#page-on-request) |
+| `onResponse()` | Событие при получении ответа | `page.onResponse(response -> System.out.println("← " + response.status() + " " + response.url()));` | Для проверки статусов, отладки | [🔗 onResponse()](https://playwright.dev/java/api/class-page#page-on-response) |
+| `onRequestFinished()` | Событие при завершении запроса | `page.onRequestFinished(request -> System.out.println("✓ " + request.url()));` | Когда нужно знать о полном завершении | [🔗 onRequestFinished()](https://playwright.dev/java/api/class-page#page-on-request-finished) |
+| `onRequestFailed()` | Событие при ошибке запроса | `page.onRequestFailed(request -> System.out.println("✗ " + request.url() + " - " + request.failure()));` | Для отслеживания ошибок сети | [🔗 onRequestFailed()](https://playwright.dev/java/api/class-page#page-on-request-failed) |
+
+**Ожидание сетевых событий**
+
+| Метод | Описание | Пример использования | Когда использовать | Официальная документация |
+| :--- | :--- | :--- | :--- | :--- |
+| `waitForResponse()` | Ожидание ответа по паттерну | `APIResponse response = page.waitForResponse("**/api/users", () -> page.click("#load"));` | После действия, вызывающего AJAX-запрос | [🔗 waitForResponse()](https://playwright.dev/java/api/class-page#page-wait-for-response) |
+| `waitForResponse(predicate)` | Ожидание ответа по условию | `page.waitForResponse(resp -> resp.status() == 200 && resp.url().contains("/api"), () -> page.click("#save"));` | Для сложных условий отбора | [🔗 waitForResponse()](https://playwright.dev/java/api/class-page#page-wait-for-response) |
+| `waitForRequest()` | Ожидание запроса по паттерну | `Request request = page.waitForRequest("**/api/log", () -> page.click("#log"));` | Для проверки, что запрос был отправлен | [🔗 waitForRequest()](https://playwright.dev/java/api/class-page#page-wait-for-request) |
+| `waitForRequest(predicate)` | Ожидание запроса по условию | `page.waitForRequest(req -> req.method().equals("POST"), () -> page.click("#submit"));` | Для проверки метода запроса | [🔗 waitForRequest()](https://playwright.dev/java/api/class-page#page-wait-for-request) |
+
+**Работа с HAR (HTTP Archive)**
+
+HAR — формат для записи и воспроизведения сетевых взаимодействий.
+
+| Метод | Описание | Пример использования | Официальная документация |
+| :--- | :--- | :--- | :--- |
+| `routeFromHAR()` | Воспроизведение запросов из HAR | `page.routeFromHAR(Paths.get("archive.har"), new Page.RouteFromHAROptions().setUpdate(false).setNotFound(RouteFromHARNotFound.FALLBACK));` | [🔗 routeFromHAR()](https://playwright.dev/java/api/class-page#page-route-from-har) |
+| `pause()` | Приостановка всех запросов | `page.pause();` | [🔗 pause()](https://playwright.dev/java/api/class-page#page-pause) |
+
+**Запись HAR-файла:**
+```java
+// Начинаем запись
+BrowserContext context = browser.newContext();
+context.tracing().start(new Tracing.StartOptions()
+    .setScreenshots(true)
+    .setSnapshots(true));
+
+// Выполняем действия
+Page page = context.newPage();
+page.navigate("https://example.com");
+page.click("#button");
+
+// Сохраняем HAR (через трассировку)
+context.tracing().stop(new Tracing.StopOptions()
+    .setPath(Paths.get("trace.zip"))); // включает HAR
+```
+
+**Информация о запросах и ответах**
+
+| Класс/Метод | Описание | Пример использования |
+| :--- | :--- | :--- |
+| `Request.url()` | URL запроса | `String url = request.url();` |
+| `Request.method()` | HTTP-метод | `String method = request.method();` |
+| `Request.headers()` | Заголовки запроса | `Map<String, String> headers = request.headers();` |
+| `Request.postData()` | Данные POST-запроса | `String data = request.postData();` |
+| `Request.resourceType()` | Тип ресурса (document, script, image) | `String type = request.resourceType();` |
+| `Response.status()` | HTTP-статус ответа | `int status = response.status();` |
+| `Response.statusText()` | Текст статуса | `String text = response.statusText();` |
+| `Response.headers()` | Заголовки ответа | `Map<String, String> headers = response.headers();` |
+| `Response.body()` | Тело ответа (как байты) | `byte[] body = response.body();` |
+| `Response.text()` | Тело ответа (как текст) | `String text = response.text();` |
+| `Response.json()` | Тело ответа (как JSON) | `JsonNode json = response.json();` |
+| `Response.request()` | Запрос, соответствующий ответу | `Request req = response.request();` |
+
+**Эмуляция сетевых условий**
+
+```java
+// Эмуляция медленного соединения
+page.route("**/*", route -> {
+    // Задержка перед продолжением
+    Thread.sleep(1000);
+    route.continue_();
+});
+
+// Эмуляция потери пакетов (через CDP)
+page.context().browser().newBrowserCDPSession().send("Network.emulateNetworkConditions", 
+    Map.of("offline", false,
+           "latency", 100,
+           "downloadThroughput", 500 * 1024 / 8,
+           "uploadThroughput", 500 * 1024 / 8));
+```
+
+**Сценарии использования**
+
+| Сценарий | Реализация |
+| :--- | :--- |
+| **Тестирование без зависимостей** | Замокать все внешние API, чтобы тесты работали офлайн |
+| **Тестирование ошибок сервера** | Перехватить запрос и вернуть 500, 403, 404 |
+| **Тестирование загрузки файлов** | Отследить запрос на загрузку через `waitForRequest()` |
+| **Ускорение тестов** | Заблокировать изображения, шрифты, аналитику |
+| **Тестирование авторизации** | Добавить заголовки авторизации ко всем запросам |
+| **Отладка** | Логировать все запросы и ответы |
+| **Нагрузочное тестирование** | Эмулировать медленное соединение |
+
+
 [🔄 К содержанию - главы](#playwright-глава)  
 [🔼 К содержанию](#content)
 
