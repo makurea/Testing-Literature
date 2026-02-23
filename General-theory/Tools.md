@@ -59,7 +59,7 @@
   - [✍️ Gherkin](#gherkin)
   - [🥒 Cucumber](#cucumber)
 
-## [⚙️ DevOps и CI/CD](#devops-ci-cd) <a id="devops-ci-cd-глава"></a>
+## [⚙️ DevOps и CI/CD](#devops-ci-cd) <a id="devops-ci-cd-глава"></a> 
 
   - [🔁 Docker](#docker)
   - [🚢 Kubernetes](#kubernetes)
