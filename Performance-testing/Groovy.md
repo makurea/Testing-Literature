@@ -73,3 +73,294 @@
 
 ---
 
+## 🌏 Типы данных <a id="типы-данных"></a>
+
+### Примитивные типы и объекты <a id="примитивные-и-объекты"></a>
+
+[🔄 К содержанию - главы](#типы-данных-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Коллекции: List, Map, Set <a id="коллекции"></a>
+
+[🔄 К содержанию - главы](#типы-данных-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Range и Spread-оператор <a id="range-spread"></a>
+
+[🔄 К содержанию - главы](#типы-данных-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Строки и GString <a id="строки-gstring"></a>
+
+[🔄 К содержанию - главы](#типы-данных-глава)
+[🔼 К содержанию](#content)
+
+---
+
+## 🟡 Ключевые концепции ООП <a id="oop"></a>
+
+### Классы и объекты <a id="классы-и-объекты"></a>
+
+[🔄 К содержанию - главы](#oop-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Наследование и Mixin <a id="наследование-mixin"></a>
+
+[🔄 К содержанию - главы](#oop-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Интерфейсы и Traits <a id="интерфейсы-traits"></a>
+
+[🔄 К содержанию - главы](#oop-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Переопределение и перегрузка методов <a id="переопределение-перегрузка"></a>
+
+[🔄 К содержанию - главы](#oop-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Абстрактные классы и динамическая типизация <a id="абстрактные-классы"></a>
+
+[🔄 К содержанию - главы](#oop-глава)
+[🔼 К содержанию](#content)
+
+---
+
+## 🔵 Методы, Closures и лямбды <a id="closures"></a>
+
+### Определение и вызов методов <a id="методы"></a>
+
+[🔄 К содержанию - главы](#closures-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Closure: создание и использование <a id="closures-использование"></a>
+
+[🔄 К содержанию - главы](#closures-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Ссылки на методы и лямбда-выражения <a id="методы-лямбда"></a>
+
+[🔄 К содержанию - главы](#closures-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Delegation и Scope в Closure <a id="delegation-scope"></a>
+
+[🔄 К содержанию - главы](#closures-глава)
+[🔼 К содержанию](#content)
+
+---
+
+## 🟠 Управление доступом и модификаторы <a id="access-modifiers"></a>
+
+### Public, Private, Protected <a id="public-private-protected"></a>
+
+[🔄 К содержанию - главы](#access-modifiers-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Static, Final и Immutable <a id="static-final-immutable"></a>
+
+[🔄 К содержанию - главы](#access-modifiers-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Properties и Getter/Setter <a id="properties-getter-setter"></a>
+
+[🔄 К содержанию - главы](#access-modifiers-глава)
+[🔼 К содержанию](#content)
+
+---
+
+## ⚡ Операторы и конструкции управления <a id="operators"></a>
+
+### Арифметические и логические операторы <a id="арифметические-логические"></a>
+
+[🔄 К содержанию - главы](#operators-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Условные конструкции: if, switch <a id="условные"></a>
+
+[🔄 К содержанию - главы](#operators-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Циклы: for, while, each <a id="циклы"></a>
+
+[🔄 К содержанию - главы](#operators-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Elvis, Safe Navigation и Spread-операторы <a id="elvis-safe"></a>
+
+[🔄 К содержанию - главы](#operators-глава)
+[🔼 К содержанию](#content)
+
+---
+
+## ❌ Исключения и обработка ошибок <a id="exceptions"></a>
+
+### Типы исключений в Groovy <a id="типы-исключений"></a>
+
+[🔄 К содержанию - главы](#exceptions-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### try-catch-finally <a id="try-catch-finally"></a>
+
+[🔄 К содержанию - главы](#exceptions-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Throw и custom exceptions <a id="throw-custom"></a>
+
+[🔄 К содержанию - главы](#exceptions-глава)
+[🔼 К содержанию](#content)
+
+---
+
+## 🗂️ Коллекции и работа с ними <a id="collections"></a>
+
+### Groovy Collections API <a id="groovy-collections-api"></a>
+
+[🔄 К содержанию - главы](#collections-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Методы обработки: find, collect, each, inject <a id="methods-collections"></a>
+
+[🔄 К содержанию - главы](#collections-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Map и List операции <a id="map-list-operations"></a>
+
+[🔄 К содержанию - главы](#collections-глава)
+[🔼 К содержанию](#content)
+
+---
+
+## 🟤 Метапрограммирование и динамика <a id="metaprogramming"></a>
+
+### Метапрограммирование: ExpandoMetaClass <a id="expando"></a>
+
+[🔄 К содержанию - главы](#metaprogramming-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### AST Transformations <a id="ast-transformations"></a>
+
+[🔄 К содержанию - главы](#metaprogramming-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Методы runtime добавления и category <a id="runtime-methods-category"></a>
+
+[🔄 К содержанию - главы](#metaprogramming-глава)
+[🔼 К содержанию](#content)
+
+---
+
+## 🏆 Взаимодействие с Java <a id="java-integration"></a>
+
+### Использование Java-классов <a id="java-classes"></a>
+
+[🔄 К содержанию - главы](#java-integration-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Java Collections vs Groovy Collections <a id="java-vs-groovy-collections"></a>
+
+[🔄 К содержанию - главы](#java-integration-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Аннотации и Reflection <a id="annotations-reflection"></a>
+
+[🔄 К содержанию - главы](#java-integration-глава)
+[🔼 К содержанию](#content)
+
+---
+
+## 👑 Работа с файлами и потоками <a id="io"></a>
+
+### Чтение и запись файлов <a id="file-io"></a>
+
+[🔄 К содержанию - главы](#io-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Working with Streams <a id="streams"></a>
+
+[🔄 К содержанию - главы](#io-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Serialization и JSON/XML <a id="serialization-json-xml"></a>
+
+[🔄 К содержанию - главы](#io-глава)
+[🔼 К содержанию](#content)
+
+---
+
+## 💡 Практические концепции для нагрузочного тестирования <a id="performance"></a>
+
+### Groovy скрипты для JMeter <a id="jmeter-groovy"></a>
+
+[🔄 К содержанию - главы](#performance-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Параллельное выполнение и GPars <a id="gpars"></a>
+
+[🔄 К содержанию - главы](#performance-глава)
+[🔼 К содержанию](#content)
+
+---
+
+### Оптимизация скриптов и memory footprint <a id="optimization-memory"></a>
+
+[🔄 К содержанию - главы](#performance-глава)
+[🔼 К содержанию](#content)
+
+---
+
+
+
+
