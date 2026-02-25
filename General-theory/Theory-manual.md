@@ -59,7 +59,7 @@
      - [Security testing](#тестирование-безопасности)
      - [Usability testing](#юзабилити-тестирование)
      - [UI/UX testing](#тестирование-uiux)
-     - [Accessibility Testing](#тестирование-доступности)
+     - [Accessibility Testing](#тестирование-доступности)  
      - [Compatibility testing](#тестирование-совместимости)
      - [Cross-platform testing](#кроссплатформенное-тестирование) 
      - [Localization testing](#тестирование-локализации)
