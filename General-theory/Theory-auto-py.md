@@ -76,7 +76,7 @@
 * [Screenplay / Pytest-BDD](#screenplay-bdd)
 * [Dependency Injection и фикстуры pytest](#di-fixtures)
 
-## [📈 Логеры, репортеры, метрики](#логеры-python)  <a id="логеры-python-глава"></a> 
+## [📈 Логеры, репортеры, метрики](#логеры-python)  <a id="логеры-python-глава"></a>  
 
 * [logging модуль Python](#logging-python)
 * [Allure + pytest](#allure-python)
