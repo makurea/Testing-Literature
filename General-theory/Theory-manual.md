@@ -63,7 +63,7 @@
      - [Compatibility testing](#тестирование-совместимости)
      - [Cross-platform testing](#кроссплатформенное-тестирование) 
      - [Localization testing](#тестирование-локализации)
-     - [Internationalization testing](#тестирование-интернацианализации)
+     - [Internationalization testing](#тестирование-интернацианализации) 
      - [Performance testing](#тестирование-производительности)  
       - [Load testing](#нагрузочное-тестирование)  
       - [Stress testing](#стресс-тестирование)  
