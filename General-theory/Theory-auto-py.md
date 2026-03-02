@@ -56,7 +56,7 @@
 * [PyAutoGUI для Desktop automation](#pyautogui)
 * [ActionsChains и JSExecutor](#actions-js-python)
 
-## [⏳ Ожидания и синхронизация](#ожидания-python)  <a id="ожидания-python-глава"></a>
+## [⏳ Ожидания и синхронизация](#ожидания-python)  <a id="ожидания-python-глава"></a> 
 
 * [Implicit / Explicit Wait в Selenium Python](#waits-python)
 * [Fluent Wait аналог в Python](#fluent-wait-python)
