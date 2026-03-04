@@ -558,6 +558,91 @@ list.stream().map(s -> s.toUpperCase())
 
 ### Delegation и Scope в Closure <a id="delegation-scope"></a>
 
+Внутри каждого замыкания (Closure) в Groovy скрыто три объекта, которые определяют, как будет искаться переменная или метод, если они не объявлены внутри самого тела замыкания.
+
+**1. Три кита контекста: this, owner, delegate**
+
+| Объект | На что указывает | Можно ли изменить? |
+| --- | --- | --- |
+| **this** | Ссылается на экземпляр **класса**, в котором было создано замыкание. | Нет |
+| **owner** | Ссылается на **объект**, в котором создано замыкание (это может быть класс или другое замыкание). | Нет |
+| **delegate** | По умолчанию равен `owner`. Это «запасной» объект для поиска методов и свойств. | **Да** |
+
+**Пример для понимания иерархии:**
+
+```groovy
+class Outer {
+    def nested() {
+        def closure = {
+            def inner = {
+                println "this: " + this.class.simpleName    // Outer
+                println "owner: " + owner.class.simpleName  // Outer$_nested_closure1 (замыкание выше)
+                println "delegate: " + delegate.class.simpleName // То же, что owner
+            }
+            inner()
+        }
+        closure()
+    }
+}
+new Outer().nested()
+
+```
+
+**2. Зачем нужен delegate?**
+
+Это главный инструмент для создания красивого кода. Вы можете «подменить» объект, к которому обращается замыкание.
+
+Представь, что у тебя есть класс настроек в JMeter. Вместо того чтобы писать `config.timeout = 500`, ты хочешь написать просто `timeout = 500` внутри блока.
+
+**Пример смены делегата:**
+
+```groovy
+def config = [timeout: 0, url: ""]
+def script = {
+    timeout = 1000  // Мы не пишем config.timeout
+    url = "https://google.com"
+}
+
+script.delegate = config
+script()
+
+println config // [timeout:1000, url:https://google.com]
+
+```
+
+**3. Стратегии разрешения (Resolve Strategies)**
+
+Когда в замыкании вызывается метод или переменная, Groovy должен решить: искать сначала в `owner` или в `delegate`? За это отвечает свойство `resolveStrategy`.
+
+| Стратегия | Описание |
+| --- | --- |
+| **Closure.OWNER_FIRST** | (По умолчанию). Сначала ищем в `owner`, если там нет — идем в `delegate`. |
+| **Closure.DELEGATE_FIRST** | Сначала ищем в `delegate`, если там нет — в `owner`. Идеально для DSL. |
+| **Closure.OWNER_ONLY** | Игнорируем делегата полностью. |
+| **Closure.DELEGATE_ONLY** | Игнорируем владельца (owner) полностью. |
+| **Closure.TO_SELF** | Ищем только внутри полей самого объекта Closure (редко используется). |
+
+**Пример с конфликтом имен:**
+
+```groovy
+class Person { String name = "Delegate Name" }
+def name = "Owner Name"
+
+def cl = { println name }
+
+cl.delegate = new Person()
+cl.resolveStrategy = Closure.DELEGATE_FIRST
+
+cl() // Выведет: "Delegate Name", так как мы сменили приоритет
+
+```
+
+**4. Итог для конспекта**
+
+* **Scope** определяется тем, где физически написан код (`this`, `owner`).
+* **Delegation** — это динамическая возможность перенаправить вызовы на другой объект.
+* **Использование:** В нагрузочном тестировании (JMeter) это позволяет писать лаконичные скрипты, где методы `sampler` или `vars` доступны «напрямую» в скрипте благодаря правильно настроенному делегату.
+
 [🔄 К содержанию - главы](#closures-глава)
 [🔼 К содержанию](#content)
 
