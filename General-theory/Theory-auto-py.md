@@ -41,7 +41,7 @@
 * [WebDriverWait и Expected Conditions в Python](#explicit-wait-python)
 * [Playwright и Pyppeteer](#playwright-pyppeteer)
 
-## [🌍 Инициализация браузера и управление сессиями](#инициализация-браузера-python)  <a id="инициализация-браузера-python-глава"></a>       
+## [🌍 Инициализация браузера и управление сессиями](#инициализация-браузера-python)  <a id="инициализация-браузера-python-глава"></a>        
 
 * [Инициализация WebDriver в Python](#webdriver-init)
 * [Headless режим в Chrome и Firefox](#headless-python)
