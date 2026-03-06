@@ -2,7 +2,7 @@
 
 ## [🎯 Основы](#основы) <a id="основы-глава"></a>       
 
-* [Что такое Performance Testing](#что-такое-performance-testing)        
+* [Что такое Performance Testing](#что-такое-performance-testing)         
 * [Цели и когда проводить](#цели-и-когда)
 * [Нефункциональные требования (NFR)](#nfr)
 * [SLA / SLO / SLI и Performance Requirements](#sla-slo)
