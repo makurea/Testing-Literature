@@ -1317,6 +1317,193 @@ items.eachWithIndex { item, idx ->
 
 ### Elvis, Safe Navigation и Spread-операторы <a id="elvis-safe"></a>
 
+**1. Оператор безопасной навигации (Safe Navigation) `?.`**
+
+Этот оператор спасает от `NullPointerException` при обращении к методам или свойствам потенциально `null` объектов. Если объект слева — `null`, оператор просто возвращает `null`, не вызывая метод/свойство.
+
+| Синтаксис | Что делает | Эквивалентный Java-код |
+|:----------|:-----------|:----------------------|
+| `user?.name` | Вернет `user.name`, если `user != null`, иначе `null` | `user != null ? user.name : null` |
+| `list?.size()` | Вернет размер списка или `null` | `list != null ? list.size() : null` |
+| `obj?.method()?.property` | Безопасная цепочка вызовов | Цепочка вложенных `if (obj != null)` |
+
+```groovy
+def user = null
+def city = user?.address?.city  // Безопасно: вернет null, а не NPE
+
+def users = ['Alice', 'Bob']
+println users?.size()  // 2
+
+users = null
+println users?.size()  // null (не 0, а именно null!)
+
+// Смешиваем с Elvis для дефолтных значений
+def timeout = config?.timeout ?: 5000  // Если config или timeout null → 5000
+```
+
+**2. Оператор Elvis (Elvis Operator) `?:`**
+
+Назван так, потому что похож на прическу Элвиса Пресли. Используется для предоставления значения по умолчанию, когда выражение слева "falsy" (null, пустая строка, 0 и т.д. по правилам Groovy Truth).
+
+| Синтаксис | Что делает | Пример |
+|:----------|:-----------|:--------|
+| `x ?: y` | Если `x` **truthy** → возвращает `x`, иначе возвращает `y` | `def name = input ?: "Guest"` |
+| `(x ?: y).method()` | Можно использовать в цепочках | `(params.id ?: "0").toInteger()` |
+
+```groovy
+// Классический пример: дефолтное имя
+def username = session.username ?: "Anonymous"
+
+// С числами (0 считается falsy!)
+def count = getCount() ?: 100  // если вернулся 0, возьмем 100
+
+// С коллекциями
+def activeUsers = cachedUsers ?: fetchUsersFromDB()
+
+// Цепочка Elvis'ов
+def port = systemPort ?: configPort ?: defaultPort ?: 8080
+
+// Внимание: пустая строка тоже falsy!
+def text = "" ?: "default"  // вернет "default"
+```
+
+**3. Оператор распространения (Spread Operator) `*.`**
+
+Позволяет вызвать метод или получить свойство у **каждого элемента** коллекции, собирая результаты в новую коллекцию.
+
+| Синтаксис | Что делает | Результат | Пример |
+|:----------|:-----------|:-----------|:--------|
+| `list*.property` | Взять свойство у каждого элемента | Новый `List` | `users*.name` → список имен |
+| `list*.method()` | Вызвать метод у каждого | Новый `List` | `strings*.toUpperCase()` |
+| `list*.method().*.property` | Цепочка spread-операторов | Цепочка трансформаций | `users*.address*.city` |
+
+```groovy
+class Person {
+    String name
+    int age
+    Address address
+}
+
+class Address {
+    String city
+}
+
+def people = [
+    new Person(name: 'Alice', age: 25, address: new Address(city: 'NYC')),
+    new Person(name: 'Bob', age: 30, address: new Address(city: 'LA')),
+    new Person(name: 'Charlie', age: 35)
+]
+
+// Получаем все имена
+def names = people*.name  // ['Alice', 'Bob', 'Charlie']
+
+// Все возраста
+def ages = people*.age     // [25, 30, 35]
+
+// Цепочка: города (у Charlie города нет → null)
+def cities = people*.address*.city  // ['NYC', 'LA', null]
+
+// Вызов методов
+def upperNames = people*.name*.toUpperCase()  // ['ALICE', 'BOB', 'CHARLIE']
+
+// Смешиваем с безопасной навигацией
+def safeCities = people*.address?.city  // безопасно, но spread уже дает null для отсутствующих
+```
+
+**4. Оператор распространения для Map (Spread Map) `*.` и `*:`**
+
+В Groovy можно "разворачивать" одну Map внутрь другой.
+
+| Синтаксис | Что делает | Пример |
+|:----------|:-----------|:--------|
+| `[*:map1, *:map2]` | Слияние двух Map | `def merged = [*:defaults, *:overrides]` |
+| `[key: value, *:otherMap]` | Добавление ключей из другой Map | `[name: 'test', *:configMap]` |
+
+```groovy
+def defaults = [timeout: 1000, retries: 3]
+def overrides = [timeout: 5000, debug: true]
+
+// Слияние с приоритетом overrides (позже перезаписывает)
+def config = [*:defaults, *:overrides]  // [timeout:5000, retries:3, debug:true]
+
+// Добавление в существующую Map
+def base = [id: 123]
+def extended = [*:base, type: 'user', active: true]  // [id:123, type:'user', active:true]
+```
+
+**5. Оператор распространения для аргументов метода (Spread Arguments) `*`**
+
+Позволяет "развернуть" список в аргументы метода, когда метод ожидает переменное число аргументов.
+
+| Синтаксис | Что делает | Пример |
+|:----------|:-----------|:--------|
+| `method(*list)` | Передать элементы списка как отдельные аргументы | `def nums = [1,2,3]; sum(*nums)` |
+| `method(*array)` | То же для массивов | `int[] arr = [1,2,3]; sum(*arr)` |
+
+```groovy
+def sum(int a, int b, int c) { a + b + c }
+
+def numbers = [10, 20, 30]
+println sum(*numbers)  // 60 (эквивалент sum(10,20,30))
+
+def range = 1..3
+println sum(*range)    // 6 (1+2+3)
+
+// Смешанные аргументы
+def format(String template, String... args) { template.format(args) }
+def params = ['Alice', 25]
+println format('Name: %s, Age: %d', *params)  // Name: Alice, Age: 25
+```
+
+**6. Сравнительная таблица операторов**
+
+| Оператор | Название | Назначение | Возврат при `null` |
+|:--------:|:---------|:-----------|:-------------------|
+| `?.` | Safe Navigation | Безопасный вызов метода/свойства | `null` |
+| `?:` | Elvis | Значение по умолчанию | Значение справа (если слева falsy) |
+| `*.` | Spread | Вызов метода для всех элементов | `null` (если коллекция `null`) |
+| `*:` | Spread Map | Слияние Map | Ошибка (если Map `null`) |
+| `*` | Spread Arg | Разворачивание списка в аргументы | Ошибка (если список `null`) |
+
+**7. Комбо-примеры для нагрузочного тестирования (JMeter)**
+
+```groovy
+// Безопасное чтение переменных JMeter
+def userId = vars?.get('userId') ?: "default_${UUID.randomUUID()}"
+def timeout = props?.get('timeout')?.toInteger() ?: 5000
+
+// Обработка списка сэмплеров
+def samples = ctx?.getPreviousResult()?.getSamples() ?: []
+def responseTimes = samples*.getTime()  // список времен ответа
+def avgTime = responseTimes.sum() ?: 0 / (responseTimes.size() ?: 1)
+
+// Генерация JSON из данных
+def userData = [
+    id: userId,
+    tags: ['premium', 'active'],
+    metadata: [*:defaultMetadata, *:customMetadata]  // слияние метаданных
+]
+
+// Безопасная цепочка
+def city = vars?.getObject('user')?.address?.city ?: 'Unknown'
+```
+
+**8. Важные нюансы**
+
+| Оператор | Подводный камень | Пример проблемы |
+|:---------|:-----------------|:----------------|
+| `?.` | Возвращает `null`, а не пустую коллекцию | `list?.size()` может вернуть `null`, а не 0 |
+| `?:` | 0 и пустая строка считаются falsy | `count ?: 100` заменит 0 на 100 (может быть неожиданно) |
+| `*.` | Создает новый список каждый раз | В больших циклах может создавать мусор для GC |
+| `*` | Не работает с `null` | `sum(*null)` бросит исключение |
+
+```groovy
+// Как обойти нюансы
+def safeSize = list?.size() ?: 0  // теперь всегда число
+def safeCount = (count != null) ? count : 100  // если 0 должен остаться 0
+def safeSpread = list ? list*.property : []    // защита от null
+```
+
 [🔄 К содержанию - главы](#operators-глава)
 [🔼 К содержанию](#content)
 
