@@ -1513,6 +1513,158 @@ def safeSpread = list ? list*.property : []    // защита от null
 
 ### Типы исключений в Groovy <a id="типы-исключений"></a>
 
+**1. Иерархия исключений**
+
+Groovy полностью наследует иерархию исключений Java, но добавляет несколько своих типов и важное отличие: **проверяемые исключения не требуют обязательной обработки**.
+
+| Уровень | Класс исключения | Описание | Проверяемое? |
+|:-------:|:-----------------|:---------|:-------------|
+| **Верхний** | `Throwable` | Все, что можно "бросить" | — |
+| ├─ **Ошибки** | `Error` | Критические проблемы JVM (обычно не ловим) | Нет |
+| │ ├─ | `OutOfMemoryError` | Закончилась память | Нет |
+| │ ├─ | `StackOverflowError` | Слишком глубокая рекурсия | Нет |
+| │ └─ | `NoClassDefFoundError` | Класс не найден при загрузке | Нет |
+| └─ **Исключения** | `Exception` | Проблемы, которые можно обработать | — |
+| ├─ **Runtime** | `RuntimeException` | Ошибки времени выполнения | **Нет** |
+| │ ├─ | `NullPointerException` | Обращение к null | Нет |
+| │ ├─ | `IllegalArgumentException` | Неверный аргумент | Нет |
+| │ ├─ | `IndexOutOfBoundsException` | Выход за границы | Нет |
+| │ ├─ | `ClassCastException` | Ошибка приведения типа | Нет |
+| │ └─ | `ArithmeticException` | Арифметическая ошибка (/0) | Нет |
+| └─ **Проверяемые** | `Exception` (кроме RuntimeException) | Должны быть обработаны | **Да (в Java)** |
+
+**2. Ключевое отличие Groovy от Java**
+
+| Характеристика | Java | Groovy |
+|:---------------|:-----|:--------|
+| **Проверяемые исключения** | Требуют `try-catch` или `throws` | **Не требуют** обработки |
+| **Код с IOException** | `try { ... } catch (IOException e) { ... }` | Можно просто написать код, компилятор не заставит ловить |
+| **Философия** | Безопасность на этапе компиляции | Удобство и краткость |
+
+```groovy
+// В Java это не скомпилируется без try-catch
+// В Groovy - работает!
+def text = new File('/tmp/test.txt').text  // если файла нет - будет исключение в рантайме
+
+// Но ловить все равно нужно, если хотим обработать
+try {
+    def data = new URL('http://example.com').text
+} catch (IOException e) {
+    println "Ошибка сети: ${e.message}"
+}
+```
+
+**3. Специфичные для Groovy исключения**
+
+Groovy добавляет свои типы исключений, которые можно встретить при использовании динамических возможностей языка.
+
+| Исключение | Когда возникает | Пример |
+|:-----------|:-----------------|:--------|
+| `MissingMethodException` | Вызов несуществующего метода | `"string".someUnknownMethod()` |
+| `MissingPropertyException` | Доступ к несуществующему свойству | `def map = [:]; map.unknownKey` |
+| `GroovyCastException` | Ошибка приведения типов | `(Integer) "not a number"` |
+| `MultipleCompilationErrorsException` | Ошибки компиляции скрипта | Синтаксические ошибки в скрипте |
+| `ClosureCreationException` | Ошибка создания замыкания | Неверный синтаксис замыкания |
+| `ReadOnlyPropertyException` | Попытка изменить read-only свойство | Изменение свойства `@Immutable` класса |
+
+```groovy
+// Примеры специфичных исключений
+def map = [name: 'Alice']
+
+try {
+    println map.age  // нет такого ключа
+} catch (MissingPropertyException e) {
+    println "Свойство не найдено: ${e.property}"
+}
+
+try {
+    def num = (Integer) "abc"
+} catch (GroovyCastException e) {
+    println "Нельзя преобразовать строку в число"
+}
+```
+
+**4. Исключения в динамическом коде**
+
+Благодаря метапрограммированию, в Groovy могут возникать исключения, связанные с динамическим поведением.
+
+| Исключение | Описание | Типичный сценарий |
+|:-----------|:---------|:-------------------|
+| `GroovyRuntimeException` | Общее исключение времени выполнения | Проблемы с метапрограммированием |
+| `IllegalAccessError` | Попытка доступа к приватному методу через метапрограммирование | `metaClass.getMetaMethod('privateMethod').invoke(obj)` |
+| `StackOverflowError` | Бесконечная рекурсия в замыканиях | Замыкание, вызывающее само себя без условия выхода |
+
+**5. Сравнение обработки исключений в Java и Groovy**
+
+| Ситуация | Java | Groovy |
+|:---------|:-----|:--------|
+| **Чтение файла** | `try-catch-finally` обязателен | Можно без `try`, исключение упадет выше |
+| **Парсинг числа** | `try { Integer.parseInt(s) } catch (NumberFormatException e)` | То же самое, но `NumberFormatException` непроверяемое |
+| **Работа с сетью** | Обязательно ловить `IOException` | Можно не ловить (но лучше ловить) |
+| **Свой синтаксис** | Только стандартный | Можно использовать `withStream { ... }` (авто-закрытие) |
+
+**6. Практические рекомендации для JMeter/Groovy скриптов**
+
+| Тип исключения | Как обрабатывать | Почему важно |
+|:---------------|:-----------------|:-------------|
+| `MissingPropertyException` | Проверять `vars.get("key") != null` | Переменные JMeter могут отсутствовать |
+| `NumberFormatException` | Использовать `?.toInteger() ?: defaultValue` | Парсинг параметров из пользователей |
+| `SocketTimeoutException` | Ловить и логировать, retry | Сеть может быть нестабильной |
+| `OutOfMemoryError` | **Не ловить!** | Скрипт должен упасть, чтобы обнаружить утечку |
+| `Exception` (общее) | Ловить в корне скрипта и логировать | Чтобы тест не падал молча |
+
+```groovy
+// Пример безопасного кода для JMeter
+try {
+    def timeout = vars.get("timeout")?.toInteger() ?: 5000
+    def response = httpClient.get("https://api.example.com", timeout)
+    
+    if (response.status != 200) {
+        throw new RuntimeException("HTTP ${response.status}: ${response.body}")
+    }
+    
+    SampleResult.setSuccessful(true)
+    SampleResult.setResponseData(response.body.bytes)
+    
+} catch (SocketTimeoutException e) {
+    SampleResult.setSuccessful(false)
+    SampleResult.setResponseMessage("Timeout: ${e.message}")
+    log.warn("Таймаут запроса", e)
+    
+} catch (NumberFormatException e) {
+    SampleResult.setSuccessful(false)
+    SampleResult.setResponseMessage("Неверный формат timeout")
+    
+} catch (Exception e) {
+    SampleResult.setSuccessful(false)
+    SampleResult.setResponseMessage("Ошибка: ${e.getClass().simpleName}")
+    log.error("Неожиданная ошибка в скрипте", e)
+}
+```
+
+**7. Таблица: Когда какое исключение ловить**
+
+| Ситуация | Какое исключение может возникнуть | Нужно ли ловить |
+|:---------|:-----------------------------------|:----------------|
+| Деление на ноль | `ArithmeticException` | Да, если данные приходят от пользователя |
+| Парсинг числа | `NumberFormatException` | **Обязательно** |
+| Доступ к null | `NullPointerException` | Использовать `?.` вместо `try-catch` |
+| Чтение файла | `FileNotFoundException`, `IOException` | Да, если файл может отсутствовать |
+| Запись в файл | `IOException`, `SecurityException` | Да |
+| HTTP запрос | `SocketTimeoutException`, `UnknownHostException` | **Обязательно** в нагрузочном тесте |
+| Преобразование типов | `GroovyCastException` | Проверять типы до преобразования |
+| Рефлексия/метапрограммирование | `MissingMethodException` | Проверять `respondsTo()` или `hasProperty()` |
+
+**8. Итог: Особенности исключений в Groovy**
+
+| Особенность | Описание | Влияние на код |
+|:------------|:---------|:---------------|
+| **Проверяемые ≠ обязательные** | Можно не ловить IOException | Меньше бойлерплейта |
+| **Динамические исключения** | Появляются из-за метапрограммирования | Нужно знать API, которое используешь |
+| **Truthy в условиях** | Исключение - это объект, он truthy | `if (e)` всегда true, нужно проверять тип |
+| **Множественный catch** | Как в Java 7+ | `catch (IOException \| SQLException e)` |
+| **try-with-resources** | Есть через `.withCloseable()` | `new FileInputStream(f).withCloseable { ... }` |
+
 [🔄 К содержанию - главы](#exceptions-глава)  
 [🔼 К содержанию](#content)  
 
