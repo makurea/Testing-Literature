@@ -1130,6 +1130,186 @@ test(1) // Выведет "Один" и "Два" (провал)
 
 ### Циклы: for, while, each <a id="циклы"></a>
 
+**1. Традиционные циклы (Java-стиль)**
+
+Groovy поддерживает классические циклы `while` и `for` в стиле Java, но добавляет свои мощные итерационные возможности.
+
+| Тип цикла | Синтаксис | Когда использовать | Пример |
+|:----------|:----------|:-------------------|:--------|
+| **while** | `while (условие) { ... }` | Когда количество итераций неизвестно заранее | `while (queue.hasNext()) { ... }` |
+| **do-while** | `do { ... } while (условие)` | Когда тело должно выполниться хотя бы раз | `do { x = readInput() } while (!x.valid)` |
+| **classic for** | `for (i=0; i<10; i++) { ... }` | Когда нужен индекс и точное количество | `for (int i=0; i<list.size(); i++) { ... }` |
+
+```groovy
+// while
+def count = 0
+while (count < 3) {
+    println "Итерация: ${count++}"
+}
+
+// do-while
+def input = ""
+do {
+    input = getUserInput()  // выполнится хотя бы раз
+} while (!input.isValid())
+
+// Классический for
+def list = ['a', 'b', 'c']
+for (int i = 0; i < list.size(); i++) {
+    println "list[$i] = ${list[i]}"
+}
+```
+
+**2. For-each по коллекциям (Java-стиль)**
+
+Groovy поддерживает Java-синтаксис `for (element : collection)`, но обычно предпочитают более лаконичные методы `each`.
+
+| Синтаксис | Описание | Пример |
+|:----------|:---------|:--------|
+| `for (element in collection) { ... }` | Итерация по элементам | `for (item in list) { println item }` |
+| `for (key in map.keySet()) { ... }` | По ключам Map | `for (k in map.keySet()) { println k }` |
+| `for (entry in map) { ... }` | По записям Map | `for (kv in map) { println kv.key + ":" + kv.value }` |
+
+```groovy
+def names = ['Alice', 'Bob', 'Charlie']
+def ages = [Alice: 25, Bob: 30, Charlie: 35]
+
+// По элементам списка
+for (name in names) {
+    println "Hello, $name"
+}
+
+// По записям Map
+for (entry in ages) {
+    println "${entry.key} is ${entry.value} years old"
+}
+```
+
+**3. Groovy-стиль: each и eachWithIndex**
+
+В Groovy принято использовать методы-итераторы, передавая им замыкания. Это лаконичнее и функциональнее.
+
+| Метод | Назначение | Параметры замыкания | Пример |
+|:------|:-----------|:-------------------|:--------|
+| **`each`** | Итерация по элементам | `{ элемент → }` | `list.each { println it }` |
+| **`eachWithIndex`** | Итерация с индексом | `{ элемент, индекс → }` | `list.eachWithIndex { item, i → println "$i: $item" }` |
+| **`reverseEach`** | Обратная итерация | `{ элемент → }` | `list.reverseEach { println it }` |
+
+```groovy
+def fruits = ['apple', 'banana', 'orange']
+
+// each (с неявным it)
+fruits.each { println "I like $it" }
+
+// each (с явным параметром)
+fruits.each { fruit -> println "I like $fruit" }
+
+// eachWithIndex
+fruits.eachWithIndex { fruit, i ->
+    println "$i. $fruit"
+}
+
+// Для Map
+def capitals = [France: 'Paris', Italy: 'Rome', Spain: 'Madrid']
+capitals.each { country, city ->
+    println "The capital of $country is $city"
+}
+```
+
+**4. Итерация по диапазонам (Range)**
+
+Диапазоны — это "гражданские" объекты в Groovy, которые можно итерировать напрямую.
+
+| Способ | Синтаксис | Пример |
+|:-------|:----------|:--------|
+| **for-in с Range** | `for (i in 1..5) { ... }` | `for (i in 1..3) { println "Раз: $i" }` |
+| **each с Range** | `(1..5).each { ... }` | `(1..5).each { println "Квадрат $it = ${it*it}" }` |
+| **step** | `range.step(2) { ... }` | `(0..10).step(2) { println "Четное: $it" }` |
+
+```groovy
+// Классический for с шагом
+for (i in 0..10 step 2) {
+    println i  // 0,2,4,6,8,10
+}
+
+// each с диапазоном символов
+('a'..'f').each { println "Буква: $it" }
+
+// step для сложной логики
+(1..100).step(10) { num ->
+    println "Десяток: $num"  // 1,11,21,...,91
+}
+```
+
+**5. Управление циклами: break, continue, return**
+
+| Оператор | Действие | Применимость | Пример |
+|:---------|:---------|:-------------|:--------|
+| **`break`** | Полный выход из цикла | Любые циклы | `for (x in list) { if (x == 'stop') break }` |
+| **`continue`** | Переход к следующей итерации | Любые циклы | `for (x in list) { if (x == null) continue }` |
+| **`return`** | Выход из метода (не только цикла) | В методах | `def find(list) { list.each { if (it) return it } }` |
+
+**Важное отличие:** В замыканиях `return` выходит **только из замыкания**, а не из внешнего метода. Для выхода из внешнего метода нужно использовать `break` с меткой.
+
+```groovy
+// break и continue работают как обычно
+def numbers = [1,2,3,4,5,6]
+for (num in numbers) {
+    if (num % 2 == 0) continue    // пропускаем четные
+    if (num > 4) break             // останавливаем после 5
+    println num                    // выведет: 1,3
+}
+
+// Метки для вложенных циклов
+outer: for (i in 1..3) {
+    for (j in 1..3) {
+        if (i * j > 4) break outer
+        println "$i * $j = ${i * j}"
+    }
+}
+// Выведет: 1*1=1, 1*2=2, 1*3=3, 2*1=2, 2*2=4 и останов
+```
+
+**6. Сравнение производительности и стиля**
+
+| Метод | Производительность | Читаемость | Когда использовать |
+|:------|:-------------------|:-----------|:-------------------|
+| **classic for** | Высокая | Средняя | Точные индексы, старые привычки |
+| **for-in** | Высокая | Хорошая | Простая итерация по коллекции |
+| **each** | Средняя | Отличная | Идиоматичный Groovy-код, цепочки методов |
+| **eachWithIndex** | Средняя | Хорошая | Когда нужен и индекс, и элемент |
+
+**7. Идиоматические примеры для JMeter/нагрузочного тестирования**
+
+```groovy
+// Генерация тестовых данных
+def users = []
+(1..100).each { id ->
+    users << [
+        id: id,
+        name: "User_${id}",
+        email: "user${id}@test.com"
+    ]
+}
+
+// Парсинг CSV-данных (если есть список строк)
+def csvLines = ['id,name', '1,Alice', '2,Bob']
+csvLines.each { line ->
+    if (line.startsWith('id')) return  // пропускаем заголовок
+    def parts = line.split(',')
+    println "User ${parts[0]}: ${parts[1]}"
+}
+
+// Пакетная обработка с прогрессом
+def items = (1..1000).toList()
+items.eachWithIndex { item, idx ->
+    if (idx % 100 == 0) {
+        println "Обработано $idx из ${items.size()}"
+    }
+    // ... обработка item
+}
+```
+
 [🔄 К содержанию - главы](#operators-глава)
 [🔼 К содержанию](#content)
 
