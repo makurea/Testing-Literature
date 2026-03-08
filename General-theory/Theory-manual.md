@@ -5951,7 +5951,7 @@ status_id INTEGER DEFAULT 1 REFERENCES task_statuses(id)
 | **Геоданные**       | `GEOMETRY`          | Geometry                    | Геометрические объекты (точки, линии и т.п., в GIS).                        |
 
 
-**❓ Вопрос:**
+**❓ Вопрос:** 
 В чём разница между CHAR и VARCHAR в SQL?
 
 ✅ Ответ:
