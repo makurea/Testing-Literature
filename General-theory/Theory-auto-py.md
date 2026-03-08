@@ -34,7 +34,7 @@
 * [virtualenv / venv](#venv)
 * [setuptools и wheel](#setuptools-wheel)
 
-## [🔎 Локаторы и взаимодействие с UI](#локаторы-python)  <a id="локаторы-python-глава"></a>         
+## [🔎 Локаторы и взаимодействие с UI](#локаторы-python)  <a id="локаторы-python-глава"></a>          
 
 * [Selenium для Python](#selenium-python)
 * [Selenoid / BrowserMob Proxy / Playwright](#selenium-advanced)
