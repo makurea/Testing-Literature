@@ -1,4 +1,4 @@
-# Содержание 🌍 <a id="content"></a>                            
+# Содержание 🌍 <a id="content"></a>                             
 
 ## [🐧 Linux](#linux)  <a id="linux-глава"></a>   
 
