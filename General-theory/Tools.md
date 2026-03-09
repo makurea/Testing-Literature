@@ -85,7 +85,7 @@
   - [🖥️ Bugzilla](#bugzilla) 
   - [🛡️ QASE](#qase) 
   - [📖 PractiTest](#practitest) 
-  - [📷 Screenshot tools (LightShot, Greenshot)](#screenshot-tools)
+  - [📷 Screenshot tools (LightShot, Greenshot)](#screenshot-tools) 
   - [📢 Mind Mapping tools (XMind, FreeMind)](#mind-mapping-tools) 
 
 ## [📚 Контроль версий и IDE](#контроль-версий-и-ide) <a id="контроль-версий-и-ide-глава"></a>  
