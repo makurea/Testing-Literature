@@ -1,6 +1,6 @@
 # Содержание 🌍 <a id="content"></a>                                
 
-## [🐧 Linux](#linux)  <a id="linux-глава"></a>    
+## [🐧 Linux](#linux)  <a id="linux-глава"></a>     
 
    - [🖥️ Основы Linux](#основы-linux) 
 
