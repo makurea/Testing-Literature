@@ -1672,6 +1672,210 @@ try {
 
 ### try-catch-finally <a id="try-catch-finally"></a>
 
+Обработка исключений в Groovy очень похожа на Java, но с некоторыми синтаксическими упрощениями и особенностями, связанными с динамической природой языка. Основная конструкция — `try-catch-finally`.
+
+**1. Базовая структура**
+
+Конструкция состоит из трех блоков, два из которых (`catch` и `finally`) являются опциональными, но хотя бы один из них должен присутствовать после `try`.
+
+| Блок | Обязательность | Назначение |
+|:-----|:----------------|:-----------|
+| `try` | **Да** | Содержит код, который может выбросить исключение. |
+| `catch` | Нет (но нужен либо `catch`, либо `finally`) | Ловит и обрабатывает исключение определенного типа. |
+| `finally` | Нет (но нужен либо `catch`, либо `finally`) | Выполняется **всегда** после `try`/`catch`, используется для освобождения ресурсов. |
+
+**2. Синтаксис и пример**
+
+```groovy
+try {
+    // Код, который может выбросить исключение
+    def result = 10 / 0  // Арифметическое исключение
+    println "Результат: $result" // Эта строка не выполнится
+} catch (ArithmeticException e) {
+    // Обработка конкретного исключения
+    println "Ошибка: деление на ноль! (${e.message})"
+} catch (Exception e) {
+    // Обработка любого другого исключения
+    println "Произошла ошибка: ${e.getClass().simpleName} - ${e.message}"
+} finally {
+    // Этот блок выполнится ВСЕГДА
+    println "Блок finally: очистка ресурсов"
+}
+
+// Вывод:
+// Ошибка: деление на ноль! (/ by zero)
+// Блок finally: очистка ресурсов
+```
+
+**3. Множественные блоки `catch`**
+
+Как и в Java, вы можете использовать несколько блоков `catch` для обработки разных типов исключений. Важно помнить о порядке: сначала должны идти более конкретные исключения, затем — более общие.
+
+```groovy
+try {
+    def numbers = [1, 2, 3]
+    def value = numbers[5] // Выбросит IndexOutOfBoundsException
+    def text = null
+    println text.length()  // Этот код уже не выполнится
+} catch (IndexOutOfBoundsException e) {
+    println "Ошибка индекса: ${e.message}"
+} catch (NullPointerException e) {
+    println "Ошибка: обращение к null"
+} catch (RuntimeException e) {
+    // Сюда попадут все остальные RuntimeException
+    println "Ошибка выполнения: ${e.message}"
+} catch (Exception e) {
+    // Сюда попадут все проверяемые исключения
+    println "Общая ошибка: ${e.message}"
+}
+```
+
+**4. Особенности `catch` в Groovy (один блок для нескольких исключений)**
+
+Начиная с Java 7 и в Groovy (который часто идет в ногу с современным Java-синтаксисом), можно перехватывать несколько типов исключений в одном блоке `catch`, используя оператор `|` (pipe).
+
+```groovy
+import java.sql.SQLException
+import java.net.ConnectException
+
+try {
+    // Код, который может выкинуть разные исключения
+    def connection = new URL("http://unknown.url").openConnection()
+    def sql = Class.forName("com.mysql.jdbc.Driver")
+} catch (ConnectException | SQLException | ClassNotFoundException e) {
+    // Единая обработка для ошибок сети, БД или отсутствия драйвера
+    println "Проблема с подключением или загрузкой: ${e.message}"
+    log.error("Сетевая или БД ошибка", e)
+}
+```
+
+**5. Блок `finally` — гарантия выполнения**
+
+Блок `finally` выполняется всегда, независимо от того, было выброшено исключение или нет. Это идеальное место для закрытия файлов, потоков, соединений с БД или освобождения других ресурсов.
+
+```groovy
+def reader
+try {
+    reader = new FileReader("/tmp/data.txt")
+    def line = reader.readLine()
+    println "Первая строка: $line"
+    // Если здесь произойдет исключение (например, при чтении),
+    // reader все равно закроется в finally
+} catch (FileNotFoundException e) {
+    println "Файл не найден: ${e.message}"
+} finally {
+    // Этот блок выполнится и после успешного try, и после catch
+    if (reader != null) {
+        try {
+            reader.close()
+            println "Ресурс закрыт"
+        } catch (IOException e) {
+            println "Ошибка при закрытии: ${e.message}"
+        }
+    }
+}
+```
+
+**6. Упрощенная работа с ресурсами: `.withCloseable()` и `.withStream()`**
+
+Groovy предлагает более элегантный способ работы с ресурсами, которые нужно закрывать, — метод `withCloseable`. Он автоматически закрывает ресурс после выполнения замыкания, избавляя от необходимости писать `try-catch-finally` вручную.
+
+| Метод | Для кого | Пример |
+|:------|:---------|:--------|
+| `withCloseable` | Любые классы, реализующие `Closeable` | `new FileInputStream("file.txt").withCloseable { stream -> ... }` |
+| `withStream` / `withReader` / `withWriter` | Специализированные методы для I/O | `new File("file.txt").withReader { reader -> ... }` |
+
+```groovy
+// Вместо громоздкого try-catch-finally
+new File("/tmp/data.txt").withReader { reader ->
+    // reader автоматически закроется после выхода из замыкания
+    def line = reader.readLine()
+    println "Первая строка: $line"
+    // Если здесь исключение, reader все равно закроется
+} // catch не нужен, но если нужно обработать исключение, то try-catch все равно понадобится снаружи
+
+// Для InputStream
+def data = new FileInputStream("/tmp/file.bin").withCloseable { stream ->
+    // работаем с stream, он закроется автоматически
+    return stream.readAllBytes()
+}
+```
+
+**7. `try-catch` как выражение (Groovy 3+)**
+
+Начиная с Groovy 3.0, конструкция `try-catch` может возвращать значение, что делает ее похожей на тернарный оператор.
+
+```groovy
+def result = try {
+    Integer.parseInt("123")
+} catch (NumberFormatException e) {
+    -1  // Значение по умолчанию при ошибке
+}
+
+println result // 123
+
+def result2 = try {
+    Integer.parseInt("abc")
+} catch (NumberFormatException e) {
+    -1
+}
+
+println result2 // -1
+```
+
+**8. Сравнение с Java**
+
+| Критерий | Java | Groovy |
+|:---------|:-----|:--------|
+| **Проверяемые исключения** | Требуют обработки или `throws` | Можно игнорировать, но лучше обрабатывать |
+| **Multi-catch** | Да (с Java 7) | Да |
+| **try-catch как выражение** | Нет | Да (с Groovy 3) |
+| **try-with-resources** | Да (с Java 7) | Да (есть `withCloseable` и I/O-методы) |
+| **Обязательность `catch` или `finally`** | Да | Да |
+
+**9. Идиоматичный Groovy-код для JMeter**
+
+В скриптах для нагрузочного тестирования обработка исключений критически важна, чтобы один упавший запрос не остановил весь тест.
+
+```groovy
+try {
+    // 1. Получаем параметры
+    def userId = vars.get("userId")?.toInteger() ?: 1
+
+    // 2. Выполняем HTTP-запрос (например, через HTTP Request sampler)
+    //    В JSR223 Sampler результат автоматически попадает в SampleResult
+    def response = sampler.sample() // упрощенно
+
+    // 3. Проверяем результат
+    if (SampleResult.isSuccessful()) {
+        SampleResult.setResponseMessage("OK")
+    } else {
+        // Логируем неуспешный ответ, но не бросаем исключение
+        log.warn("Request failed with code: ${SampleResult.getResponseCode()}")
+    }
+} catch (NumberFormatException e) {
+    // Ошибка в тестовых данных - помечаем сэмпл как неуспешный, но продолжаем тест
+    SampleResult.setSuccessful(false)
+    SampleResult.setResponseMessage("Invalid userId format")
+    log.error("Data error: ", e)
+} catch (SocketTimeoutException e) {
+    // Таймаут - частая проблема в нагрузке
+    SampleResult.setSuccessful(false)
+    SampleResult.setResponseMessage("Timeout")
+    log.warn("Timeout for userId: ${vars.get('userId')}")
+} catch (Exception e) {
+    // Любая другая непредвиденная ошибка
+    SampleResult.setSuccessful(false)
+    SampleResult.setResponseMessage("Script error: ${e.getClass().simpleName}")
+    log.error("Unexpected error in script", e)
+} finally {
+    // Здесь можно, например, инкрементировать счетчик итераций
+    println "Обработка пользователя ${vars.get('userId')} завершена"
+}
+```
+
+**Резюме:** `try-catch-finally` в Groovy работает привычно для Java-разработчика, но добавляет удобства: multi-catch, возможность использовать конструкцию как выражение и встроенные методы для автоматического закрытия ресурсов, что делает код чище и безопаснее.
+
 [🔄 К содержанию - главы](#exceptions-глава)
 [🔼 К содержанию](#content)
 
