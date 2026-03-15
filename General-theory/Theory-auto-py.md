@@ -62,7 +62,7 @@
 * [Fluent Wait аналог в Python](#fluent-wait-python)
 * [Асинхронные ожидания в Playwright / AsyncIO](#async-wait-python)
 
-## [🌐 API Тестирование](#api-тестирование-python)  <a id="api-тестирование-python-глава"></a>  
+## [🌐 API Тестирование](#api-тестирование-python)  <a id="api-тестирование-python-глава"></a>   
 
 * [Requests / HTTPX](#requests-httpx)
 * [pytest + requests для API тестов](#pytest-requests)
