@@ -49,7 +49,7 @@
    - [Хэш-таблицы](#хэш-таблицы)
    - [Очереди и стеки](#очереди-стек) 
   
-## [🏆 Структуры данных и обобщения (Generics)](#generics)   <a id="generics-глава"></a>        
+## [🏆 Структуры данных и обобщения (Generics)](#generics)   <a id="generics-глава"></a>         
 
    - [hashCode и equals + Хеш-таблицы, buckets](#hashcode-и-equals-хеш-таблицы-buckets)
    - [Generics: общее понимание](#generics-общее-понимание) 
