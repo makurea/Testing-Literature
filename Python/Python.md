@@ -4151,7 +4151,7 @@ class ExplicitWaitStrategy(WaitStrategy):
 | **Недостатки** | Сложность реализации | Редко используется в Python |
 | **Пример** | Интерфейс `Injectable` с методом `inject()` | Сложные фреймворки |
 
-#### IoC Container / DI Container
+#### IoC Container / DI Container 
 
 ##### Функции контейнера
 | Функция | Описание | Пример в тестировании |
