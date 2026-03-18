@@ -2340,15 +2340,15 @@ def result = [1, 2, 3, 4, 5, 6]
 
 ### Параллельное выполнение и GPars <a id="gpars"></a>
 
-[🔄 К содержанию - главы](#performance-глава)  
-[🔼 К содержанию](#content)  
+[🔄 К содержанию - главы](#performance-глава)    
+[🔼 К содержанию](#content)    
 
 ---
 
 ### Оптимизация скриптов и memory footprint <a id="optimization-memory"></a>
 
-[🔄 К содержанию - главы](#performance-глава)
-[🔼 К содержанию](#content)
+[🔄 К содержанию - главы](#performance-глава)  
+[🔼 К содержанию](#content)  
 
 ---
 
