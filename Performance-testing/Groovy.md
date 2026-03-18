@@ -2317,15 +2317,15 @@ def result = [1, 2, 3, 4, 5, 6]
 
 ### Working with Streams <a id="streams"></a>
 
-[🔄 К содержанию - главы](#io-глава)
-[🔼 К содержанию](#content)
+[🔄 К содержанию - главы](#io-глава)  
+[🔼 К содержанию](#content)  
 
 ---
 
 ### Serialization и JSON/XML <a id="serialization-json-xml"></a>
 
-[🔄 К содержанию - главы](#io-глава)
-[🔼 К содержанию](#content)
+[🔄 К содержанию - главы](#io-глава)  
+[🔼 К содержанию](#content)  
 
 ---
 
@@ -2333,8 +2333,8 @@ def result = [1, 2, 3, 4, 5, 6]
 
 ### Groovy скрипты для JMeter <a id="jmeter-groovy"></a>
 
-[🔄 К содержанию - главы](#performance-глава)
-[🔼 К содержанию](#content)
+[🔄 К содержанию - главы](#performance-глава)  
+[🔼 К содержанию](#content)  
 
 ---
 
