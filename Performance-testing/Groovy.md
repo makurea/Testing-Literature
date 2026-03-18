@@ -2294,15 +2294,15 @@ def result = [1, 2, 3, 4, 5, 6]
 
 ### Java Collections vs Groovy Collections <a id="java-vs-groovy-collections"></a>
 
-[🔄 К содержанию - главы](#java-integration-глава)
-[🔼 К содержанию](#content)
+[🔄 К содержанию - главы](#java-integration-глава)  
+[🔼 К содержанию](#content)  
 
 ---
 
 ### Аннотации и Reflection <a id="annotations-reflection"></a>
 
-[🔄 К содержанию - главы](#java-integration-глава)
-[🔼 К содержанию](#content)
+[🔄 К содержанию - главы](#java-integration-глава)  
+[🔼 К содержанию](#content)  
 
 ---
 
@@ -2310,8 +2310,8 @@ def result = [1, 2, 3, 4, 5, 6]
 
 ### Чтение и запись файлов <a id="file-io"></a>
 
-[🔄 К содержанию - главы](#io-глава)
-[🔼 К содержанию](#content)
+[🔄 К содержанию - главы](#io-глава)  
+[🔼 К содержанию](#content)  
 
 ---
 
