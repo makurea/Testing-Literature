@@ -4452,7 +4452,7 @@ class UserViewTest(TestCase):
         self.assertTemplateUsed(response, "users/list.html")
 ```
 
-##### Clean Architecture тестирование
+##### Clean Architecture тестирование 
 ```python
 # Тестирование Use Case
 def test_create_user_use_case():
