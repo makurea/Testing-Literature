@@ -4435,7 +4435,7 @@ def test_user_interface(driver):
     assert "User List" in driver.title
 ```
 
-##### Django тестирование
+##### Django тестирование 
 ```python
 from django.test import TestCase
 
