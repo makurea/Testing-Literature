@@ -2333,8 +2333,8 @@ def result = [1, 2, 3, 4, 5, 6]
 
 ### Groovy скрипты для JMeter <a id="jmeter-groovy"></a>
 
-[🔄 К содержанию - главы](#performance-глава)  
-[🔼 К содержанию](#content)  
+[🔄 К содержанию - главы](#performance-глава)    
+[🔼 К содержанию](#content)    
 
 ---
 
