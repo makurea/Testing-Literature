@@ -2482,8 +2482,8 @@ AST Transformations — механизм Groovy для модификации а
 | Singleton-сервис | `@Singleton` |
 | Ленивая инициализация тяжелого ресурса | `@Lazy` |
 
-[🔄 К содержанию - главы](#metaprogramming-глава)
-[🔼 К содержанию](#content)
+[🔄 К содержанию - главы](#metaprogramming-глава)  
+[🔼 К содержанию](#content)  
 
 ---
 
