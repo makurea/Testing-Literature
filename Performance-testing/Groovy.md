@@ -2556,8 +2556,8 @@ AST Transformations — механизм Groovy для модификации а
 | Генерация кода на этапе компиляции | AST |
 | Утилитные методы без boilerplate | AST (`@Delegate`, `@Lazy`) |
 
-[🔄 К содержанию - главы](#metaprogramming-глава)
-[🔼 К содержанию](#content)
+[🔄 К содержанию - главы](#metaprogramming-глава)  
+[🔼 К содержанию](#content)  
 
 ---
 
