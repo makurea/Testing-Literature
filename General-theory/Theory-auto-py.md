@@ -7671,7 +7671,7 @@ def test_login_multilingual():
         assert error_text == expected
 ```
 
-#### Продвинутые техники поиска 
+#### Продвинутые техники поиска  
 
 ##### Поиск по части текста
 ```python
