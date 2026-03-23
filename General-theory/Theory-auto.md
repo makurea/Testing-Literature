@@ -2617,7 +2617,7 @@ jobs:
 | `isClosed()` | Проверяет, закрыто ли соединение | `boolean closed = webSocket.isClosed();` |
 
 
-[🔄 К содержанию - главы](#playwright-глава)  
+[🔄 К содержанию - главы](#playwright-глава)   
 [🔼 К содержанию](#content)
 
 ---
