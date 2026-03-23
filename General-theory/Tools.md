@@ -49,7 +49,7 @@
 ## [📋 Тест-менеджмент](#тест-менеджмент) <a id="тест-менеджмент-глава"></a>       
 
   - [📌 Jira](#jira)
-  - [📖 Confluence](#confluence)
+  - [📖 Confluence](#confluence) 
   - [📊 TestRail](#testrail)
   - [🧪 Zephyr](#зефир)
 
