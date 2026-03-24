@@ -5928,7 +5928,7 @@ def setup_test_logging(request):
         record.test_id = test_name
         return record
     
-    logging.setLogRecordFactory(record_factory)
+    logging.setLogRecordFactory(record_factory)  
     
     yield
     
