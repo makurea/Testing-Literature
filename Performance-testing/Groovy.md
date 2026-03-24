@@ -1665,7 +1665,7 @@ try {
 | **Множественный catch** | Как в Java 7+ | `catch (IOException \| SQLException e)` |
 | **try-with-resources** | Есть через `.withCloseable()` | `new FileInputStream(f).withCloseable { ... }` |
 
-[🔄 К содержанию - главы](#exceptions-глава)  
+[🔄 К содержанию - главы](#exceptions-глава)   
 [🔼 К содержанию](#content)  
 
 ---
