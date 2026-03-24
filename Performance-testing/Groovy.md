@@ -35,7 +35,7 @@
 * [Циклы: for, while, each](#циклы)
 * [Elvis, Safe Navigation и Spread-операторы](#elvis-safe)
 
-## [❌ Исключения и обработка ошибок](#exceptions) <a id="exceptions-глава"></a>
+## [❌ Исключения и обработка ошибок](#exceptions) <a id="exceptions-глава"></a> 
 
 * [Типы исключений в Groovy](#типы-исключений)
 * [try-catch-finally](#try-catch-finally)
