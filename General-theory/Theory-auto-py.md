@@ -38,7 +38,7 @@
 
 * [Selenium для Python](#selenium-python)
 * [Selenoid / BrowserMob Proxy / Playwright](#selenium-advanced)
-* [WebDriverWait и Expected Conditions в Python](#explicit-wait-python)
+* [WebDriverWait и Expected Conditions в Python](#explicit-wait-python) 
 * [Playwright и Pyppeteer](#playwright-pyppeteer)
 
 ## [🌍 Инициализация браузера и управление сессиями](#инициализация-браузера-python)  <a id="инициализация-браузера-python-глава"></a>         
