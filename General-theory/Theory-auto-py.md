@@ -46,7 +46,7 @@
 * [Инициализация WebDriver в Python](#webdriver-init)
 * [Headless режим в Chrome и Firefox](#headless-python)
 * [Параллельные сессии с pytest-xdist](#parallel-sessions)
-* [Browser capabilities и options](#browser-capabilities-python)
+* [Browser capabilities и options](#browser-capabilities-python) 
 
 ## [🎭 Selenium / Playwright / PyAutoGUI](#selenium-playwright-python)  <a id="selenium-playwright-python-глава"></a>     
 
