@@ -48,7 +48,7 @@
 * [Оптимизация кода, базы, инфраструктуры](#оптимизация) 
 * [CI/CD и автоматизация Performance Testing](#cicd)
 
-## [💡 Best Practices](#best-practices) <a id="best-practices-глава"></a> 
+## [💡 Best Practices](#best-practices) <a id="best-practices-глава"></a>  
 
 * [Типичные ошибки и как их избежать](#ошибки)      
 * [Checklist перед запуском теста](#checklist) 
