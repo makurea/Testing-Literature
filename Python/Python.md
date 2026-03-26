@@ -4419,9 +4419,9 @@ Dependency Injection и Inversion of Control — мощные инструмен
 ```python
 # Тестирование Model
 def test_user_model():
-    user = User(name="John", email="john@example.com")
+    user = User(name="John", email="john@example.com") 
     assert user.is_valid()
-    assert user.email.endswith("@example.com")
+    assert user.email.endswith("@example.com") 
 
 # Тестирование Controller через API
 def test_user_controller():
