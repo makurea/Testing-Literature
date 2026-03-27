@@ -41,7 +41,7 @@
 * [try-catch-finally](#try-catch-finally)
 * [Throw и custom exceptions](#throw-custom)
 
-## [🗂️ Коллекции и работа с ними](#collections) <a id="collections-глава"></a>
+## [🗂️ Коллекции и работа с ними](#collections) <a id="collections-глава"></a> 
 
 * [Groovy Collections API](#groovy-collections-api)
 * [Методы обработки: find, collect, each, inject](#methods-collections)
