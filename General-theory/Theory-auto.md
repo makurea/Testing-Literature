@@ -3115,7 +3115,7 @@ page.context().browser().newBrowserCDPSession().send("Network.emulateNetworkCond
 | **Нагрузочное тестирование** | Эмулировать медленное соединение |
 
 
-[🔄 К содержанию - главы](#playwright-глава)  
+[🔄 К содержанию - главы](#playwright-глава)   
 [🔼 К содержанию](#content)
 
 ---
