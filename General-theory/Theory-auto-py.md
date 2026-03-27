@@ -5571,7 +5571,7 @@ class Container:
             self.container.register(interface, implementation, scope=punq.transient)
     
     def resolve(self, interface):
-        return self.container.resolve(interface)
+        return self.container.resolve(interface) 
 
 @pytest.fixture(scope="session")
 def di_container():
