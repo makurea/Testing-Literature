@@ -8728,7 +8728,7 @@ def unique_test_data(request):
     
     return {
         'username': f'user_{worker_id}_{unique_suffix}',
-        'email': f'user_{worker_id}_{unique_suffix}@example.com',
+        'email': f'user_{worker_id}_{unique_suffix}@example.com', 
         'password': f'pass_{worker_id}_{unique_suffix}'
     }
 
