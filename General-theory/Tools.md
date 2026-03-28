@@ -1450,7 +1450,7 @@ spec:
 | `kubectl expose deployment <имя_деплоя> --port=80 --type=NodePort` | Создать сервис для деплоя с доступом по порту 80 |
 | `kubectl delete -f deployment.yaml` | Удалить объект из YAML-файла |
 
-[🔄 К содержанию - главы](#devops-ci-cd-глава)  
+[🔄 К содержанию - главы](#devops-ci-cd-глава)   
 [🔼 К содержанию](#content)
 
 ---
