@@ -25,7 +25,7 @@
 
 ## [🔌 Тестирование API](#тестирование-апи) <a id="тестирование-апи-глава"></a> 
 
-  - [🌐 REST API](#rest-api)
+  - [🌐 REST API](#rest-api) 
   - [📬 Postman](#postman)
   - [📃 Swagger](#swagger)
   - [📝 Apidoc](#apidoc)
