@@ -31,7 +31,7 @@
 
 - [Maven](#maven)
 - [Gradle](#gradle)
-- [Сравнение Maven и Gradle](#сравнение-maven-gradle)  
+- [Сравнение Maven и Gradle](#сравнение-maven-gradle)   
 
 ## [🔎 Локаторы](#локаторы)  <a id="локаторы-глава"></a>     
  
