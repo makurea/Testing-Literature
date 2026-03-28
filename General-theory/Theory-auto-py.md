@@ -5010,7 +5010,7 @@ class LoginPage(BasePage):
 
 #### Расширенные техники
 
-##### Page Factory с декораторами
+##### Page Factory с декораторами 
 ```python
 def element(locator):
     def decorator(func):
