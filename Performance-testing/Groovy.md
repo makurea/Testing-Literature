@@ -3147,6 +3147,176 @@ if (!SampleResult.isSuccessful()) {
 
 ### Groovy скрипты для JMeter <a id="jmeter-groovy"></a>
 
+**Groovy скрипты для JMeter**
+
+**Типы сэмплеров для Groovy**
+
+| Сэмплер | Назначение | Приоритет |
+|---------|-----------|-----------|
+| JSR223 Sampler | Выполнение произвольного Groovy кода | Высший (рекомендуемый) |
+| JSR223 PreProcessor | Подготовка данных перед запросом | Высокий |
+| JSR223 PostProcessor | Обработка ответа после запроса | Высокий |
+| JSR223 Assertion | Проверка результатов | Высокий |
+| JSR223 Listener | Сбор статистики, логирование | Средний |
+| BeanShell Sampler | Устаревший аналог (медленнее) | Низкий (избегать) |
+
+**Ключевые переменные JMeter в Groovy**
+
+| Переменная | Тип | Область видимости | Назначение |
+|-----------|-----|------------------|------------|
+| `vars` | JMeterVariables | Поток (thread) | Чтение/запись пользовательских переменных |
+| `props` | java.util.Properties | Глобальная (JVM) | Чтение/запись системных свойств JMeter |
+| `log` | org.slf4j.Logger | Скрипт | Логирование (info, warn, error, debug) |
+| `ctx` | JMeterContext | Поток | Доступ к контексту выполнения |
+| `sampler` | Sampler | Сэмплер | Текущий сэмплер (в Pre/PostProcessor) |
+| `prev` | SampleResult | Поток | Предыдущий результат (в PostProcessor) |
+| `SampleResult` | SampleResult | Сэмплер | Текущий результат (в JSR223 Sampler) |
+| `parameters` | String | Скрипт | Параметры, переданные в сэмплер |
+| `OUT` | PrintWriter | Скрипт | Вывод в консоль JMeter (jmeter.log) |
+
+**Методы vars (JMeterVariables)**
+
+| Категория | Метод | Возврат | Назначение |
+|-----------|-------|---------|------------|
+| Чтение | `get(String key)` | String | Получить переменную (null если нет) |
+| Чтение | `getObject(String key)` | Object | Получить объект |
+| Запись | `put(String key, String value)` | void | Установить строковую переменную |
+| Запись | `putObject(String key, Object value)` | void | Установить объект |
+| Существование | `containsKey(String key)` | boolean | Проверить наличие |
+| Удаление | `remove(String key)` | void | Удалить переменную |
+| Все ключи | `keySet()` | Set | Получить все имена переменных |
+
+**Методы props (Properties)**
+
+| Категория | Метод | Возврат | Примечание |
+|-----------|-------|---------|------------|
+| Чтение | `get(String key)` | String | Глобальные настройки JMeter |
+| Чтение | `getProperty(String key)` | String | Аналогично get |
+| Запись | `put(String key, String value)` | void | Изменяет глобально (все потоки) |
+| Загрузка | `load(InputStream)` | void | Загрузить свойства из файла |
+| Системные | `getProperty(String key, String default)` | String | Доступ к System.getProperty() |
+
+**Методы log (Logger)**
+
+| Уровень | Метод | Аргументы |
+|---------|-------|-----------|
+| debug | `debug(String msg)` | Простое сообщение |
+| debug | `debug(String msg, Throwable t)` | Сообщение + исключение |
+| info | `info(String msg)` | Информационное |
+| info | `info(String msg, Throwable t)` | Информационное + исключение |
+| warn | `warn(String msg)` | Предупреждение |
+| warn | `warn(String msg, Throwable t)` | Предупреждение + исключение |
+| error | `error(String msg)` | Ошибка |
+| error | `error(String msg, Throwable t)` | Ошибка + исключение |
+
+**Методы ctx (JMeterContext)**
+
+| Метод | Возврат | Назначение |
+|-------|---------|------------|
+| `getVariables()` | JMeterVariables | Получить vars (альтернативный доступ) |
+| `getProperties()` | Properties | Получить props |
+| `getPreviousResult()` | SampleResult | Получить предыдущий результат |
+| `getCurrentSampler()` | Sampler | Текущий сэмплер |
+| `getThreadGroup()` | ThreadGroup | Группа потоков |
+| `getThread()` | JMeterThread | Текущий поток |
+| `getEngine()` | StandardJMeterEngine | Движок JMeter |
+
+**Методы SampleResult**
+
+| Категория | Метод | Назначение |
+|-----------|-------|------------|
+| Статус | `setSuccessful(boolean flag)` | Успешность сэмплера (true/false) |
+| Статус | `isSuccessful()` | Проверить успешность |
+| Ответ | `setResponseData(String data)` | Установить тело ответа |
+| Ответ | `setResponseData(byte[] data)` | Установить бинарный ответ |
+| Ответ | `getResponseDataAsString()` | Получить тело ответа как строку |
+| Код | `setResponseCode(String code)` | HTTP-код (200, 500 и т.д.) |
+| Сообщение | `setResponseMessage(String msg)` | Сообщение об ошибке или успехе |
+| Заголовки | `setRequestHeaders(String headers)` | Установить заголовки запроса |
+| Тайминги | `setStartTime(long time)` | Установить время начала |
+| Тайминги | `setEndTime(long time)` | Установить время окончания |
+
+**Типичные операции в JMeter скриптах**
+
+| Операция | Переменные | Ключевые методы |
+|----------|-----------|-----------------|
+| Чтение пользовательской переменной | vars | `get()`, `getObject()` |
+| Запись пользовательской переменной | vars | `put()`, `putObject()` |
+| Чтение глобального свойства | props | `get()`, `getProperty()` |
+| Запись глобального свойства | props | `put()` |
+| Логирование ошибки | log | `error()`, `warn()` |
+| Доступ к ответу сервера | prev, SampleResult | `getResponseDataAsString()` |
+| Установка статуса сэмплера | SampleResult | `setSuccessful()`, `setResponseCode()` |
+| Парсинг JSON | JsonSlurper | `parseText()` |
+| Формирование JSON | JsonOutput | `toJson()` |
+| Чтение файла | new File() | `text`, `readLines()`, `eachLine()` |
+| Выполнение HTTP запроса | sampler (HTTP) | `sample()` |
+
+**Правила работы с переменными**
+
+| Что делать | Почему | Как |
+|-----------|--------|-----|
+| Использовать vars вместо props для данных потока | props общие для всех потоков → race condition | `vars.put("key", "value")` |
+| Проверять переменные на null перед использованием | Отсутствующая переменная → NPE | `vars.get("key") ?: "default"` |
+| Избегать хранения больших объектов в vars | Каждый поток держит копию → OutOfMemoryError | Хранить в props или внешнем кэше |
+| Использовать `vars.putObject()` для сложных типов | `put()` принимает только String | `vars.putObject("list", myList)` |
+| Приводить типы при чтении объекта | `getObject()` возвращает Object | `def list = vars.getObject("list") as List` |
+
+**Производительность Groovy в JMeter**
+
+| Фактор | Влияние | Рекомендация |
+|--------|---------|--------------|
+| Компиляция скрипта | Высокое (первое выполнение) | Кэшировать скрипт (галка "Cache compiled script") |
+| Динамическая типизация | Среднее | Использовать `@CompileStatic` для тяжелых скриптов |
+| Создание объектов | Высокое | Переиспользовать объекты, избегать `new` в циклах |
+| Парсинг JSON/XML | Среднее | Использовать `INDEX_OVERLAY` для больших данных |
+| Логирование | Низкое (на уровне debug) | Отключать debug в production нагрузке |
+| Доступ к файлам | Высокое | Читать файлы один раз в `setup thread group` |
+
+**Сравнение с BeanShell**
+
+| Характеристика | Groovy (JSR223) | BeanShell |
+|---------------|-----------------|-----------|
+| Скорость выполнения | Высокая (компилируется в байткод) | Низкая (интерпретируется) |
+| Поддержка Java 8+ | Полная | Ограниченная |
+| Доступ к JMeter API | Полный | Полный |
+| Синтаксис | Как Java + расширения | Как Java (старый) |
+| Кэширование скриптов | Да | Да |
+| Рекомендация JMeter | **Официально рекомендуется** | Устаревший |
+
+**Общие паттерны для нагрузочного тестирования**
+
+| Паттерн | Описание | Реализация |
+|---------|----------|------------|
+| Data-driven test | Чтение тестовых данных из CSV/JSON перед тестом | `setup thread group` → чтение файла → vars |
+| Динамические параметры | Генерация уникальных данных на каждый запрос | UUID, timestamp, счетчик в vars |
+| Корреляция | Извлечение значения из ответа для следующего запроса | JsonSlurper/XmlSlurper → vars.put() |
+| Conditional logic | Ветвление сценария на основе ответа | if (prev.isSuccessful()) { ... } |
+| Обработка ошибок | Логирование ошибок, fallback действия | try-catch + log.error() + setSuccessful(false) |
+| Throttling | Контроль частоты запросов | System.currentTimeMillis() + Thread.sleep() |
+| Тайминги | Измерение времени выполнения операций | setStartTime/setEndTime |
+
+**Настройки JSR223 Sampler для максимальной производительности**
+
+| Параметр | Значение | Влияние |
+|----------|---------|---------|
+| Language | groovy | Обязательно (не Java) |
+| Cache compiled script | true | Скрипт компилируется один раз |
+| Script file | Внешний файл (опционально) | Удобно для больших скриптов |
+| Parameters | ${parameter} | Передача JMeter-переменных |
+| Script compilation caching | true (по умолчанию) | Кэширование скомпилированного кода |
+
+**Ограничения и подводные камни**
+
+| Проблема | Проявление | Решение |
+|----------|-----------|---------|
+| Утечка памяти через vars | OutOfMemoryError | Очищать vars через `vars.remove()` после использования |
+| Гонка потоков при записи в props | Непредсказуемое поведение | Использовать синхронизацию `synchronized(props)` |
+| Долгая компиляция при первом запуске | Высокий latency первых сэмплеров | Использовать "Cache compiled script" |
+| Загрузка классов через скрипт | ClassNotFoundException | Загружать классы в test plan (jar в /lib/ext) |
+| Неправильный тип в `vars.get()` | ClassCastException | Использовать `?.` и явное приведение |
+| Слишком частый GC | Падение производительности | Минимизировать создание временных объектов |
+
 [🔄 К содержанию - главы](#performance-глава)      
 [🔼 К содержанию](#content)     
 
