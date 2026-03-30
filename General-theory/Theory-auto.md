@@ -3849,7 +3849,7 @@ assertThat(thrown)
 - 🧩 Интеграция с JUnit/TestNG
 - 📜 Читаемый синтаксис: `await().until(...)`
 
-#### Подключение в Gradle (Groovy DSL)
+#### Подключение в Gradle (Groovy DSL) 
 
 - 📘 [Maven Repository](https://mvnrepository.com/artifact/org.awaitility/awaitility-groovy) -- смотрим свежую версию 
 
