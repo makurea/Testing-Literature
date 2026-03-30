@@ -56,7 +56,7 @@
 
 ## [👑 Управление памятью и работа со ссылками](#memory)   <a id="memory-глава"></a>   
 
-   - [Память, сборщик мусора - Memory Management, Garbage Collection](#память)  
+   - [Память, сборщик мусора - Memory Management, Garbage Collection](#память)   
    - [Строки и пул строк(Pool string)](#строки-и-пул-строк)
    - [Каллизия (Call-by-value и Call-by-reference)](#call-by-value)
    
