@@ -3084,7 +3084,7 @@ context.tracing().stop(new Tracing.StopOptions()
 | `Response.json()` | Тело ответа (как JSON) | `JsonNode json = response.json();` |
 | `Response.request()` | Запрос, соответствующий ответу | `Request req = response.request();` |
 
-**Эмуляция сетевых условий**
+**Эмуляция сетевых условий** 
 
 ```java
 // Эмуляция медленного соединения
