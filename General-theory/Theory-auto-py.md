@@ -6425,7 +6425,7 @@ Allure с pytest создает профессиональную систему 
 
 ##### Базовый экспорт метрик
 ```python
-from prometheus_client import start_http_server, Counter, Gauge, Histogram
+from prometheus_client import start_http_server, Counter, Gauge, Histogram 
 
 # Запуск HTTP сервера для экспорта метрик
 start_http_server(8000)
