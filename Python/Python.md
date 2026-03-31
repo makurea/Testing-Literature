@@ -5149,7 +5149,7 @@ def outer():
     count = 0
     
     def increment():
-        nonlocal count  # Указываем, что count из enclosing области
+        nonlocal count  # Указываем, что count из enclosing области  
         count += 1
         return count
     
