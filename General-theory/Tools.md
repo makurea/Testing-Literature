@@ -1979,7 +1979,7 @@ deploy:
 
 ---
 
-### ☸️ Openshift  <a id="openshift"></a>
+### ☸️ Openshift  <a id="openshift"></a>  
 
 #### OpenShift — кратко
 
