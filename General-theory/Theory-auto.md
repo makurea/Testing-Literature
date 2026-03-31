@@ -2882,7 +2882,7 @@ newPage.navigate("https://example.com/dashboard"); // Уже авторизов�
 **Пример эмуляции iPhone 13:**
 
 ```java
-BrowserContext mobileContext = browser.newContext(new Browser.NewContextOptions()
+BrowserContext mobileContext = browser.newContext(new Browser.NewContextOptions()  
     .setViewportSize(390, 844)
     .setUserAgent("Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X)")
     .setDeviceScaleFactor(3.0)
