@@ -3261,7 +3261,7 @@ page.screenshot(new Page.ScreenshotOptions()
     .setPath(Paths.get("page-with-mask.png"))
     .setMask(Arrays.asList(
         page.locator(".credit-card"),
-        page.locator(".personal-data")
+        page.locator(".personal-data")  
     )));
 ```
 
