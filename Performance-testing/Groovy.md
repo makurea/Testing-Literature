@@ -51,7 +51,7 @@
 
 * [Метапрограммирование: ExpandoMetaClass](#expando)
 * [AST Transformations](#ast-transformations)
-* [Методы runtime добавления и category](#runtime-methods-category)
+* [Методы runtime добавления и category](#runtime-methods-category) 
 
 ## [🏆 Взаимодействие с Java](#java-integration) <a id="java-integration-глава"></a>
 
