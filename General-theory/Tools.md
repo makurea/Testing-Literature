@@ -43,7 +43,7 @@
   - [🐘 PostgreSQL](#postgresql)
   - [🟠 Oracle](#oracle)
   - [🧠 Redis](#redis)
-  - [📦 NoSQL (например MongoDB или аналоги)](#nosql)
+  - [📦 NoSQL (например MongoDB или аналоги)](#nosql) 
   - [☸️ Hazelcast](#hazelcast)
 
 ## [📋 Тест-менеджмент](#тест-менеджмент) <a id="тест-менеджмент-глава"></a>       
