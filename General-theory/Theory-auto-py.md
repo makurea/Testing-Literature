@@ -89,7 +89,7 @@
 * [Pytest + Appium интеграция](#pytest-appium)
 * [Параллельный запуск тестов с pytest-xdist](#parallel-appium)
 
-## [💾 Работа с базами данных](#базы-данных-python)  <a id="базы-данных-python-глава"></a>      
+## [💾 Работа с базами данных](#базы-данных-python)  <a id="базы-данных-python-глава"></a>       
 
 * [SQLAlchemy / ORM](#sqlalchemy)
 * [sqlite3 / PostgreSQL / MySQL](#db-python)
