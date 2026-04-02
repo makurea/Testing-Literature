@@ -1497,8 +1497,8 @@ resource "aws_instance" "example" {
 }
 ```
 
-[🔄 К содержанию - главы](#devops-ci-cd-глава)  
-[🔼 К содержанию](#content)
+[🔄 К содержанию - главы](#devops-ci-cd-глава)    
+[🔼 К содержанию](#content)  
 
 ---
 
