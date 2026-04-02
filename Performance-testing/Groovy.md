@@ -3322,7 +3322,7 @@ if (!SampleResult.isSuccessful()) {
 
 ---
 
-### Параллельное выполнение и GPars <a id="gpars"></a>  
+### Параллельное выполнение и GPars <a id="gpars"></a>    
 
 [🔄 К содержанию - главы](#performance-глава)         
 [🔼 К содержанию](#content)      
