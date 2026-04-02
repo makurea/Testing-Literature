@@ -3331,7 +3331,7 @@ if (!SampleResult.isSuccessful()) {
 
 ### Оптимизация скриптов и memory footprint <a id="optimization-memory"></a>
 
-[🔄 К содержанию - главы](#performance-глава)      
+[🔄 К содержанию - главы](#performance-глава)       
 [🔼 К содержанию](#content)    
 
 ---
