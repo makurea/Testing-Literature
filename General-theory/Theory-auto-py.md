@@ -4519,7 +4519,7 @@ import aioresponses
 import pytest
 
 @pytest.mark.asyncio
-async def test_with_mock(aioresponses):
+async def test_with_mock(aioresponses): 
     # Настройка mock ответа
     aioresponses.get(
         'https://api.example.com/users/1',
