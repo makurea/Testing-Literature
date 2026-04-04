@@ -6280,7 +6280,7 @@ jobs:
     - name: Run tests
       run: pytest --alluredir=allure-results
     - name: Generate Allure report
-      uses: simple-elf/allure-report-action@master
+      uses: simple-elf/allure-report-action@master 
       with:
         allure_results: allure-results
         allure_report: allure-report
