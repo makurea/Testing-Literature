@@ -7526,7 +7526,7 @@ JSON Schema — это язык для описания структуры JSON-
   "additionalProperties": false
 }
 ```
-📝 Пример JSON
+📝 Пример JSON  
 ```json
 {
   "name": "Дарт Вейдер",
