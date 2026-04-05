@@ -5385,7 +5385,7 @@ file = open('data.txt', 'r')
 try:
     content = file.read()
 finally:
-    file.close()  # Важно не забыть закрыть!
+    file.close()  # Важно не забыть закрыть!  
 
 # Контекстный менеджер (рекомендуется)
 with open('data.txt', 'r') as file:
