@@ -65,7 +65,7 @@
 * [Working with Streams](#streams)
 * [Serialization и JSON/XML](#serialization-json-xml)
 
-## [💡 Практические концепции для нагрузочного тестирования](#performance) <a id="performance-глава"></a>
+## [💡 Практические концепции для нагрузочного тестирования](#performance) <a id="performance-глава"></a> 
 
 * [Groovy скрипты для JMeter](#jmeter-groovy)
 * [Параллельное выполнение и GPars](#gpars)
