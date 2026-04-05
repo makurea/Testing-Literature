@@ -4916,7 +4916,7 @@ class DataProcessor:
             response.raise_for_status()
             return response.json()
         except requests.RequestException as e:
-            print(f"Ошибка загрузки данных: {e}")
+            print(f"Ошибка загрузки данных: {e}") 
             return None
     
     def process_data(self, data):
