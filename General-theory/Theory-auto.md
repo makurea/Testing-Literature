@@ -2847,7 +2847,7 @@ page.click("#login");
 page.waitForURL("**/dashboard");
 
 String storageState = context.storageState();
-Files.write(Paths.get("state.json"), storageState.getBytes());
+Files.write(Paths.get("state.json"), storageState.getBytes());  
 context.close();
 
 // В другом тесте восстанавливаем
