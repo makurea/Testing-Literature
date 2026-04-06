@@ -6318,7 +6318,7 @@ class CustomAllureReporter:
         allure.dynamic.link(url, name=name, link_type=link_type)
 ```
 
-#### Best Practices
+#### Best Practices 
 
 ##### Организация отчетов
 | Практика | Рекомендация | Пример |
