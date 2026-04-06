@@ -6960,7 +6960,7 @@ driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
 | **app** | Путь к приложению | `'/path/app.apk'` |
 | **automationName** | Движок автоматизации | `'UiAutomator2'`, `'XCUITest'` |
 
-##### Android-specific capabilities
+##### Android-specific capabilities  
 | Capability | Назначение | Пример |
 |------------|------------|--------|
 | **appPackage** | Пакет приложения | `'com.example.app'` |
