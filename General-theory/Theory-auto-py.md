@@ -4489,7 +4489,7 @@ async def test_parallel_requests(aiohttp_client):
 @pytest.mark.asyncio
 async def test_stress_api():
     async with aiohttp.ClientSession() as session:
-        semaphore = asyncio.Semaphore(100)  # Ограничение параллелизма
+        semaphore = asyncio.Semaphore(100)  # Ограничение параллелизма  
         
         async def make_request(url):
             async with semaphore:
