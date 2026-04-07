@@ -1898,7 +1898,7 @@ public class WaitExamples {
         WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.id("loginButton")));
         button.click();
 
-        // 3️⃣ Текучее ожидание (Fluent Wait)
+        // 3️⃣ Текучее ожидание (Fluent Wait) 
         FluentWait<WebDriver> fluentWait = new FluentWait<>(driver)
                 .withTimeout(Duration.ofSeconds(15))         // общее время ожидания
                 .pollingEvery(Duration.ofSeconds(2))         // частота проверки
