@@ -6537,7 +6537,7 @@ class InstrumentedWebDriver:
         self.driver = driver
         
         # Метрики
-        self.page_load_time = Histogram(
+        self.page_load_time = Histogram( 
             'selenium_page_load_seconds',
             'Page load time',
             ['url']
