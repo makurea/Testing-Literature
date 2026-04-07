@@ -8775,7 +8775,7 @@ class DeviceAwareScheduler(LoadScheduling):
         # из конфигурации или внешнего источника
         return 'android'  # или 'ios'
     
-    def _split_scope(self, nodeid):
+    def _split_scope(self, nodeid):   
         """Разделение тестов по scope с учетом устройств"""
         # Маркировка тестов для определенных устройств
         if 'android' in nodeid:
