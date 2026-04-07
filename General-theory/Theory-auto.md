@@ -2365,7 +2365,7 @@ jobs:
 
 🔗 [Java с Playwright Test Runner](https://playwright.dev/java/docs/intro)
 
-[🔄 К содержанию - главы](#playwright-глава)  
+[🔄 К содержанию - главы](#playwright-глава)   
 [🔼 К содержанию](#content)
 
 ---
