@@ -54,7 +54,7 @@
    - [hashCode и equals + Хеш-таблицы, buckets](#hashcode-и-equals-хеш-таблицы-buckets)
    - [Generics: общее понимание](#generics-общее-понимание) 
 
-## [👑 Управление памятью и работа со ссылками](#memory)   <a id="memory-глава"></a>   
+## [👑 Управление памятью и работа со ссылками](#memory)   <a id="memory-глава"></a>     
 
    - [Память, сборщик мусора - Memory Management, Garbage Collection](#память)   
    - [Строки и пул строк(Pool string)](#строки-и-пул-строк)
