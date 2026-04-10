@@ -47,7 +47,7 @@
 * [Методы обработки: find, collect, each, inject](#methods-collections)
 * [Map и List операции](#map-list-operations)
 
-## [🟤 Метапрограммирование и динамика](#metaprogramming) <a id="metaprogramming-глава"></a>  
+## [🟤 Метапрограммирование и динамика](#metaprogramming) <a id="metaprogramming-глава"></a>   
 
 * [Метапрограммирование: ExpandoMetaClass](#expando)
 * [AST Transformations](#ast-transformations)
