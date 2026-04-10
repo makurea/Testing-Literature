@@ -4220,7 +4220,7 @@ public class LoginSteps extends AkitaStepDefinitions {
 
 ---
 
-### Знания Allure reporter - аннотации <a id="allure-reporter-аннотации"></a>
+### Знания Allure reporter - аннотации <a id="allure-reporter-аннотации"></a>  
 
 Allure Reporter — это мощный инструмент для создания наглядных и информативных отчетов о выполнении тестов. Он поддерживает интеграцию с популярными тестовыми фреймворками, такими как JUnit, TestNG, Pytest и другие.
 
