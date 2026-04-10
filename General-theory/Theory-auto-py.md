@@ -8000,7 +8000,7 @@ def android_driver():
     
     driver = webdriver.Remote('http://localhost:4723', options=options)
     
-    yield driver
+    yield driver 
     
     # Очистка после теста
     driver.quit()
