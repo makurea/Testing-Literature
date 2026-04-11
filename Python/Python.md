@@ -5734,7 +5734,7 @@ class TestLoggingContext:
         if exc_type:
             self.log_file.write(f"ОШИБКА: {exc_type.__name__}: {exc_val}\n")
         else:
-            self.log_file.write("ТЕСТ ПРОЙДЕН УСПЕШНО\n")
+            self.log_file.write("ТЕСТ ПРОЙДЕН УСПЕШНО\n") 
         
         self.log_file.write(f"Время завершения: {datetime.now()}\n")
         self.log_file.close()
