@@ -3062,7 +3062,7 @@ if (!SampleResult.isSuccessful()) {
 | Скорость | Высокая | Средняя |
 | Когда использовать | XML < 1 МБ | XML > 10 МБ, потоковая отправка |
 
-**Сравнение XmlSlurper vs XmlParser**
+**Сравнение XmlSlurper vs XmlParser**  
 
 | Критерий | XmlSlurper | XmlParser |
 |----------|-----------|-----------|
