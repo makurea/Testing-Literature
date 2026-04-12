@@ -2890,7 +2890,7 @@ BrowserContext mobileContext = browser.newContext(new Browser.NewContextOptions(
     .setIsMobile(true));
 ```
 
-**Трассировка и отладка**
+**Трассировка и отладка** 
 
 | Метод | Описание | Пример использования | Когда использовать | Официальная документация |
 | :--- | :--- | :--- | :--- | :--- |
