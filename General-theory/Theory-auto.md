@@ -3300,7 +3300,7 @@ context.close(); // видео сохранится автоматически
 | `page.onPageError()` | Логирование ошибок на странице | `page.onPageError(error -> System.err.println("Page error: " + error));` |
 | `setLogLevel()` | Уровень логирования Playwright | `System.setProperty("playwright.log", "DEBUG");` |
 
-**Режимы запуска для отладки**
+**Режимы запуска для отладки**  
 
 | Режим | Команда/Настройка | Описание |
 | :--- | :--- | :--- |
