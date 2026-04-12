@@ -8501,7 +8501,7 @@ class TestShoppingCart:
             home_page.go_to_cart()
             assert cart_page.is_visible()
         
-        with allure.step("Проверка содержимого корзины"):
+        with allure.step("Проверка содержимого корзины"): 
             cart_items = cart_page.get_items()
             assert len(cart_items) == 1
             assert cart_items[0]["name"] == test_product["name"]
