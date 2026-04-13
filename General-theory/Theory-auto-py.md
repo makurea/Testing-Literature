@@ -6523,7 +6523,7 @@ def test_example(test_metrics):
     assert result == expected
 ```
 
-#### Продвинутые техники
+#### Продвинутые техники 
 
 ##### Метрики для Selenium/Playwright тестов
 ```python
