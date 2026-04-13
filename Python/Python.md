@@ -148,7 +148,7 @@
 
 ---
 
-### Коллекции: list, tuple, set, dict <a id="коллекции-list-tuple-set-dict"></a>  
+### Коллекции: list, tuple, set, dict <a id="коллекции-list-tuple-set-dict"></a>   
 
 **Сравнительная таблица коллекций**
 
