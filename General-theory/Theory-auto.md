@@ -77,7 +77,7 @@
 - [Библиотека ожидания для api тестов?](#ожидание-апи)
 - [Метод Thread.sleep()](#метод-sleep)
 
-## [🎬 Playwright ](#playwright)  <a id="playwright-глава"></a>          
+## [🎬 Playwright ](#playwright)  <a id="playwright-глава"></a>           
 
 - [Что такое Playwright?](#что-такое-playwright)
 - [Playwright vs Selenium](#playwright-vs-selenium)
