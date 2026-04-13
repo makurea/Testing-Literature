@@ -1816,7 +1816,7 @@ println result // 123
 
 def result2 = try {
     Integer.parseInt("abc")
-} catch (NumberFormatException e) {
+} catch (NumberFormatException e) { 
     -1
 }
 
