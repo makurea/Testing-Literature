@@ -43,7 +43,7 @@
 * [Raise и повтор выброса ошибок](#raise)
 * [Контекстные менеджеры (with)](#контекстные-менеджеры) 
 
-## [🗂️ Коллекции и структуры данных](#коллекции) <a id="коллекции-глава"></a>       
+## [🗂️ Коллекции и структуры данных](#коллекции) <a id="коллекции-глава"></a>        
 
 * [List, Tuple, Set, Dict](#list-tuple-set-dict)
 * [collections: Counter, deque, defaultdict, namedtuple](#collections-модуль) 
