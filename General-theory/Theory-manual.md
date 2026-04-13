@@ -5603,7 +5603,7 @@ public class MyController {
 
  🛠 Примеры реализаций
 
-- **Apache Camel** — маршрутизация и интеграция через Java DSL.
+- **Apache Camel** — маршрутизация и интеграция через Java DSL.  
 - **Mule ESB** — гибкий и мощный open-source ESB.
 - **WSO2 Enterprise Integrator** — платформа для корпоративной интеграции.
 - **IBM Integration Bus** — промышленное решение от IBM.
