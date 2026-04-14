@@ -6969,7 +6969,7 @@ driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
 | **fullReset** | Полный сброс приложения | `True`/`False` |
 | **adbPort** | Порт ADB сервера | `5037` |
 
-##### iOS-specific capabilities 
+##### iOS-specific capabilities  
 | Capability | Назначение | Пример |
 |------------|------------|--------|
 | **bundleId** | Bundle ID приложения | `'com.example.app'` |
