@@ -101,7 +101,7 @@
 
 ---
 
-## 🐧 Linux  <a id="linux"></a> 
+## 🐧 Linux  <a id="linux"></a>  
 
 ### 🖥️ Основы Linux   <a id="основы-linux"></a>     
 
