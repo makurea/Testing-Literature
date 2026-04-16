@@ -5918,7 +5918,7 @@ def test_with_artifacts(test_artifacts_dir):
 
 PEP 8
 
-PEP 8 — официальный стиль кодирования Python.
+PEP 8 — официальный стиль кодирования Python.  
 
 Он стандартизирует внешний вид и структуру кода.
 
