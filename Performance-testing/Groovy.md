@@ -56,7 +56,7 @@
 ## [🏆 Взаимодействие с Java](#java-integration) <a id="java-integration-глава"></a>
 
 * [Использование Java-классов](#java-classes)
-* [Java Collections vs Groovy Collections](#java-vs-groovy-collections)
+* [Java Collections vs Groovy Collections](#java-vs-groovy-collections) 
 * [Аннотации и Reflection](#annotations-reflection)
 
 ## [👑 Работа с файлами и потоками](#io) <a id="io-глава"></a>
