@@ -4399,7 +4399,7 @@ driver.findElement(By.xpath("//android.widget.TextView[@text='Login']"));
 | `pushFile()`           | Копирование файла в устройство |
 | `getDeviceTime()`      | Получение системного времени |
 
-##### `By`
+##### `By` 
 **Назначение:** Универсальные локаторы от Selenium, работающие в Appium.
 
 | Метод | Назначение |
