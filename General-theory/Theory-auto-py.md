@@ -8578,7 +8578,7 @@ Device1        Device2     DeviceN
 
 #### Настройка параллельного окружения
 
-##### Конфигурация множества серверов Appium
+##### Конфигурация множества серверов Appium  
 ```python
 # servers_config.py
 APPIUM_SERVERS = [
