@@ -9121,7 +9121,7 @@ jobs:
     - name: Upload test results
       uses: actions/upload-artifact@v2
       with:
-        name: test-results-worker-${{ matrix.worker }}
+        name: test-results-worker-${{ matrix.worker }} 
         path: |
           results-*.xml
           report-*.html
