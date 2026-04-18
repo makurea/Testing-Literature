@@ -2295,7 +2295,7 @@ mvn test -Dworkers=4
 
 #### Trace Viewer
 
-Trace Viewer — инструмент для анализа упавших тестов :
+Trace Viewer — инструмент для анализа упавших тестов :  
 
 ```java
 @Test
