@@ -8608,7 +8608,7 @@ APPIUM_SERVERS = [
     }
 ]
 
-def get_available_server(worker_id=None):
+def get_available_server(worker_id=None): 
     """Получение доступного сервера Appium"""
     if worker_id:
         # Распределение по worker_id
