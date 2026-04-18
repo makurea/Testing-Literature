@@ -1666,7 +1666,7 @@ Prometheus:
 - **`promtool check config prometheus.yml`** – проверка конфигурации  
 
 Grafana:  
-- **Добавление источника данных Prometheus**  
+- **Добавление источника данных Prometheus**   
 - **Создание дашборда с метриками**  
 
 
