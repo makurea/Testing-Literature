@@ -268,7 +268,7 @@ Performance Requirements (NFR) → SLO → SLA
 
 #### Как это применяется в Performance Testing  
 
-1. **Performance Requirements** — то, что вы тестируете. Должны быть определены до теста.
+1. **Performance Requirements** — то, что вы тестируете. Должны быть определены до теста. 
 2. **SLO** — критерий прохождения теста (PASS/FAIL). Если SLO нарушен — тест не пройден.
 3. **SLI** — то, что вы фактически измеряете в ходе теста и сравниваете с SLO.
 4. **SLA** — то, что защищает бизнес в production. Performance testing помогает убедиться, что SLA не будут нарушены после релиза.
