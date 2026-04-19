@@ -2792,7 +2792,7 @@ Playwright автоматически ожидает готовности эле
 
 **Expected Conditions (аналогия с Selenium)**
 
-| Selenium Expected Condition | Playwright аналог |
+| Selenium Expected Condition | Playwright аналог |  
 | :--- | :--- |
 | `visibilityOfElementLocated` | `locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE))` |
 | `elementToBeClickable` | `locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.ATTACHED))` + auto-waiting |
