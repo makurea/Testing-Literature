@@ -107,7 +107,7 @@
 * [AsyncIO, Await и Event Loop](#asyncio)
 * [Многопоточность (threading)](#threading)
 * [Многопроцессность (multiprocessing)](#multiprocessing)
-* [Асинхронные генераторы и контекстные менеджеры](#async-generators)
+* [Асинхронные генераторы и контекстные менеджеры](#async-generators) 
 
 ## [⚙️ Практика и инструменты разработчика](#инструменты) <a id="инструменты-глава"></a>
 
