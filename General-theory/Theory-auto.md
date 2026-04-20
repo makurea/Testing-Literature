@@ -2600,7 +2600,7 @@ jobs:
 | `onClose()` | Подписывается на событие закрытия | `worker.onClose(closedWorker -> System.out.println("Worker closed"));` |
 
 
-#### 🔌 WebSocket   <a id="websocket-классы-и-объекты"></a>
+#### 🔌 WebSocket   <a id="websocket-классы-и-объекты"></a>  
 
 Представляет WebSocket-соединение, открытое страницей. Позволяет мониторить и взаимодействовать с WebSocket-трафиком.
 
