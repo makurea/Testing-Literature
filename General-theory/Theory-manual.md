@@ -6556,7 +6556,7 @@ SELECT name FROM suppliers;
 SELECT name,
        CASE
            WHEN age < 18 THEN 'Minor'
-           WHEN age BETWEEN 18 AND 64 THEN 'Adult'
+           WHEN age BETWEEN 18 AND 64 THEN 'Adult' 
            ELSE 'Senior'
        END AS age_group
 FROM users;
