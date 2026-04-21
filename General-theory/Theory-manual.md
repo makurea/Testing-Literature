@@ -6166,7 +6166,7 @@ status_id INTEGER DEFAULT 1 REFERENCES task_statuses(id)
 
 
 **❓ Вопрос:** 
-В чём разница между CHAR и VARCHAR в SQL?
+В чём разница между CHAR и VARCHAR в SQL?  
 
 ✅ Ответ:
 CHAR — это строка фиксированной длины, дополняется пробелами.
