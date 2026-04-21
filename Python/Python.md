@@ -4735,7 +4735,7 @@ squared = list(map(lambda x: x ** 2, numbers))
 evens = list(filter(lambda x: x % 2 == 0, numbers))
 ```
 
-#### Классы и объекты
+#### Классы и объекты 
 
 ##### Базовый класс
 ```python
