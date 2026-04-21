@@ -3747,7 +3747,7 @@ assertThat(thrown)
 | `isEqualToIgnoringCase(str)`     | Равенство без учёта регистра                   |
 | `isEqualToNormalizingWhitespace(str)` | Равенство с нормализацией пробелов       |
 
-##### 🔹 Числа (`Integer`, `Double`, `BigDecimal` и др.)
+##### 🔹 Числа (`Integer`, `Double`, `BigDecimal` и др.)  
 
 | Метод                             | Назначение                                      |
 |----------------------------------|--------------------------------------------------|
