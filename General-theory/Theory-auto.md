@@ -2586,7 +2586,7 @@ jobs:
 | `isVisible()` | Проверяет видимость элемента | `boolean visible = frame.isVisible("#element");` |
 | `getAttribute()` | Получает атрибут элемента | `String attr = frame.getAttribute("#link", "href");` |
 
-#### ⚙️ Worker  <a id="worker-классы-и-объекты"></a>
+#### ⚙️ Worker  <a id="worker-классы-и-объекты"></a> 
 
 Представляет веб-воркер (Web Worker) — скрипт, выполняющийся в фоновом потоке, отдельно от основной страницы.
 
