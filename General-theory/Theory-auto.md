@@ -1725,7 +1725,7 @@ Selenoid идеально подходит для автоматизации UI-
 | `getDomAttribute(String name)` | Возвращает значение атрибута из DOM (Selenium 4).     |
 | `getDomProperty(String name)`  | Получает значение свойства из DOM (Selenium 4).       |
 
-#### **By** <a id="by"></a>
+#### **By** <a id="by"></a>  
 Класс `By` используется для поиска элементов на странице.   
 
 | Метод                         | Описание                                 |
