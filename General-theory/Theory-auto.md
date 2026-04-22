@@ -1796,7 +1796,7 @@ Selenoid идеально подходит для автоматизации UI-
 | `executeAsyncScript(String script)` | Выполняет асинхронный JavaScript-код |
 | `executeAsyncScript(String script, Object... args)` | Выполняет асинхронный JavaScript-код с параметрами | 
 
-####  WindowHandle <a id="windowhandle"></a>
+####  WindowHandle <a id="windowhandle"></a>  
 Используется для переключения между окнами браузера.
 
 | Метод | Описание |
