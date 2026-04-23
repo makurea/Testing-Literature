@@ -2650,7 +2650,7 @@ jobs:
 | `page.getByTitle()` | Поиск по title атрибуту | `page.getByTitle("Help tooltip")`<br>`page.getByTitle("Close").click()` | Для элементов с всплывающими подсказками | [🔗 getByTitle()](https://playwright.dev/java/api/class-page#page-get-by-title) |
 | `page.getByTestId()` | Поиск по data-testid атрибуту | `page.getByTestId("product-card")`<br>`page.getByTestId("submit-button").click()` | Для тестовых идентификаторов — **самый надежный способ**, не зависит от изменений в UI | [🔗 getByTestId()](https://playwright.dev/java/api/class-page#page-get-by-test-id) |
 
-**Фильтрация и комбинирование локаторов**
+**Фильтрация и комбинирование локаторов** 
 
 | Метод | Описание | Пример | Результат |
 | :--- | :--- | :--- | :--- |
