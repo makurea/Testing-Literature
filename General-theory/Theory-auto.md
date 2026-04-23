@@ -2517,7 +2517,7 @@ jobs:
 
 🔗 [Официальная документация](https://playwright.dev/java/api/class-apirequestcontext)
 
-| Метод | Описание | Пример использования |
+| Метод | Описание | Пример использования | 
 | :--- | :--- | :--- |
 | `get()` | Выполняет GET-запрос | `APIResponse response = context.get("https://api.example.com/users");` |
 | `post()` | Выполняет POST-запрос | `APIResponse response = context.post("https://api.example.com/users", RequestOptions.create().setData(user));` |
