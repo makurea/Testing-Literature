@@ -6410,7 +6410,7 @@ SELECT * FROM products ORDER BY price ASC;
 SELECT * FROM products ORDER BY price DESC;
 ```
 
-#### 📊 Агрегатные функции
+#### 📊 Агрегатные функции  
 ```sql
 -- COUNT()
 SELECT COUNT(*) FROM orders;
