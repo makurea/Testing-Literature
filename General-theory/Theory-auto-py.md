@@ -6212,7 +6212,7 @@ def allure_logging(request):
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item, call):
-    """Сбор информации о результатах теста для Allure"""
+    """Сбор информации о результатах теста для Allure"""  
     outcome = yield
     rep = outcome.get_result()
     
