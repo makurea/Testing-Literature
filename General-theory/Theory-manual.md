@@ -6550,7 +6550,7 @@ SELECT name FROM suppliers;
 
 ```
 
-#### 🏷 Условные выражения
+#### 🏷 Условные выражения 
 ```sql
 -- CASE
 SELECT name,
