@@ -2606,7 +2606,7 @@ jobs:
 
 🔗 [Официальная документация](https://playwright.dev/java/api/class-websocket)
 
-| Метод | Описание | Пример использования |
+| Метод | Описание | Пример использования |  
 | :--- | :--- | :--- |
 | `url()` | Возвращает URL WebSocket соединения | `String wsUrl = webSocket.url();` |
 | `expectEvent()` | Ожидает определенное событие | `WebSocketFrame frame = webSocket.expectEvent();` |
