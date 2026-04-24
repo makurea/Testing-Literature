@@ -4534,7 +4534,7 @@ async def test_with_mock(aioresponses):
             assert data['name'] == 'John'
 ```
 
-#### Тестирование WebSocket
+#### Тестирование WebSocket 
 
 ##### Особенности WebSocket тестирования
 | Аспект | Реализация | Использование |
