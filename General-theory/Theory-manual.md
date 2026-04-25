@@ -8181,7 +8181,7 @@ fi
 
 #### 4\. Другие HTTP-методы
 
-| Действие | cURL (Bash/PowerShell/CMD) | Назначение |
+| Действие | cURL (Bash/PowerShell/CMD) | Назначение | 
 | :--- | :--- | :--- |
 | **PUT (Обновление)** | `curl -X PUT -H "Content-Type: application/json" -d @new_data.json <URL>/<id>` | Полное обновление ресурса. |
 | **DELETE (Удаление)** | `curl -X DELETE <URL>/<id>` | Удаление ресурса. |
