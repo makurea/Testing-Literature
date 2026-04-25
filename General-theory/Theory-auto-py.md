@@ -6830,7 +6830,7 @@ class AlertManagerIntegration:
         self.custom_alerts = Gauge(
             'custom_test_alerts',
             'Custom test alerts',
-            ['alert_name', 'severity']
+            ['alert_name', 'severity'] 
         )
     
     def send_test_failure_alert(self, test_name, error_message, severity='warning'):
