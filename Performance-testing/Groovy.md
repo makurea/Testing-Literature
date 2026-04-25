@@ -53,7 +53,7 @@
 * [AST Transformations](#ast-transformations)
 * [Методы runtime добавления и category](#runtime-methods-category) 
 
-## [🏆 Взаимодействие с Java](#java-integration) <a id="java-integration-глава"></a>
+## [🏆 Взаимодействие с Java](#java-integration) <a id="java-integration-глава"></a>  
 
 * [Использование Java-классов](#java-classes)
 * [Java Collections vs Groovy Collections](#java-vs-groovy-collections) 
