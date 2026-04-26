@@ -5,7 +5,7 @@
 * [Что можно автоматизировать с Python, а что нет](#что-можно-python)
 * [Авторизация, аутентификация и управление сессиями в Python](#auth-python)
 
-## [🦊 Системы контроля версий и Python](#git-python)  <a id="git-python-глава"></a>             
+## [🦊 Системы контроля версий и Python](#git-python)  <a id="git-python-глава"></a>               
 
 * [Git для Python-разработчика](#git-python)
 * [Использование Git в проектах с virtualenv / poetry](#git-virtualenv)  
