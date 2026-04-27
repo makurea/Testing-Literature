@@ -4954,7 +4954,7 @@ curl --cookie "user_id=123" http://<lb_ip>
 4. **Системы с компенсирующими транзакциями** (Saga-паттерн)
 5. **Интеграция с legacy-системами**
 
-Популярные инструменты: Camunda, AWS Step Functions, Temporal
+Популярные инструменты: Camunda, AWS Step Functions, Temporal  
 
 ### Когда использовать Хореографию
 
