@@ -5052,7 +5052,7 @@ class HomePage(BasePage):
 | **current_page** | Текущая активная страница | Контекстное управление |
 | **page_cache** | Кэш созданных страниц | Переиспользование экземпляров |
 
-##### Пример теста с POM
+##### Пример теста с POM 
 ```python
 import pytest
 from pages.login_page import LoginPage
