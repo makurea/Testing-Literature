@@ -4812,7 +4812,7 @@ fetch('https://api.example.com/data')
 - Трафик на сервер  
 
 #### Логи:
-- `access.log`, `error.log` (NGINX, HAProxy)  
+- `access.log`, `error.log` (NGINX, HAProxy)    
 - `CloudWatch`, `GCP Monitoring`  
 - `Prometheus + Grafana`
 
