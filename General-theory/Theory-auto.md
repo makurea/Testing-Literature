@@ -2562,7 +2562,7 @@ jobs:
 | `waitForElementState()` | Ждет определенного состояния | `elementHandle.waitForElementState(ElementState.STABLE);` |
 | `dispose()` | Освобождает ресурс | `elementHandle.dispose();` |
 
-#### 🖼️ Frame  <a id="frame-классы-и-объекты"></a>
+#### 🖼️ Frame  <a id="frame-классы-и-объекты"></a>  
 
 Представляет iframe на странице. Позволяет взаимодействовать с элементами внутри фрейма, как если бы это была отдельная страница.
 
