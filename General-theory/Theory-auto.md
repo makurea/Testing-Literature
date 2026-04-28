@@ -2175,7 +2175,7 @@ page.route("**/api/**", route -> route.fulfill(
 | **Retry механизм** | ✅ Встроенный | ❌ Нет | ❌ Нет |
 | **Языки** | Java, JS, Python, .NET | Java | Java |
 
-#### Конфигурация (playwright.config)
+#### Конфигурация (playwright.config)  
 
 ```java
 // playwright.config.java
