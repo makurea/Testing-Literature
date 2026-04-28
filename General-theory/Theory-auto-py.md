@@ -5880,7 +5880,7 @@ with log_execution_time(logger, "Загрузка страницы"):
     driver.get("https://example.com")
 ```
 
-#### Интеграция с pytest
+#### Интеграция с pytest  
 
 ##### Фикстуры для логирования
 | Фикстура | Назначение | Пример |
