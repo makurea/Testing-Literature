@@ -335,6 +335,99 @@ println p.applyDiscount()    // 899.99
 
 ### Наследование и Mixin <a id="наследование-mixin"></a>
 
+**Наследование (как в Java)**
+
+| Ключевое слово | Назначение | Пример |
+|:---------------|:-----------|:--------|
+| `extends` | Наследование класса | `class Student extends Person` |
+| `super` | Доступ к родителю | `super.method()` |
+| `@Override` | Переопределение метода | `@Override String toString()` |
+
+```groovy
+class Animal {
+    String name
+    def speak() { "I'm an animal" }
+}
+
+class Dog extends Animal {
+    @Override
+    def speak() { "Woof! I'm $name" }
+}
+
+def dog = new Dog(name: "Rex")
+println dog.speak()  // Woof! I'm Rex
+```
+
+**Mixin — примешивание поведения**
+
+Mixin позволяет добавить методы класса в другой класс **без наследования**. Это альтернатива множественному наследованию.
+
+| Способ | Синтаксис | Область |
+|:-------|:----------|:---------|
+| Аннотация `@Mixin` | `@Mixin(Logger)` | Класс (compile-time) |
+| Метод `mixin` | `obj.mixin(Logger)` | Экземпляр (runtime) |
+
+```groovy
+// Класс с методами для примешивания
+class Logger {
+    def log(String msg) { println "[LOG] $msg" }
+    def error(String msg) { println "[ERROR] $msg" }
+}
+
+// Способ 1: аннотация @Mixin (compile-time)
+@Mixin(Logger)
+class Service {
+    def execute() {
+        log("Executing...")   // метод из Logger
+        // ... логика
+    }
+}
+
+new Service().execute()  // [LOG] Executing...
+
+// Способ 2: runtime mixin
+class User {
+    String name
+}
+
+def user = new User(name: "Alice")
+user.mixin(Logger)   // добавляем методы в экземпляр
+user.log("User created")  // [LOG] User created
+```
+
+**Сравнение: extends vs @Mixin**
+
+| Характеристика | `extends` | `@Mixin` |
+|:---------------|:----------|:---------|
+| Связь | **is-a** (один родитель) | **has-a** (много примесей) |
+| Переопределение методов | Да | Да (последний имеет приоритет) |
+| Доступ к полям класса | Да (protected) | Нет (только методы) |
+| Множественное "наследование" | Нет (один родитель) | **Да** (несколько `@Mixin`) |
+| Состояние (поля) | Наследуются | Не примешиваются |
+
+```groovy
+class Flyer {
+    def fly() { "Flying!" }
+}
+
+class Swimmer {
+    def swim() { "Swimming!" }
+}
+
+// Множественное примешивание
+@Mixin([Flyer, Swimmer])
+class Duck {
+    def quack() { "Quack!" }
+}
+
+def duck = new Duck()
+println duck.fly()    // Flying!
+println duck.swim()   // Swimming!
+println duck.quack()  // Quack!
+```
+
+**Важно:** `@Mixin` считается устаревшим в новых версиях Groovy. Вместо него рекомендуется использовать **Traits** (см. следующий раздел).
+
 [🔄 К содержанию - главы](#oop-глава)   
 [🔼 К содержанию](#content)    
 
