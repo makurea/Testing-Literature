@@ -264,6 +264,70 @@ def json = """{
 
 ### Классы и объекты <a id="классы-и-объекты"></a>
 
+**Определение класса**
+
+| Стиль | Синтаксис |
+|:------|:----------|
+| Классический | `class User { String name; int age }` |
+| Компактный | `class User { String name, age }` |
+
+**Создание объектов**
+
+| Способ | Пример |
+|:-------|:--------|
+| Конструктор | `new User("Alice", 25)` |
+| Именованные параметры | `new User(name: "Alice", age: 25)` |
+| С `with` | `new User().with { name = "Alice"; it }` |
+
+```groovy
+class User {
+    String name
+    int age
+    String getInfo() { "$name ($age)" }
+}
+
+def u1 = new User(name: "Bob", age: 30)
+def u2 = new User().with { name = "Charlie"; age = 35; it }
+```
+
+**Свойства (ключевая особенность)**
+
+| Действие | Синтаксис | Что реально |
+|:---------|:----------|:------------|
+| Запись | `obj.prop = val` | `obj.setProp(val)` |
+| Чтение | `val = obj.prop` | `val = obj.getProp()` |
+| Прямой доступ | `obj.@prop` | Обход геттера/сеттера |
+
+**Конструкторы и методы**
+
+```groovy
+class Product {
+    String name
+    BigDecimal price
+    boolean available = true
+    
+    // метод без return
+    def total(quantity) { price * quantity }
+    
+    // параметр по умолчанию
+    def applyDiscount(percent = 10) { price * (100 - percent) / 100 }
+}
+
+def p = new Product(name: "Laptop", price: 999.99)
+println p.total(2)           // 1999.98
+println p.applyDiscount()    // 899.99
+```
+
+**Импорты по умолчанию:** `java.lang.*`, `java.io.*`, `java.math.*`, `java.net.*`, `java.util.*`, `groovy.lang.*`, `groovy.util.*`
+
+**Java vs Groovy**
+
+| Аспект | Java | Groovy |
+|:-------|:-----|:--------|
+| Getter/Setter | Писать вручную | **Авто** для свойств |
+| Конструктор с полями | Писать явно | Именованные параметры |
+| `toString()` | Переопределять | `@ToString` |
+
 [🔄 К содержанию - главы](#oop-глава)     
 [🔼 К содержанию](#content)    
 
