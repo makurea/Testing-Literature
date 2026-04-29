@@ -577,6 +577,118 @@ p.log()             // Log: Product
 
 ### Переопределение и перегрузка методов <a id="переопределение-перегрузка"></a>
 
+**Переопределение (Override) — изменение метода родителя**
+
+| Ключевое слово | Назначение | Пример |
+|:---------------|:-----------|:--------|
+| `@Override` | Аннотация (проверяет, что метод существует в родителе) | `@Override def speak() { ... }` |
+| `super` | Вызов метода родителя | `super.speak()` |
+
+```groovy
+class Animal {
+    def speak() { "Some sound" }
+    def getName() { "Animal" }
+}
+
+class Cat extends Animal {
+    @Override
+    def speak() { "Meow!" }           // полное переопределение
+    
+    @Override
+    def getName() { "Cat: ${super.getName()}" }  // расширение логики
+}
+
+def cat = new Cat()
+println cat.speak()   // Meow!
+println cat.getName() // Cat: Animal
+```
+
+**Перегрузка (Overload) — несколько методов с одним именем**
+
+| Правило | Пример |
+|:--------|:--------|
+| Разные параметры (тип, количество, порядок) | `add(int a, int b)` vs `add(double a, double b)` |
+| Возвращаемый тип НЕ учитывается | Нельзя перегружать только по возврату |
+
+```groovy
+class Calculator {
+    // перегрузка по количеству параметров
+    def sum(a, b) { a + b }
+    def sum(a, b, c) { a + b + c }
+    
+    // перегрузка по типу
+    def multiply(int a, int b) { a * b }
+    def multiply(double a, double b) { a * b }
+    
+    // перегрузка с дефолтными параметрами (альтернатива)
+    def power(a, b = 2) { a ** b }
+}
+
+def calc = new Calculator()
+println calc.sum(2, 3)        // 5
+println calc.sum(2, 3, 4)     // 9
+println calc.multiply(2, 3)   // 6 (int версия)
+println calc.power(5)         // 25 (b=2)
+println calc.power(5, 3)      // 125
+```
+
+**Ключевые отличия**
+
+| Характеристика | Переопределение | Перегрузка |
+|:---------------|:----------------|:-----------|
+| Время определения | Runtime (динамически) | Compile-time (статически) |
+| Связь с классами | Разные классы (родитель→потомок) | Один класс |
+| Сигнатура метода | Та же самая | Разная (параметры) |
+| Аннотация | `@Override` | Нет |
+| Динамика в Groovy | **Все методы виртуальные** | Работает как в Java |
+
+**Особенности Groovy**
+
+```groovy
+// Groovy: все методы переопределяемы (даже статические — с оговорками)
+class Parent {
+    static def staticMethod() { "Parent static" }
+    def method() { "Parent" }
+}
+
+class Child extends Parent {
+    // переопределение обычного метода
+    @Override
+    def method() { "Child" }
+    
+    // статический метод НЕ переопределяется (скрывается)
+    static def staticMethod() { "Child static" }
+}
+
+def child = new Child()
+println child.method()           // Child
+println Child.staticMethod()     // Child static (вызов по классу)
+println ((Parent) child).staticMethod()  // Parent static
+```
+
+**Практические рекомендации**
+
+| Ситуация | Что использовать |
+|:---------|:------------------|
+| Меняем поведение метода в наследнике | `@Override` |
+| Добавляем метод с таким же именем, но другими параметрами | Перегрузка |
+| Хотим вызвать родительскую реализацию | `super.method()` |
+| Нужна гибкость с дефолтными значениями | Параметры по умолчанию (альтернатива перегрузке) |
+
+```groovy
+// Идиоматичный Groovy: параметры по умолчанию вместо перегрузки
+class Service {
+    // вместо 3 перегруженных методов
+    def process(data, timeout = 5000, retries = 3) {
+        println "Processing $data with timeout=$timeout, retries=$retries"
+    }
+}
+
+new Service().process("test")                // timeout=5000, retries=3
+new Service().process("test", 1000)          // timeout=1000, retries=3
+new Service().process("test", 1000, 0)       // timeout=1000, retries=0
+```
+
 [🔄 К содержанию - главы](#oop-глава)    
 [🔼 К содержанию](#content)  
 
