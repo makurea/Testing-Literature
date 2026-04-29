@@ -435,6 +435,141 @@ println duck.quack()  // Quack!
 
 ### Интерфейсы и Traits <a id="интерфейсы-traits"></a>
 
+**Интерфейсы (как в Java)**
+
+| Особенность | Синтаксис | Пример |
+|:------------|:----------|:--------|
+| Объявление | `interface Name { ... }` | `interface Flyable { void fly() }` |
+| Реализация | `class Name implements Interface` | `class Bird implements Flyable` |
+| Методы по умолчанию | `default void method() { ... }` | Только Java 8+ |
+
+```groovy
+interface Flyable {
+    void fly()                    // абстрактный метод
+    default void land() {         // метод по умолчанию
+        println "Landing..."
+    }
+}
+
+class Bird implements Flyable {
+    @Override
+    void fly() { println "Flapping wings" }
+}
+
+def bird = new Bird()
+bird.fly()   // Flapping wings
+bird.land()  // Landing...
+```
+
+**Traits — мощнее интерфейсов**
+
+Trait — это контейнер для методов и полей, который можно примешивать к классам. Сочетает преимущества интерфейсов (множественная реализация) и классов (состояние).
+
+| Возможность Trait | Пример |
+|:------------------|:--------|
+| Поля (состояние) | `String name = "default"` |
+| Реализованные методы | `def greet() { "Hello" }` |
+| Абстрактные методы | `void execute()` |
+| Конструкторы | Нет (не поддерживаются) |
+| Наследование traits | `trait A extends B` |
+
+```groovy
+// Базовый trait
+trait Named {
+    String name
+    def getName() { name?.toUpperCase() ?: "UNKNOWN" }
+}
+
+// Trait с логикой
+trait Logging {
+    def log(String msg) { println "[${new Date()}] $msg" }
+}
+
+// Класс использует несколько traits
+class User implements Named, Logging {
+    User(String name) { this.name = name }
+    def introduce() {
+        log("User: ${getName()}")
+    }
+}
+
+def user = new User("Alice")
+user.introduce()  // [Tue...] User: ALICE
+```
+
+**Сравнение: Interface vs Trait vs Class**
+
+| Характеристика | Interface | Trait | Class |
+|:---------------|:----------|:------|:------|
+| Поля (состояние) | ❌ (только константы) | ✅ | ✅ |
+| Реализованные методы | ✅ (default) | ✅ | ✅ |
+| Абстрактные методы | ✅ | ✅ | ✅ |
+| Конструкторы | ❌ | ❌ | ✅ |
+| Множественное наследование | ✅ | ✅ | ❌ (один родитель) |
+| Состояние при наследовании | Нет | Да (поля копируются) | Да |
+
+**Продвинутые возможности Traits**
+
+```groovy
+// Trait может требовать, чтобы класс реализовал метод
+trait Validatable {
+    abstract void validate()   // класс ДОЛЖЕН реализовать
+    
+    def save() {
+        validate()
+        println "Saving..."
+    }
+}
+
+// Trait может переопределять методы класса
+trait Loud {
+    String speak() { "LOUD: ${super.speak()}" }
+}
+
+class Dog {
+    String speak() { "bark" }
+}
+
+class LoudDog extends Dog implements Loud {}
+
+def ld = new LoudDog()
+println ld.speak()  // LOUD: bark
+
+// Динамическое добавление trait в runtime
+def dog = new Dog()
+dog.metaClass.mixin(Loud)
+println dog.speak()  // LOUD: bark
+```
+
+**Идиоматическое применение**
+
+| Сценарий | Решение |
+|:---------|:--------|
+| Переиспользуемая логика без состояния | `interface` |
+| Переиспользуемая логика **с** состоянием | `trait` |
+| Множественное "наследование" поведения | `trait` |
+| Полноценный объект с конструктором | `class` |
+
+```groovy
+// Реальный пример: логгирование + сериализация
+trait JsonSerializable {
+    def toJson() { groovy.json.JsonOutput.toJson(this.properties) }
+}
+
+trait Logging {
+    def log() { println "Log: ${this.class.simpleName}" }
+}
+
+class Product implements JsonSerializable, Logging {
+    String name
+    BigDecimal price
+}
+
+def p = new Product(name: "Laptop", price: 999.99)
+println p.toJson()  // {"name":"Laptop","price":999.99}
+p.log()             // Log: Product
+```
+
 [🔄 К содержанию - главы](#oop-глава)     
 [🔼 К содержанию](#content)  
 
