@@ -696,6 +696,173 @@ new Service().process("test", 1000, 0)       // timeout=1000, retries=0
 
 ### Абстрактные классы и динамическая типизация <a id="абстрактные-классы"></a>
 
+**Абстрактные классы**
+
+| Ключевое слово | Назначение | Пример |
+|:---------------|:-----------|:--------|
+| `abstract class` | Класс, который нельзя инстанцировать | `abstract class Shape { ... }` |
+| `abstract method` | Метод без реализации | `abstract double area()` |
+
+```groovy
+abstract class Shape {
+    String color
+    
+    // абстрактный метод (без тела)
+    abstract double area()
+    
+    // обычный метод
+    String getDescription() { "A $color shape with area ${area()}" }
+}
+
+class Circle extends Shape {
+    double radius
+    
+    @Override
+    double area() { Math.PI * radius * radius }
+}
+
+class Rectangle extends Shape {
+    double width, height
+    
+    @Override
+    double area() { width * height }
+}
+
+// Shape shape = new Shape()  // ОШИБКА! Абстрактный класс нельзя создать
+def circle = new Circle(color: "red", radius: 5)
+println circle.area()           // 78.539...
+println circle.getDescription() // A red shape with area 78.539...
+```
+
+**Динамическая типизация — сердце Groovy**
+
+| Характеристика | Java | Groovy |
+|:---------------|:-----|:--------|
+| Тип переменной | Обязателен | Опционален (`def`) |
+| Проверка типов | Compile-time | Runtime |
+| Приведение типов | Явное | Автоматическое (часто) |
+| Вызов методов | По типу переменной | По реальному объекту |
+
+```groovy
+// Динамика в действии
+def something = "Hello"
+println something.toUpperCase()  // HELLO (String)
+
+something = 42
+println something + 8            // 50 (Integer)
+
+something = [1, 2, 3]
+println something.sum()          // 6 (List)
+
+// Ошибка будет ТОЛЬКО в runtime
+// something.unknownMethod()  // MissingMethodException
+
+// Но IDE может подсветить проблему статически
+```
+
+**Duck Typing (утиная типизация)**
+
+> *"Если это ходит как утка и крякает как утка — значит это утка"*
+
+```groovy
+// Неважно, КАКОЙ объект, важно, ЧТО он умеет
+def callSpeak(obj) {
+    obj.speak()  // вызовется метод speak() любого объекта
+}
+
+class Dog {
+    def speak() { "Woof!" }
+}
+
+class Cat {
+    def speak() { "Meow!" }
+}
+
+class Duck {
+    def speak() { "Quack!" }
+}
+
+println callSpeak(new Dog())   // Woof!
+println callSpeak(new Cat())   // Meow!
+println callSpeak(new Duck())  // Quack!
+```
+
+**Проверка возможностей объекта**
+
+```groovy
+def obj = "Hello"
+
+// Проверка типа
+if (obj instanceof String) { println "It's a String" }
+
+// Проверка наличия метода (Groovy-way)
+if (obj.respondsTo("toUpperCase")) {
+    println obj.toUpperCase()
+}
+
+// Проверка наличия свойства
+if (obj.hasProperty("length")) {
+    println obj.length
+}
+```
+
+**Сравнение: статическая vs динамическая типизация**
+
+| Аспект | Статическая (`@CompileStatic`) | Динамическая (обычный Groovy) |
+|:-------|:-------------------------------|:------------------------------|
+| Скорость | Высокая | Средняя |
+| Безопасность типов | Compile-time | Runtime |
+| Метапрограммирование | ❌ | ✅ |
+| Duck typing | ❌ | ✅ |
+| Кодоподсказки IDE | Отличные | Ограниченные |
+
+```groovy
+// Динамический стиль (обычный Groovy)
+def process(data) {
+    data.collect { it * 2 }  // работает с числами, строками ("ha" * 2)
+}
+
+println process([1,2,3])     // [2,4,6]
+println process(["a","b"])   // ["aa","bb"]
+
+// Статический стиль (защита от ошибок)
+import groovy.transform.CompileStatic
+
+@CompileStatic
+def processSafe(List<Integer> data) {
+    data.collect { it * 2 }  // только числа, ошибка на этапе компиляции
+}
+```
+
+**Идиоматическое применение**
+
+| Сценарий | Рекомендация |
+|:---------|:-------------|
+| Простые скрипты, прототипы | Динамика (`def`) |
+| Крупные проекты, библиотеки | `@CompileStatic` |
+| Использование EMC/метапрограммирования | Только динамика |
+| Нагрузочное тестирование (JMeter) | `@CompileStatic` для тяжелых скриптов |
+| DSL для бизнес-логики | Динамика |
+
+```groovy
+// Реальный пример: гибкий обработчик разных типов
+class DataProcessor {
+    def process(data) {
+        switch (data) {
+            case String: return data.toUpperCase()
+            case Number: return data ** 2
+            case List:   return data.sum()
+            default:     return "Unknown: ${data.class}"
+        }
+    }
+}
+
+def processor = new DataProcessor()
+println processor.process("hello")   // HELLO
+println processor.process(5)         // 25
+println processor.process([1,2,3])   // 6
+```
+
 [🔄 К содержанию - главы](#oop-глава)    
 [🔼 К содержанию](#content)  
 
