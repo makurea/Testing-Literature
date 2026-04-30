@@ -20,7 +20,7 @@
 </div>
 
 <div style="text-align: right;"> 
-  <img src="https://i.ibb.co/jP155h45/458652.jpg" alt="Описание изображения" style="width: 33%; height: auto;">
+  <img src="https://i.ibb.co/jP155h45/458652.jpg" alt="Testing Literature Banner" style="width: 100%; max-width: 1200px; height: auto; border-radius: 16px;">
 </div>
 
 ## [Мануальное тестирование](General-theory/Theory-manual.md)
