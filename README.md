@@ -16,7 +16,7 @@
 В этом репозитории собраны материалы для обучения тестированию программного обеспечения и обеспечению качества (QA). 
 
 <div align="center">
-  <img src="https://i.ibb.co/jP155h45/458652.jpg" alt="Testing Literature Banner" style="width: 85%; max-width: 1100px; height: auto; max-height: 140px; object-fit: cover; border-radius: 16px;">
+  <img src="https://i.ibb.co/jP155h45/458652.jpg" alt="Testing Literature Banner" style="width: 100%; max-width: 1400px; height: 80px; object-fit: cover; object-position: center 30%; border-radius: 12px;">
 </div>
 
 ## [Мануальное тестирование](General-theory/Theory-manual.md)
