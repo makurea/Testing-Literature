@@ -15,12 +15,8 @@
 
 В этом репозитории собраны материалы для обучения тестированию программного обеспечения и обеспечению качества (QA). 
 
-<div style="text-align: right;"> 
-  <img src="https://i0.wp.com/cdn.onlinewebfonts.com/svg/img_277302.png" alt="Описание изображения" style="width: 33%; height: auto;">
-</div>
-
 <div align="center">
-  <img src="https://i.ibb.co/jP155h45/458652.jpg" alt="Testing Literature Banner" style="width: 100%; max-width: 1000px; height: auto; max-height: 180px; object-fit: cover; border-radius: 16px;">
+  <img src="https://i.ibb.co/jP155h45/458652.jpg" alt="Testing Literature Banner" style="width: 60%; max-width: 800px; height: auto; border-radius: 16px;">
 </div>
 
 ## [Мануальное тестирование](General-theory/Theory-manual.md)
