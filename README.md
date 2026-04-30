@@ -1,5 +1,18 @@
 # Ресурсы и литература по тестированию программного обеспечения и обеспечению качества
 
+<div align="center">
+
+![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
+![Manual QA](https://img.shields.io/badge/Manual_QA-2C3E50?style=for-the-badge)
+![Automation QA](https://img.shields.io/badge/Automation_QA-16A085?style=for-the-badge)
+![Selenium](https://img.shields.io/badge/Selenium-43B02A?style=for-the-badge&logo=selenium&logoColor=white)
+![Playwright](https://img.shields.io/badge/Playwright-2EAD33?style=for-the-badge&logo=playwright&logoColor=white)
+![REST API](https://img.shields.io/badge/API-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+
+</div>
+
 В этом репозитории собраны материалы для обучения тестированию программного обеспечения и обеспечению качества (QA). 
 
 <div style="text-align: right;"> 
