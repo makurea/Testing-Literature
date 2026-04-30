@@ -19,6 +19,10 @@
   <img src="https://i0.wp.com/cdn.onlinewebfonts.com/svg/img_277302.png" alt="Описание изображения" style="width: 33%; height: auto;">
 </div>
 
+<div style="text-align: right;"> 
+  <img src="https://i.ibb.co/jP155h45/458652.jpg" alt="Описание изображения" style="width: 33%; height: auto;">
+</div>
+
 ## [Мануальное тестирование](General-theory/Theory-manual.md)
 
 * [🟢 Основы тестирования](General-theory/Theory-manual.md#основы-тестирования-глава)
