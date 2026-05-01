@@ -2683,7 +2683,7 @@ Locator expensiveProduct = page
 ```
 **Сравнение с Selenium**
 
-| Аспект | 🎭 Playwright Locator | 🌍 Selenium WebElement |
+| Аспект | 🎭 Playwright Locator | 🌍 Selenium WebElement | 
 | :--- | :--- | :--- |
 | **Когда ищется элемент** | В момент действия (ленивый) | В момент создания (немедленный) |
 | **Auto-waiting** | ✅ Встроен автоматически | ❌ Нужны явные или неявные ожидания |
