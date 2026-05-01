@@ -6462,7 +6462,7 @@ with REQUEST_LATENCY.time():  # Измерение времени
 
 #### Интеграция с pytest
 
-##### Кастомные метрики для тестов
+##### Кастомные метрики для тестов 
 ```python
 import pytest
 from prometheus_client import Counter, Histogram, Gauge
