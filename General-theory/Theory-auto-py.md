@@ -5067,7 +5067,7 @@ def test_successful_login(driver):
     assert home_page.is_user_logged_in("testuser")
 ```
 
-#### Варианты POM для разных фреймворков
+#### Варианты POM для разных фреймворков 
 
 ##### Selenium + POM
 | Аспект | Реализация | Особенности |
