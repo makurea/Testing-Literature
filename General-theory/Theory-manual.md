@@ -5361,7 +5361,7 @@ services:
 
 Все команды используют параметр `--bootstrap-server`, указывающий адрес Kafka-брокера:
 
-##### 🔹 1. Список всех топиков
+##### 🔹 1. Список всех топиков 
 ```bash
 # Показывает все топики, доступные в кластере Kafka.
 bin/kafka-topics.sh --list --bootstrap-server kafka.mycompany.com:9092
