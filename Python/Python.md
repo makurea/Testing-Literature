@@ -4179,7 +4179,7 @@ class ExplicitWaitStrategy(WaitStrategy):
 | **Сервисы** | Предоставляемые зависимости | WebDriver, APIClient, Database |
 | **Конфигурация** | Источник настроек | Environment variables, config files |
 
-##### Пример DI в тестовом фреймворке
+##### Пример DI в тестовом фреймворке 
 ```python
 class TestRunner:
     def __init__(self, driver: WebDriver, reporter: Reporter, config: Config):
