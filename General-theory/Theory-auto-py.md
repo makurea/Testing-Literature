@@ -7329,7 +7329,7 @@ import subprocess
 import time
 
 class EmulatorManager:
-    """Управление Android эмуляторами"""
+    """Управление Android эмуляторами""" 
     
     def start_emulator(self, avd_name):
         """Запуск эмулятора"""
