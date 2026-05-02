@@ -2511,7 +2511,7 @@ jobs:
 | `setInputFiles()` | Загружает файл(ы) | `locator.setInputFiles(Paths.get("file.txt"));` |
 | `evaluate()` | Выполняет JS на найденном элементе | `locator.evaluate("node => node.value");` |
 
-#### 🌍 APIRequestContext  <a id="apirequestcontext-классы-и-объекты"></a>
+#### 🌍 APIRequestContext  <a id="apirequestcontext-классы-и-объекты"></a> 
 
 Позволяет выполнять HTTP-запросы напрямую из тестов, без использования браузера. Используется для тестирования API или подготовки данных для UI-тестов.
 
