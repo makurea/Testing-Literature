@@ -4999,7 +4999,7 @@ def calculate_sum(a, b):
     return result
 
 # Доступ только внутри функции
-# print(result)  # NameError: name 'result' is not defined
+# print(result)  # NameError: name 'result' is not defined  
 ```
 
 ##### Enclosing (Охватывающая область)
