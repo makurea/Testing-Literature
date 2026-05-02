@@ -4356,7 +4356,7 @@ Dependency Injection и Inversion of Control — мощные инструмен
 
 ##### Поток запроса в Django
 ```
-Запрос → URL Router → View → Model → Template → Ответ
+Запрос → URL Router → View → Model → Template → Ответ 
     ↓        ↓         ↓        ↓        ↓        ↓
    HTTP   Определение  Обработка  Работа  Генерация  HTTP
           обработчика  логики     с БД    HTML      ответ
