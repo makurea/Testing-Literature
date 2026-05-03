@@ -2753,7 +2753,7 @@ Playwright автоматически ожидает готовности эле
 | **Editable** | Поле доступно для редактирования (не disabled, не readonly) | `fill`, `type`, `clear`, `press` | [🔗 Editable](https://playwright.dev/java/docs/actionability#editable) |
 | **Attached** | Элемент присутствует в DOM | все действия | [🔗 Attached](https://playwright.dev/java/docs/actionability#attached) |
 
-🔗 [Подробнее об actionability](https://playwright.dev/java/docs/actionability)
+🔗 [Подробнее об actionability](https://playwright.dev/java/docs/actionability)  
 
 **Явные ожидания**
 
