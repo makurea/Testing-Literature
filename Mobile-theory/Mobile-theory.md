@@ -2518,7 +2518,7 @@ adb shell dumpsys package <package> | grep "android.permission.CAMERA"
 | **Xcode** | Установка на устройство/симулятор |
 | **App Center / Firebase App Distribution** | Бета-распространение |
 
-#### Полезные ADB команды
+#### Полезные ADB команды  
 
 ```bash
 # Установка APK
