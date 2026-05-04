@@ -8915,7 +8915,7 @@ def appium_driver_with_pool(request):
         'app': 'app.apk'
     }
     
-    driver = webdriver.Remote('http://localhost:4723/wd/hub', capabilities)
+    driver = webdriver.Remote('http://localhost:4723/wd/hub', capabilities) 
     
     yield driver
     
