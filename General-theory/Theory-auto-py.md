@@ -6761,7 +6761,7 @@ class TestEnvironmentMonitor:
             'Pending tests in queue'
         )
         
-        # Запуск периодического обновления
+        # Запуск периодического обновления 
         self._start_monitoring()
     
     def _start_monitoring(self):
