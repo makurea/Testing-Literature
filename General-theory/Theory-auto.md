@@ -2403,7 +2403,7 @@ jobs:
 | `version()` | Возвращает версию браузера | `String version = browser.version();` |
 | `isConnected()` | Проверяет, активен ли браузер | `boolean isConnected = browser.isConnected();` |
 
-#### 📦 BrowserContext   <a id="browserContext-классы-и-объекты"></a>
+#### 📦 BrowserContext   <a id="browserContext-классы-и-объекты"></a> 
 
 Изолированная сессия внутри браузера (аналог режима инкогнито). Каждый контекст имеет свои cookies, localStorage и кеш. Идеален для изоляции тестов.
 
