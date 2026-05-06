@@ -6487,7 +6487,7 @@ def pytest_runtest_makereport(item, call):
     TESTS_RUNNING.dec()
     
     if report.when == "call":
-        result = report.outcome  # passed, failed, skipped
+        result = report.outcome  # passed, failed, skipped 
         TESTS_TOTAL.labels(result=result).inc()
 ```
 
