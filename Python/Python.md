@@ -4323,7 +4323,7 @@ Dependency Injection и Inversion of Control — мощные инструмен
 
 ##### Поток данных
 ```
-Пользователь → Controller → Model → View → Пользователь
+Пользователь → Controller → Model → View → Пользователь 
     ↓           ↓           ↓        ↓
    Ввод      Обработка   Обновление  Отображение
             запроса      данных      результата
