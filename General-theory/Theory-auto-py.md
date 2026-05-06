@@ -5512,7 +5512,7 @@ def browser(request):
         return EdgeDriver()
 
 def test_cross_browser(browser):
-    # Тест запустится 3 раза с разными браузерами
+    # Тест запустится 3 раза с разными браузерами 
     browser.get("https://example.com")
     assert "Example" in browser.title
 ```
