@@ -6166,7 +6166,7 @@ import json
 response_data = {"status": "success", "user_id": 123}
 allure.attach(json.dumps(response_data, indent=2),
              name="API Response",
-             attachment_type=allure.attachment_type.JSON)
+             attachment_type=allure.attachment_type.JSON)  
 
 # Прикрепление текста
 allure.attach("Логи выполнения теста", 
