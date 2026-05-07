@@ -13,7 +13,7 @@
 
 </div>
 
-В этом репозитории собраны материалы для обучения тестированию программного обеспечения и обеспечению качества (QA). 
+В этом репозитории собраны материалы для обучения тестированию программного обеспечения и обеспечению качества (QA).   
 
 <div align="center">
   <img src="https://i.ibb.co/jP155h45/458652.jpg" alt="Testing Literature Banner" style="width: 100%; max-width: 1400px; height: 700px; object-fit: cover; object-position: center 30%; border-radius: 12px;">
