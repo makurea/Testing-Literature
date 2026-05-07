@@ -2036,7 +2036,7 @@ Expected Conditions значительно упрощают использова
 
 🔗 [Архитектура Playwright](https://playwright.dev/java/docs/library)
 
-#### Преимущества перед Selenium
+#### Преимущества перед Selenium  
 
 | Возможность | Playwright | Selenium |
 |-------------|------------|----------|
