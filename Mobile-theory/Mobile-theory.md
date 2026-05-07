@@ -2087,7 +2087,7 @@ textField.isSecureTextEntry = true
 | **Отладочная информация** | Инспекция сборки | `android:debuggable="true"` в release? Нет символов в iOS release |
 | **Тампинг** | Root detection / Jailbreak detection | Приложение не работает на рутованных/джейлбрейкнутых устройствах |
 
-**Что искать в декомпилированном коде:**
+**Что искать в декомпилированном коде:** 
 - API ключи (Google Maps, Firebase, Stripe)
 - Внутренние URL (admin, staging)
 - Алгоритмы шифрования (если кастомные — плохо)
