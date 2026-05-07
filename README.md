@@ -44,7 +44,7 @@
 * [📜 Типы данных](General-theory/Theory-manual.md#типы-данных-глава)
 * [🧾 Командная строка и скрипты](General-theory/Theory-manual.md#командная-строка-и-скрипты-глава)
 
-## [Автоматизация - Java](General-theory/Theory-auto.md)
+## [Автоматизация - Java](General-theory/Theory-auto.md)  
 
 * [🟢 Основы автоматизации](General-theory/Theory-auto.md#основы-автоматизации-глава)
 * [🦊 GIT](General-theory/Theory-auto.md#git-глава)
