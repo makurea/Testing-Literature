@@ -2026,7 +2026,7 @@
 - [ ] БД зашифрована (SQLCipher, Room с шифрованием)
 
 **iOS:**
-- [ ] Токены в Keychain (kSecAttrAccessibleWhenUnlocked)
+- [ ] Токены в Keychain (kSecAttrAccessibleWhenUnlocked) 
 - [ ] UserDefaults только для нечувствительных данных
 - [ ] Файлы в защищённой директории (FileProtectionType.complete)
 
