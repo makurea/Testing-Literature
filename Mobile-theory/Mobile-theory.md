@@ -2376,7 +2376,7 @@ adb shell dumpsys package <package> | grep "android.permission.CAMERA"
 
 #### Основные сценарии установки
 
-##### 1. Первая установка (Clean install)
+##### 1. Первая установка (Clean install) 
 
 | Сценарий | Действие | Ожидание |
 |----------|----------|----------|
