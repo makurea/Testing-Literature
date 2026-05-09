@@ -7636,7 +7636,7 @@ class LocalizedLoginPage:
     
     def __init__(self, driver, language="en"):
         self.driver = driver
-        self.locators = LocalizedLocators(language)
+        self.locators = LocalizedLocators(language) 
     
     @property
     def login_button(self):
