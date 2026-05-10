@@ -1676,7 +1676,7 @@ Grafana:
 - `grafana.ini` – параметры Grafana  
 
 
-💡 Пример запроса PromQL  
+💡 Пример запроса PromQL    
 
 ```promql
 rate(node_cpu_seconds_total[5m])
