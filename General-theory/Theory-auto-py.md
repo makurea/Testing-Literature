@@ -5026,7 +5026,7 @@ class LoginPage(BasePage):
         pass  # Реализация через декоратор
 ```
 
-##### Компонентный подход
+##### Компонентный подход 
 ```python
 class HeaderComponent:
     def __init__(self, driver):
