@@ -3196,7 +3196,7 @@ public class TraceExtension implements AfterTestExecutionCallback {
 }
 ```
 
-**Codegen (Генератор тестов)**
+**Codegen (Генератор тестов)** 
 
 Codegen записывает действия пользователя в браузере и генерирует готовый код теста.
 
