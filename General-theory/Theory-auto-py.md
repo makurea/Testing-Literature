@@ -7194,7 +7194,7 @@ class LoginPage:
         self.click_login()
 ```
 
-#### Интеграция с pytest
+#### Интеграция с pytest 
 
 ##### Фикстуры для Appium
 ```python
