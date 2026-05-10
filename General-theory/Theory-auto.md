@@ -3031,7 +3031,7 @@ page.route("**/api/data", route -> {
 | `onRequestFinished()` | Событие при завершении запроса | `page.onRequestFinished(request -> System.out.println("✓ " + request.url()));` | Когда нужно знать о полном завершении | [🔗 onRequestFinished()](https://playwright.dev/java/api/class-page#page-on-request-finished) |
 | `onRequestFailed()` | Событие при ошибке запроса | `page.onRequestFailed(request -> System.out.println("✗ " + request.url() + " - " + request.failure()));` | Для отслеживания ошибок сети | [🔗 onRequestFailed()](https://playwright.dev/java/api/class-page#page-on-request-failed) |
 
-**Ожидание сетевых событий**
+**Ожидание сетевых событий** 
 
 | Метод | Описание | Пример использования | Когда использовать | Официальная документация |
 | :--- | :--- | :--- | :--- | :--- |
