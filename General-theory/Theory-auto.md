@@ -4317,7 +4317,7 @@ driver.findElement(MobileBy.AndroidUIAutomator(
 ));
 ```
 
-##### 🧬 XPath
+##### 🧬 XPath  
 
 **Описание:**  
 Поиск по иерархии XML-дерева с помощью XPath выражений.
