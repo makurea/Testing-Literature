@@ -4723,7 +4723,7 @@ total = sum_all(1, 2, 3, 4, 5)
 user = create_user("Bob", "bob@example.com", age=30)
 ```
 
-##### Lambda-функции
+##### Lambda-функции  
 ```python
 # Анонимные функции
 square = lambda x: x ** 2
