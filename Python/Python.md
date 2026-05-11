@@ -5676,7 +5676,7 @@ def test_with_temp_data():
         assert result == expected
 ```
 
-#### Best Practices
+#### Best Practices  
 
 ##### Безопасность и надежность
 | Практика | Пример | Почему важно |
