@@ -3132,7 +3132,7 @@ AST Transformations — механизм Groovy для модификации а
 
 ---
 
-## 🏆 Взаимодействие с Java <a id="java-integration"></a>
+## 🏆 Взаимодействие с Java <a id="java-integration"></a>   
 
 ### Использование Java-классов <a id="java-classes"></a>
 
