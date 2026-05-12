@@ -5407,3 +5407,9 @@ adb shell pm clear <package>
 
 ---
 
+## 🛠️ Charles Proxy для анализа трафика   <a id="charles-proxy"></a>     
+
+[🔄 К содержанию — чек-лист](#charles-глава)   
+[🔼 К содержанию](#content)  
+
+---
