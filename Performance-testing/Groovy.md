@@ -4139,7 +4139,7 @@ log.info("Memory before: ${usedMemory() / 1024 / 1024} MB")
 log.info("Memory after: ${usedMemory() / 1024 / 1024} MB")
 ```
 
-**8. Anti-patterns — кратко**
+**8. Anti-patterns — кратко**  
 
 | ❌ Плохо | ✅ Хорошо |
 |:---------|:----------|
