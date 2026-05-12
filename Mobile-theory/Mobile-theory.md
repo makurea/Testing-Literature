@@ -5409,7 +5409,122 @@ adb shell pm clear <package>
 
 ## 🛠️ Charles Proxy для анализа трафика   <a id="charles-proxy"></a>     
 
-[🔄 К содержанию — чек-лист](#charles-глава)   
-[🔼 К содержанию](#content)  
+### Установка и первичная настройка  <a id="установка-charles"></a>     
+
+#### Установка Charles Proxy
+
+| Шаг | Действие | Проверка |
+|-----|----------|----------|
+| **Скачивание** | Charlesproxy.com → Download | Файл скачался (Windows .exe / macOS .dmg / Linux .deb) |
+| **Установка** | Запустить установщик, следовать инструкциям | Установка завершена, ярлык появился |
+| **Запуск** | Открыть Charles | Открывается главное окно, нет ошибок |
+| **Активация** | Help → Register → ввести лицензию | License valid (или пробный период 30 дней) |
+
+#### Первичная настройка (macOS / Windows)
+
+**Настройка SSL проксирования**
+
+| Действие | Путь в Charles | Ожидание |
+|----------|----------------|----------|
+| Включить SSL проксирование | Proxy → SSL Proxying Settings → Enable SSL Proxying | Галочка включена |
+| Добавить host:port | Add → Host: `*`, Port: `*` (или конкретный домен) | Все HTTPS запросы расшифровываются |
+| Скачать корневой сертификат | Help → SSL Proxying → Save Charles Root Certificate | .crt файл сохранён |
+| Установить сертификат на устройство | Инструкции ниже | Сертификат доверенный |
+
+**Настройки прокси**
+
+| Настройка | Путь | Рекомендация |
+|-----------|------|--------------|
+| HTTP Proxy порт | Proxy → Proxy Settings → HTTP Proxy | 8888 (по умолчанию) |
+| SOCKS Proxy | Proxy → Proxy Settings → SOCKS Proxy | Можно оставить выключенным |
+| Windows Proxy | Proxy → Windows Proxy | Включить (перехват трафика браузера) |
+| macOS Proxy | Proxy → macOS Proxy | Включить (перехват трафика браузера) |
+
+#### Установка сертификата на устройство
+
+**Android**
+
+| Шаг | Действие |
+|-----|----------|
+| 1 | Charles → Help → SSL Proxying → Save Charles Root Certificate (.cer) |
+| 2 | Перекинуть .cer файл на устройство (USB/email/cloud) |
+| 3 | На устройстве: Settings → Security → Encryption & credentials → Install from storage |
+| 4 | Выбрать файл, дать имя, OK |
+| 5 | (Android 7+) Только для приложений с `android:usesCleartextTraffic="true"` или добавленным网络安全 config |
+
+**iOS**
+
+| Шаг | Действие |
+|-----|----------|
+| 1 | Charles → Help → SSL Proxying → Install Charles Root Certificate on a Mobile Device |
+| 2 | Показан адрес `chls.pro/ssl` и IP:порт |
+| 3 | На устройстве: Settings → Wi-Fi → нажать (i) на сети → Configure Proxy → Manual (IP:порт) |
+| 4 | Открыть Safari → `chls.pro/ssl` → скачать профиль |
+| 5 | Settings → General → VPN & Device Management → установить профиль |
+| 6 | Settings → General → About → Certificate Trust Settings → включить信任 |
+
+#### Подключение устройства
+
+**Общая схема**
+
+```
+[Устройство] --- (Wi-Fi) --- [Компьютер с Charles] --- (Интернет)
+                :8888
+```
+
+**Android подключение**
+
+| Шаг | Действие |
+|-----|----------|
+| 1 | Устройство и компьютер в одной Wi-Fi сети |
+| 2 | Charles → Proxy → Proxy Settings → запомнить IP и порт (по умолчанию 8888) |
+| 3 | На устройстве: Settings → Wi-Fi → долгий тап на сети → Modify network → Advanced → Proxy → Manual |
+| 4 | Ввести IP компьютера и порт 8888 |
+| 5 | Save → появится предложение установить сертификат (если уже установлен — ок) |
+| 6 | Устройство готово, трафик идёт через Charles |
+
+**iOS подключение**
+
+| Шаг | Действие |
+|-----|----------|
+| 1 | Устройство и компьютер в одной Wi-Fi сети |
+| 2 | Charles → Proxy → Proxy Settings → запомнить IP и порт |
+| 3 | На устройстве: Settings → Wi-Fi → нажать (i) на сети → Configure Proxy → Manual |
+| 4 | Ввести IP компьютера и порт 8888 |
+| 5 | Save → открыть Safari → `chls.pro/ssl` → установить сертификат (если ещё нет) |
+| 6 | Включить доверие сертификату (Settings → General → Certificate Trust Settings → включить) |
+
+#### Первые проверки после подключения
+
+| Проверка | Ожидание |
+|----------|----------|
+| **Устройство появилось в Charles** | В левой панели → Structure / Sequence → видны запросы с устройства |
+| **Запросы расшифровываются** | Вместо `<unknown>` — читаемый JSON/HTML, нет иконки замка с вопросом |
+| **SSL работает** | В запросе зелёный значок (или нет ошибки "SSL handshake") |
+| **Throttling** | Proxy → Throttle Settings → Enable → выбрать профиль (3G) — скорость ограничена |
+| **Breakpoint** | На запросе правой кнопкой → Breakpoints — запрос останавливается |
+
+#### Типовые проблемы и решения
+
+| Проблема | Решение |
+|----------|---------|
+| **Нет трафика от устройства** | Проверить Wi-Fi (одна сеть), порт, отключить VPN на устройстве |
+| **SSL handshake failed (Android 7+)** | Добавить сетевую безопасность в `res/xml/network_security_config.xml` |
+| **iOS не доверяет сертификат** | Settings → General → About → Certificate Trust Settings → включить |
+| **Charles показывает `CONNECT` только** | Не включено SSL Proxying (Proxy → SSL Proxying Settings → Enable → Add `*:*`) |
+| **Приложение не работает с прокси** | В приложении SSL Pinning — нужно обойти через скрипт или использовать другую утилиту |
+| **Charles медленно работает** | Очистить структуру (Edit → Clear) или отключить запись (Record → Pause) |
+
+#### Альтернативные инструменты
+
+| Инструмент | Платформа | Отличия |
+|-----------|-----------|---------|
+| **Proxyman** | macOS | UI удобнее, аналогичный функционал (breakpoints, throttling, map local) |
+| **Fiddler** | Windows | Аналог Charles, для Windows |
+| **mitmproxy** | Linux/macOS/Windows | Консольный, автоматизация скриптами |
+| **Burp Suite** | Кроссплатформа | Безопасность, но и для тестирования подходит |
+
+[🔄 К содержанию — Charles](#charles-глава)
+[🔼 К содержанию](#content)
 
 ---
