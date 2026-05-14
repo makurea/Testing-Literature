@@ -2456,7 +2456,7 @@ pipelines:
 | **HTTPS + App Password** | `git clone https://username:app_password@bitbucket.org/workspace/repo.git` | Создать в настройках Bitbucket → App passwords |
 | **SSH** | `git clone git@bitbucket.org:workspace/repo.git` | Нужно добавить публичный ключ в Bitbucket (рекомендуется) |
 
-#### 📊 Сравнение: Bitbucket vs GitHub vs GitLab
+#### 📊 Сравнение: Bitbucket vs GitHub vs GitLab  
 
 | Функция | Bitbucket | GitHub | GitLab |
 |---------|-----------|--------|--------|
