@@ -4379,7 +4379,7 @@ driver.findElement(By.xpath("//android.widget.TextView[@text='Login']"));
 | `getSessionId()`        | ID активной сессии |
 | `startActivity()`       | Запуск Android-активности |
 
-##### `AndroidDriver`
+##### `AndroidDriver` 
 **Назначение:** Специализированный драйвер для Android.
 
 | Метод / Поле | Назначение |
