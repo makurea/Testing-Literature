@@ -4388,7 +4388,7 @@ Dependency Injection и Inversion of Control — мощные инструмен
 | **Gateways / Repositories** | Граница | DatabaseGateway, ExternalAPIGateway |
 | **Frameworks** | Внешний круг | Django, Flask, SQLAlchemy |
 
-#### Применение в тестовой автоматизации
+#### Применение в тестовой автоматизации 
 
 ##### Тестирование MVC приложений
 | Компонент | Стратегия тестирования | Инструменты |
