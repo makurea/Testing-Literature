@@ -7862,7 +7862,7 @@ class LocalizationDebugger:
     @staticmethod
     def verify_translation_coverage(driver, language):
         """Проверка покрытия переводами"""
-        screen_texts = LocalizationDebugger.find_all_text_elements(driver)
+        screen_texts = LocalizationDebugger.find_all_text_elements(driver) 
         translations = LocalizedLocators(language).translations
         
         missing = []
