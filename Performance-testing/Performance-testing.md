@@ -303,7 +303,7 @@ Performance Requirements (NFR) → SLO → SLA
 
 ---
 
-### Ключевые метрики (Response Time, TPS, Error Rate)  <a id="ключевые-метрики"></a>     
+### Ключевые метрики (Response Time, TPS, Error Rate)  <a id="ключевые-метрики"></a>      
 
 Помимо метрик приложения, критически важно отслеживать состояние серверов:
 
