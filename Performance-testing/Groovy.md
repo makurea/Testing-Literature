@@ -3718,7 +3718,7 @@ if (!SampleResult.isSuccessful()) {
 
 ### Groovy скрипты для JMeter <a id="jmeter-groovy"></a>
 
-**Groovy скрипты для JMeter**
+**Groovy скрипты для JMeter**  
 
 **Типы сэмплеров для Groovy**
 
