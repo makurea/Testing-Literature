@@ -7296,7 +7296,7 @@ LogCat (short for **Log Catalog**) — это инструмент Android SDK, 
 | Сбор логов             | `adb logcat > logs.txt`                                                                                                                     | Сохраняет все системные логи в файл                   |
 | Запуск теста (JUnit)   | `adb shell am instrument -w -m -e class com.example.tests.LoginTest com.example.myapp.test/androidx.test.runner.AndroidJUnitRunner`        | Запуск автотестов через instrumentation               |
 
-[🔄 К содержанию - главы](#мобильное-приложение-глава)  
+[🔄 К содержанию - главы](#мобильное-приложение-глава)   
 [🔼 К содержанию](#content)
 
 ---
