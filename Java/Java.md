@@ -807,7 +807,7 @@ System.out.println(str); // Вывод: Hello World!
 
 В Java все исключения организованы в иерархическую структуру, которая начинается с класса `Throwable`. От него наследуются два основных подкласса: `Error` и `Exception`.
 
- <img src="https://clipof.ru/wp-content/uploads/c/1/d/c1d319d14f1bbf6a7131f7ab2647e480.png" alt="Описание изображения" style="width: 75%; height: auto;">
+ <img src="https://i.ibb.co/c9snjnw/java-exception.jpg" alt="Иерархия исключений" style="width: 75%; height: auto;">
 
 1. **Throwable**:
    - Корневой класс для всех ошибок и исключений.
