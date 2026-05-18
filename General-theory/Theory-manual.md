@@ -5804,8 +5804,8 @@ bin/kafka-console-consumer.sh --topic my-topic --bootstrap-server kafka.mycompan
 ```
 
 ##### 🔹 Советы:
-✅ Убедись, что Kafka запущен и доступен по указанному адресу.
-✅ Для защищённых кластеров используй --command-config client.properties
+✅ Убедись, что Kafka запущен и доступен по указанному адресу.  
+✅ Для защищённых кластеров используй --command-config client.properties  
 
 
 #### Принцип работы Kafka
