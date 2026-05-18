@@ -4079,6 +4079,8 @@ Content-Length: 90
 
 ### Методы HTTP <a id="методы-http"></a>
 
+<img src="https://i.ibb.co/B5QQ66t4/http.jpg" alt="Методы HTTP" style="width: 75%; height: auto;">
+
 **CRUD — это набор типовых операций, соответствующих HTTP-методам:**
 
 - **C — Create → POST** — создание нового ресурса на сервере.
