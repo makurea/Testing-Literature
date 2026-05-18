@@ -1720,7 +1720,7 @@ Jenkins поддерживает множество **плагинов** для 
 
 ---
 
-💡 Пример Jenkinsfile  
+💡 Пример Jenkinsfile   
 
 ```groovy
 pipeline {
