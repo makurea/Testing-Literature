@@ -1131,6 +1131,8 @@ numbersforEach(n -> Systemoutprintln(n * 2))
 
  <img src="https://avatars.mds.yandex.net/i?id=c1caf0644d08d30c3ced60119f328f1e_l-5516535-images-thumbs&n=13" alt="Описание изображения" style="width: 75%; height: auto;">
 
+  <img src="https://i.ibb.co/PGCC5f57/java-collections.jpg" alt=" Java Collections и Map" style="width: 75%; height: auto;">
+  
 ### Таблица иерархии коллекций в Java
 
 | Интерфейс/Класс         | Описание                                                                 | Реализации / Примечания                                      |
