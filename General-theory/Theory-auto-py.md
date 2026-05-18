@@ -6348,7 +6348,7 @@ class CustomAllureReporter:
 
 ##### Пример аналитики
 ```python
-import json
+import json 
 from collections import Counter
 
 def analyze_allure_results(results_dir):
