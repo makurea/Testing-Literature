@@ -1129,8 +1129,6 @@ numbersforEach(n -> Systemoutprintln(n * 2))
 
 ## 🔸 Java Collections и Map 7️⃣<a id="java-collections-и-map"></a>
 
- <img src="https://avatars.mds.yandex.net/i?id=c1caf0644d08d30c3ced60119f328f1e_l-5516535-images-thumbs&n=13" alt="Описание изображения" style="width: 75%; height: auto;">
-
   <img src="https://i.ibb.co/PGCC5f57/java-collections.jpg" alt=" Java Collections и Map" style="width: 75%; height: auto;">
   
 ### Таблица иерархии коллекций в Java
@@ -1554,6 +1552,8 @@ Generics (обобщения) позволяют создавать классы
 ## 🔸 Управление памятью, сборщик мусора - Memory Management, Garbage Collection <a id="память"></a>
 
 В Java управление памятью автоматизировано, что делает язык более безопасным и удобным для использования. Память делится на несколько областей:
+
+<img src="https://i.ibb.co/YFXtQZnF/java-areas.jpg" alt="Память" style="width: 75%; height: auto;">
 
 **Stack (Стек)** : Хранит локальные переменные и информацию о вызовах методов. Каждый поток имеет свой собственный стек.  
 **Heap (Куча)** : Общая область памяти, где создаются все объекты. Управление памятью здесь осуществляется через механизм сборки мусора.  
