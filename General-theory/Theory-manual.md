@@ -4664,7 +4664,7 @@ curl -F "user=name" \
 3. Сервер обрабатывает запрос и возвращает данные
 4. JavaScript получает ответ и обновляет DOM (интерфейс)
 
-#### 📥 Пример AJAX-запроса через `fetch()`:
+#### 📥 Пример AJAX-запроса через `fetch()`: 
 ```javascript
 fetch('https://api.example.com/data')
   .then(response => response.json())
