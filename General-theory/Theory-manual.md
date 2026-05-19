@@ -5235,7 +5235,7 @@ Argo — набор **open-source инструментов для Kubernetes**, 
 | `kubectl get rollout -n <ns>` | список Rollouts (Argo Rollouts) |
 | `kubectl describe rollout <name>` | статус canary-обновления |
 
-#### Canary vs Blue/Green (Argo Rollouts)
+#### Canary vs Blue/Green (Argo Rollouts) 
 
 | Стратегия | Как работает | QA проверяет |
 |-----------|--------------|---------------|
