@@ -4426,7 +4426,7 @@ iOS:
 
 ---
 
-### Что такое: Kaspresso/Espresso/WebdriverIO <a id="kaspresso-espresso-webdriverio"></a>
+### Что такое: Kaspresso/Espresso/WebdriverIO <a id="kaspresso-espresso-webdriverio"></a>  
 
 Kaspresso, Espresso и WebdriverIO — это различные инструменты и библиотеки для автоматизации тестирования мобильных приложений.
 
