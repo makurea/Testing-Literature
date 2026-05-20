@@ -6608,7 +6608,7 @@ class InstrumentedAPIClient:
                 status=status
             ).observe(duration)
             
-            self.request_total.labels(
+            self.request_total.labels( 
                 method=method.upper(),
                 endpoint=endpoint,
                 status=status
