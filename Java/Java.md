@@ -1667,7 +1667,7 @@ Generics (обобщения) позволяют создавать классы
      String str4 = new String("Hello").intern();
      Systemoutprintln(str1 == str4); // true, так как str4 теперь ссылается на строку из пула
      ```
-[🔄 К содержанию - главы](#memory-глава)    
+[🔄 К содержанию - главы](#memory-глава)     
 [🔼 К содержанию](#content)
 
 ---
