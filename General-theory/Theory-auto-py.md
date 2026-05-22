@@ -5876,7 +5876,7 @@ def log_execution_time(logger, operation_name):
         raise
 
 # Использование
-with log_execution_time(logger, "Загрузка страницы"):
+with log_execution_time(logger, "Загрузка страницы"): 
     driver.get("https://example.com")
 ```
 
