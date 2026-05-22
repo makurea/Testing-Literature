@@ -2525,7 +2525,7 @@ jobs:
 
 🔗 [Официальная документация](https://playwright.dev/java/api/class-elementhandle)
 
-| Метод | Описание | Пример использования |  
+| Метод | Описание | Пример использования |   
 | :--- | :--- | :--- |
 | `click()` | Кликает по элементу | `elementHandle.click();` |
 | `fill()` | Заполняет поле текстом | `elementHandle.fill("text");` |
