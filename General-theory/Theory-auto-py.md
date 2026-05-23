@@ -8745,7 +8745,7 @@ def isolated_user(appium_driver, unique_test_data):
     return user_data
 ```
 
-#### Стратегии распределения тестов
+#### Стратегии распределения тестов  
 
 ##### Балансировка нагрузки
 ```python
