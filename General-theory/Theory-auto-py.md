@@ -5342,7 +5342,7 @@ def verify_welcome_message(driver, message):
 | **behave** | Альтернативный фреймворк | Через адаптеры |
 | **allure-bdd** | Отчетность для BDD тестов | Allure интеграция |
 
-#### Best Practices
+#### Best Practices 
 
 ##### Для Screenplay
 | Практика | Рекомендация | Пример |
