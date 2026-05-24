@@ -21,7 +21,7 @@
 - [Примеры работы с инструментами CI/CD](#примеры-работы-с-инструментами)
 - [Виртуализация и Контейнеризация](#виртуализация)
 
-## [🕵️ Тест-раннеры (Test Runners)](#test-runners)  <a id="test-runners-глава"></a> 
+## [🕵️ Тест-раннеры (Test Runners)](#test-runners)  <a id="test-runners-глава"></a>  
 
 - [JUnit](#junit)
 - [TestNG](#testng)
