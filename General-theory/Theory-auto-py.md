@@ -8,7 +8,7 @@
 ## [🦊 Системы контроля версий и Python](#git-python)  <a id="git-python-глава"></a>               
 
 * [Git для Python-разработчика](#git-python)
-* [Использование Git в проектах с virtualenv / poetry](#git-virtualenv)   
+* [Использование Git в проектах с virtualenv / poetry](#git-virtualenv)    
 * [Интеграция Git с CI/CD для Python](#git-ci-cd)
 
 ## [🚀 CI/CD для Python](#ci-cd-python)  <a id="ci-cd-python-глава"></a>  
