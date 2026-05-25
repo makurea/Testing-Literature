@@ -5224,7 +5224,7 @@ def test_user_login():
 ##### Компоненты BDD
 | Компонент | Назначение | Формат |
 |-----------|------------|--------|
-| **Feature файлы** | Описание функциональности | Gherkin (.feature) |
+| **Feature файлы** | Описание функциональности | Gherkin (.feature) | 
 | **Step definitions** | Реализация шагов | Python файлы |
 | **Scenarios** | Конкретные тестовые случаи | Given/When/Then |
 | **Scenario outlines** | Параметризованные сценарии | Examples таблицы |
