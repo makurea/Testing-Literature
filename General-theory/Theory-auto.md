@@ -60,7 +60,7 @@
 - [Selenoid](#selenoid)
 - [Классы](#selenium-классы)
     - [WebDriver](#webdriver)
-    - [WebElement](#webelement)
+    - [WebElement](#webelement) 
     - [By](#by)
     - [Actions](#actions)
     - [Alert](#alert)
