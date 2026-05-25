@@ -5185,7 +5185,7 @@ Page Object Model остается фундаментальным паттерн
 
 ##### Архитектура Screenplay
 ```
-Actor (Who) → Abilities (Can) → Tasks (Do) → Interactions (How) → System
+Actor (Who) → Abilities (Can) → Tasks (Do) → Interactions (How) → System 
       ↓              ↓              ↓               ↓              ↓
    Исполнитель   Навыки/Роли    Бизнес-действия   Технические   Тестируемая
      тестов                     (Login, Order)     действия       система
