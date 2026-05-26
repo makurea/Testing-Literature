@@ -3141,7 +3141,7 @@ Trace Viewer — это веб-интерфейс для анализа запи
 **Запись трассировки в тесте:**  
 
 ```java
-BrowserContext context = browser.newContext();
+BrowserContext context = browser.newContext(); 
 
 // Начать трассировку
 context.tracing().start(new Tracing.StartOptions()
