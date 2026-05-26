@@ -5840,7 +5840,7 @@ class StructuredFormatter(logging.Formatter):
             'line': record.lineno
         }
         if record.exc_info:
-            log_record['exception'] = self.formatException(record.exc_info)
+            log_record['exception'] = self.formatException(record.exc_info) 
         
         if hasattr(record, 'test_id'):
             log_record['test_id'] = record.test_id
