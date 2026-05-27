@@ -3267,7 +3267,7 @@ def factorial_rec(n):
 
 ```python
 data = [5, 2, 9, 1]
-data.sort()              # сортировка на месте
+data.sort()              # сортировка на месте 
 sorted_data = sorted(data, reverse=True)
 ````
 
