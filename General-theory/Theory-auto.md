@@ -2890,7 +2890,7 @@ BrowserContext mobileContext = browser.newContext(new Browser.NewContextOptions(
 
 **События контекста**
 
-| Событие | Описание | Пример использования |
+| Событие | Описание | Пример использования | 
 | :--- | :--- | :--- |
 | `onPage()` | Срабатывает при создании новой страницы | `context.onPage(page -> System.out.println("New page: " + page.url()));` |
 | `onClose()` | Срабатывает при закрытии контекста | `context.onClose(ctx -> System.out.println("Context closed"));` |
