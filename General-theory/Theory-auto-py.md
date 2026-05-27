@@ -7004,7 +7004,7 @@ element = driver.find_element(AppiumBy.ACCESSIBILITY_ID, 'Login')
 element = driver.find_element(AppiumBy.XPATH, '//Button[@text="Login"]')
 
 # Android UiAutomator 
-element = driver.find_element(
+element = driver.find_element( 
     AppiumBy.ANDROID_UIAUTOMATOR,
     'new UiSelector().text("Login")'
 )
