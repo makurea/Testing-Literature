@@ -2834,7 +2834,7 @@ page.navigate("https://example.com/login");
 page.fill("#username", "user");
 page.fill("#password", "pass");
 page.click("#login");
-page.waitForURL("**/dashboard");
+page.waitForURL("**/dashboard"); 
 
 String storageState = context.storageState();
 Files.write(Paths.get("state.json"), storageState.getBytes());  
