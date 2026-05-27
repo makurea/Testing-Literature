@@ -70,7 +70,7 @@
 * [Асинхронное API тестирование с aiohttp](#aiohttp)
 * [Postman / Newman интеграция с Python](#postman-python)
 
-## [🏛 Архитектура фреймворка на Python](#архитектура-python)  <a id="архитектура-python-глава"></a>  
+## [🏛 Архитектура фреймворка на Python](#архитектура-python)  <a id="архитектура-python-глава"></a>   
 
 * [Page Object Model (POM) на Python](#pom-python)
 * [Screenplay / Pytest-BDD](#screenplay-bdd)
