@@ -5135,7 +5135,7 @@ increment()
 print(counter)  # 1
 
 create_global()
-print(NEW_GLOBAL)  # "Created in function"
+print(NEW_GLOBAL)  # "Created in function" 
 ```
 
 ##### `nonlocal`
