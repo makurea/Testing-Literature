@@ -365,7 +365,7 @@ Performance Requirements (NFR) → SLO → SLA
 | **Анализ данных** | Excel, Jupyter, умение строить графики, работать с логами и метриками |
 | **CI/CD** | Jenkins, GitLab CI, GitHub Actions (запуск тестов по расписанию/после деплоя) |
 
-**Soft skills:**
+**Soft skills:**  
 
 | Навык | Зачем нужен |
 |-------|-------------|
