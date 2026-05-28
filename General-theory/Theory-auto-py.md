@@ -5965,7 +5965,7 @@ def test_parallel():
     test_logger = TestLogger()
     test_logger.log(logging.INFO, "Начало теста")
     # ... выполнение теста
-    test_logger.log(logging.INFO, "Конец теста")
+    test_logger.log(logging.INFO, "Конец теста")  
 ```
 
 #### Best Practices
