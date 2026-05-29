@@ -3091,7 +3091,7 @@ adb shell dumpsys battery unplug
 adb shell dumpsys power | grep -A 20 "Wake Locks"
 ```
 
-**iOS (Instruments):**
+**iOS (Instruments):** 
 - Energy Log → запустить на 15-30 минут → анализ по категориям
 
 [🔄 К содержанию — главы](#виды-тестирования-глава)    
