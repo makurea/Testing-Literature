@@ -2795,7 +2795,7 @@ Playwright автоматически ожидает готовности эле
 | `urlContains` | `page.waitForURL(url -> url.contains("pattern"))` |
 
 
-[🔄 К содержанию - главы](#playwright-глава)   
+[🔄 К содержанию - главы](#playwright-глава)    
 [🔼 К содержанию](#content)
 
 ---
