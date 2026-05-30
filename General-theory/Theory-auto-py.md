@@ -7038,7 +7038,7 @@ element = driver.find_element(
 
 ##### Примеры жестов
 ```python
-from appium.webdriver.common.touch_action import TouchAction
+from appium.webdriver.common.touch_action import TouchAction 
 
 # Tap по координатам
 action = TouchAction(driver)
