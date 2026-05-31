@@ -1073,7 +1073,7 @@ List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5)
 numbersforEach(n -> Systemoutprintln(n * 2))
 ```
 
-[🔄 К содержанию - главы](#современные-api-глава)  
+[🔄 К содержанию - главы](#современные-api-глава)   
 [🔼 К содержанию](#content)
 
 ---
