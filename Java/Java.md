@@ -1125,7 +1125,7 @@ numbersforEach(n -> Systemoutprintln(n * 2))
 
 ---
 
-# 🗂️Коллекции <a id="коллекции"></a>   
+# 🗂️Коллекции <a id="коллекции"></a>    
 
 ## 🔸 Java Collections и Map 7️⃣<a id="java-collections-и-map"></a>
 
