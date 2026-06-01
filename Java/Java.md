@@ -948,7 +948,7 @@ System.out.println(str); // Вывод: Hello World!
 
 # 🟤 Современные API <a id="современные-api"></a>
 
-## 🔹 Stream API 1️⃣2️⃣<a id="stream-api"></a>
+## 🔹 Stream API 1️⃣2️⃣<a id="stream-api"></a> 
 
 ### Теоретическое описание
 
