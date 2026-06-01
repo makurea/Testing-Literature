@@ -2724,7 +2724,7 @@ Locator expensiveProduct = page
 | **Комбинации** | `Control+Shift+T`, `Alt+F4`, `Control+A`, `Control+C`, `Control+V` |
 
 
-[🔄 К содержанию - главы](#playwright-глава)  
+[🔄 К содержанию - главы](#playwright-глава)   
 [🔼 К содержанию](#content)
 
 ---
