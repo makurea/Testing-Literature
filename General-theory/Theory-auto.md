@@ -2987,7 +2987,7 @@ page.route("**/google-analytics.com/**", Route::abort);
 
 **Модификация запроса:**
 ```java
-// Добавление заголовка авторизации ко всем запросам API
+// Добавление заголовка авторизации ко всем запросам API 
 page.route("**/api/**", route -> {
     Map<String, String> headers = new HashMap<>(route.request().headers());
     headers.put("Authorization", "Bearer test-token");
