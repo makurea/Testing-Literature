@@ -7545,7 +7545,7 @@ class LokaliseClient:
             "Content-Type": "application/json"
         }
     
-    def get_translations(self, lang_code="ru"):
+    def get_translations(self, lang_code="ru"): 
         """Получение переводов для языка"""
         url = f"{self.base_url}/projects/{self.project_id}/translations/{lang_code}"
         response = requests.get(url, headers=self.headers)
