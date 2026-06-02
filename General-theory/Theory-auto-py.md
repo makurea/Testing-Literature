@@ -6573,7 +6573,7 @@ class InstrumentedAPIClient:
     """API клиент с метриками"""
     
     def __init__(self):
-        self.session = requests.Session()
+        self.session = requests.Session() 
         
         # Метрики API
         self.request_duration = Histogram(
