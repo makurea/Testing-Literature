@@ -1754,7 +1754,7 @@ pipeline {
 
 ---
 
-### 🐙 GitHub Actions  <a id="github-actions"></a> 
+### 🐙 GitHub Actions  <a id="github-actions"></a>  
 
 GitHub Actions — это инструмент для автоматизации рабочих процессов CI/CD непосредственно в репозиториях GitHub. Он позволяет запускать сборку, тестирование и развертывание кода по событиям.  
 
