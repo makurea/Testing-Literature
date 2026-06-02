@@ -2930,7 +2930,7 @@ BrowserContext context = browser.newContext(new Browser.NewContextOptions()
     .setTimezoneId("Europe/Moscow"));
 ```
 
-[🔄 К содержанию - главы](#playwright-глава)  
+[🔄 К содержанию - главы](#playwright-глава)   
 [🔼 К содержанию](#content)
 
 ---
