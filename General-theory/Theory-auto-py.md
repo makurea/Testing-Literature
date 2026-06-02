@@ -7321,7 +7321,7 @@ class DeviceAwareDriver:
         self.driver.swipe(start_x, start_y, end_x, end_y, 1000)
 ```
 
-#### Работа с эмуляторами/симуляторами
+#### Работа с эмуляторами/симуляторами 
 
 ##### Управление эмуляторами
 ```python
