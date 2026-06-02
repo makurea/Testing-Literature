@@ -6176,7 +6176,7 @@ allure.attach("Логи выполнения теста",
 # Прикрепление HTML
 allure.attach("<h1>Тест завершен</h1>",
              name="result.html",
-             attachment_type=allure.attachment_type.HTML)
+             attachment_type=allure.attachment_type.HTML) 
 ```
 
 #### Интеграция с фикстурами pytest
