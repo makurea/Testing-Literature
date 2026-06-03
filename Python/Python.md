@@ -4851,7 +4851,7 @@ def validate_age(age):
     return True
 ```
 
-#### Комprehensions (генераторы коллекций)
+#### Комprehensions (генераторы коллекций) 
 
 ##### Синтаксис comprehensions
 ```python
