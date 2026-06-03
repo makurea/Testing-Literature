@@ -4776,7 +4776,7 @@ employee = Employee("Bob", 30, "Developer")
 print(employee.introduce())
 ```
 
-#### Модули и пакеты
+#### Модули и пакеты 
 
 ##### Структура проекта
 ```
