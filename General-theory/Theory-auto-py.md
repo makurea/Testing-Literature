@@ -7052,7 +7052,7 @@ driver.swipe(start_x=100, start_y=500,
              end_x=100, end_y=100, duration=800)
 
 # Scroll к элементу
-driver.scroll(origin_el=element1, destination_el=element2)
+driver.scroll(origin_el=element1, destination_el=element2) 
 
 # Multi-touch
 from appium.webdriver.common.multi_action import MultiAction
