@@ -2899,7 +2899,7 @@ BrowserContext mobileContext = browser.newContext(new Browser.NewContextOptions(
 | `onRequestFailed()` | Срабатывает при ошибке запроса | `context.onRequestFailed(request -> System.out.println("Request failed: " + request.url()));` |
 
 
-**Создание контекста с предустановками**
+**Создание контекста с предустановками**  
 
 ```java
 // Создание контекста с различными настройками
