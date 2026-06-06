@@ -2875,7 +2875,7 @@ def result = [1, 2, 3, 4, 5, 6]
 | **Преобразование List в Map** | `list.collectEntries { [it.id, it] }` | Создает Map, где ключ — `id` элемента, а значение — сам элемент. |
 | **Слияние с приоритетом** | `def merged = [*:defaults, *:overrides]` | Spread-оператор `*:` для Map. Параметры `overrides` имеют приоритет. |
 
-[🔄 К содержанию - главы](#collections-глава)  
+[🔄 К содержанию - главы](#collections-глава)    
 [🔼 К содержанию](#content)  
 
 ---
