@@ -2627,7 +2627,7 @@ def lazyResult = (1..1000000).lazy
 lazyResult.toList() // Только здесь начнутся вычисления
 ```
 
-**5. Сравнение Java Streams API и Groovy Collections API**
+**5. Сравнение Java Streams API и Groovy Collections API** 
 
 Groovy Collections API появился раньше, чем Java Streams, и во многом вдохновил его. Однако у них есть важные различия.
 
