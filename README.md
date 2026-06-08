@@ -19,7 +19,7 @@
   <img src="https://i.ibb.co/jP155h45/458652.jpg" alt="Testing Literature Banner" style="width: 100%; max-width: 1400px; height: 700px; object-fit: cover; object-position: center 30%; border-radius: 12px;">
 </div>
 
-## [Мануальное тестирование](General-theory/Theory-manual.md)
+## [Мануальное тестирование](General-theory/Theory-manual.md) 
 
 * [🟢 Основы тестирования](General-theory/Theory-manual.md#основы-тестирования-глава)
 * [🔴 Документы и отчеты](General-theory/Theory-manual.md#документы-и-отчеты-глава)
