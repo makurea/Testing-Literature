@@ -5522,7 +5522,7 @@ def timer_context(name="Операция"):
 with timer_context("Сложные вычисления"):
     result = complex_calculation()
 ```
-
+ 
 #### Практические паттерны
 
 ##### Обработка нескольких файлов одновременно 
