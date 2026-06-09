@@ -363,7 +363,7 @@ Performance Requirements (NFR) → SLO → SLA
 | **Сети и протоколы** | HTTP/HTTPS, REST, gRPC, WebSocket, TCP/IP, понимание latency, bandwidth |
 | **Инфраструктура** | Linux (системные метрики, настройка ядра), Docker, Kubernetes, облака (AWS/GCP/Azure) |
 | **Анализ данных** | Excel, Jupyter, умение строить графики, работать с логами и метриками |
-| **CI/CD** | Jenkins, GitLab CI, GitHub Actions (запуск тестов по расписанию/после деплоя) |
+| **CI/CD** | Jenkins, GitLab CI, GitHub Actions (запуск тестов по расписанию/после деплоя) | 
 
 **Soft skills:**  
 
