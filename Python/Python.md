@@ -4566,7 +4566,7 @@ Clean Architecture:      MVC/MVT:
 | **Защищенные** | _single_leading_underscore | `_internal_method()` |
 | **Приватные** | __double_leading_underscore | `__private_attribute` |
 
-#### Типы данных и переменные
+#### Типы данных и переменные 
 
 ##### Примитивные типы
 | Тип | Описание | Пример |
