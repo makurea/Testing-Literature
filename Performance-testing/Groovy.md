@@ -2880,7 +2880,7 @@ def result = [1, 2, 3, 4, 5, 6]
 
 ---
 
-## 🟤 Метапрограммирование и динамика <a id="metaprogramming"></a>
+## 🟤 Метапрограммирование и динамика <a id="metaprogramming"></a> 
 
 ### Метапрограммирование: ExpandoMetaClass <a id="expando"></a>
 
