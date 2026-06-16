@@ -3557,7 +3557,7 @@ adb shell input keyevent KEYCODE_WAKEUP
 | **Bluetooth** | BLUETOOTH_SCAN, BLUETOOTH_CONNECT (Android 12+) | Не сканирует/не подключается |
 | **Фоновый GPS** | ACCESS_BACKGROUND_LOCATION | GPS работает только при активном приложении |
 
-#### Платформенные особенности
+#### Платформенные особенности 
 
 | Платформа | Особенность | Что проверить |
 |-----------|-------------|---------------|
