@@ -3505,7 +3505,7 @@ WSDL — это XML-документ, который описывает:
    <!-- Тело запроса -->
    <soapenv:Body>
       <web:YourRequest>
-         <web:Parameter1>Value1</web:Parameter1>
+         <web:Parameter1>Value1</web:Parameter1> 
          <web:Parameter2>Value2</web:Parameter2>
       </web:YourRequest>
    </soapenv:Body>
