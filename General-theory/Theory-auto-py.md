@@ -6230,7 +6230,7 @@ def pytest_runtest_makereport(item, call):
 | **@allure.story** | Группировка по user stories | Фильтрация по историям |
 | **@allure.feature** | Группировка по фичам | Организация по функциональности |
 
-##### Пример параметризированного теста
+##### Пример параметризированного теста  
 ```python
 import pytest
 import allure
