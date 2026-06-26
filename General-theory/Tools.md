@@ -38,7 +38,7 @@
 
   - [🧮 SQL](#sql)
   - [🐬 DBeaver](#dbeaver)
-  - [💾 PL/SQL Developer](#plsql-developer)
+  - [💾 PL/SQL Developer](#plsql-developer) 
   - [🐬 MySQL](#mysql) 
   - [🐘 PostgreSQL](#postgresql)
   - [🟠 Oracle](#oracle)
