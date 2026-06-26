@@ -1180,47 +1180,6 @@ numbersforEach(n -> Systemoutprintln(n * 2))
 
 Java Collections Framework предоставляет набор интерфейсов и классов для работы с коллекциями данных 
 
-### Основные интерфейсы:      
-
-- **Collection**: Базовый интерфейс для всех коллекций  
-
-- **List**: Упорядоченная коллекция с возможностью дублирования элементов 
-  ```java
-  List<String> list = new ArrayList<>
-  ```
-- **Set**: Коллекция без дубликатов
-  ```java
-  Set<String> set = new HashSet<>
-  ```
-- **Queue**: Коллекция для очередей (FIFO)
-  ```java
-  Queue<String> queue = new LinkedList<>
-  ```
-### Map:
-Представляет набор ключ-значение 
-
-#### Основные реализации:
-
-- **HashMap**: Хэш-таблица без гарантии порядка
-  ```java
-  Map<String, Integer> map = new HashMap<>
-  ```
-  
-- **LinkedHashMap**: Сохраняет порядок вставки 
-  ```java
-  Map<String, Integer> linkedMap = new LinkedHashMap<>
-  ```
-  
-- **TreeMap**: Отсортированная по ключам коллекция
-  ```java
-  Map<String, Integer> treeMap = new TreeMap<>
-  ```
-  
-### Преимущества:
-- Единый интерфейс для различных типов коллекций
-- Гибкость выбора реализации в зависимости от задачи
-- Поддержка потокобезопасных коллекций через Collections.synchronizedXXX()
-
 [🔄 К содержанию - главы](#коллекции-глава)    
 [🔼 К содержанию](#content)
 
