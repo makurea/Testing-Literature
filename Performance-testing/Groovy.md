@@ -28,7 +28,7 @@
 * [Static, Final и Immutable](#static-final-immutable)
 * [Properties и Getter/Setter](#properties-getter-setter)
 
-## [⚡ Операторы и конструкции управления](#operators) <a id="operators-глава"></a>  
+## [⚡ Операторы и конструкции управления](#operators) <a id="operators-глава"></a>   
 
 * [Арифметические и логические операторы](#арифметические-логические)
 * [Условные конструкции: if, switch](#условные)
