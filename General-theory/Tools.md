@@ -6,7 +6,7 @@
 
 ## [🌐 Веб-тестирование](#веб-тестирование) <a id="веб-тестирование-глава"></a>                               
 
-  - [🛠️ Chrome DevTools](#chrome-devtools)
+  - [🛠️ Chrome DevTools](#chrome-devtools) 
   - [🔍 Lighthouse](#lighthouse)
   - [🖥️ BrowserStack](#browserstack)
   - [☁️ Sauce Labs](#sauce-labs)
