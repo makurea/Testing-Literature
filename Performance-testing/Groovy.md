@@ -22,7 +22,7 @@
 * [Ссылки на методы и лямбда-выражения](#методы-лямбда)
 * [Delegation и Scope в Closure](#delegation-scope)
 
-## [🟠 Управление доступом и модификаторы](#access-modifiers) <a id="access-modifiers-глава"></a> 
+## [🟠 Управление доступом и модификаторы](#access-modifiers) <a id="access-modifiers-глава"></a>  
 
 * [Public, Private, Protected](#public-private-protected)
 * [Static, Final и Immutable](#static-final-immutable)
