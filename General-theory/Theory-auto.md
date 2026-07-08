@@ -1798,7 +1798,7 @@ Selenoid идеально подходит для автоматизации UI-
 | `getAlertType()` | Получает тип окна (Alert, Confirm, Prompt) |
 | `setFileInput(String filePath)` | Загружает файл в окно, если это поддерживается |
 
-#### IFrame <a id="iframe"></a>
+#### IFrame <a id="iframe"></a> 
 `IFrame` — это встроенные фреймы, в которые можно переключаться.
 
 | Метод | Описание |
