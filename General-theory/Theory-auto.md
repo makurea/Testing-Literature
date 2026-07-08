@@ -54,7 +54,7 @@
 - [Browser-менеджер](#browser-менеджер)
 - [Headless-режим](#headless-режим)   
 
-## [🎭 Selenium ](#selenium)  <a id="selenium-глава"></a>                       
+## [🎭 Selenium ](#selenium)  <a id="selenium-глава"></a>                        
 
 - [Что такое Selenium?](#что-такое-selenium)  
 - [Selenide](#selenide)
