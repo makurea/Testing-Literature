@@ -4203,7 +4203,7 @@ container.register(Config, TestConfig)
 runner = container.resolve(TestRunner)
 ```
 
-#### DI и фикстуры pytest
+#### DI и фикстуры pytest 
 
 ##### Сравнение подходов
 | Подход | DI контейнер | pytest фикстуры |
