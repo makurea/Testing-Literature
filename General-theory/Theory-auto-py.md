@@ -28,7 +28,7 @@
 * [Сравнение pytest и unittest](#сравнение-pytest-unittest)
 
 
-## [📦 Управление зависимостями и сборка](#сборка-python)  <a id="сборка-python-глава"></a>            
+## [📦 Управление зависимостями и сборка](#сборка-python)  <a id="сборка-python-глава"></a>             
 
 * [pip и requirements.txt](#pip)
 * [poetry](#poetry)
