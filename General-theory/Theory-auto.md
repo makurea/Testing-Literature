@@ -2365,7 +2365,7 @@ jobs:
           path: target/playwright-report/
 ```
 
-#### Сравнение с JUnit/TestNG
+#### Сравнение с JUnit/TestNG 
 
 | Критерий | Playwright Test Runner | JUnit 5 | TestNG |
 |----------|------------------------|---------|--------|
