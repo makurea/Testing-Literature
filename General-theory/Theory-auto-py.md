@@ -83,7 +83,7 @@
 * [Allure + pytest](#allure-python)
 * [Метрики: Prometheus + Python](#metrics-python)
 
-## [📱 Автоматизация тестирования мобильных приложений](#мобильная-автоматизация-python)  <a id="мобильная-автоматизация-python-глава"></a>        
+## [📱 Автоматизация тестирования мобильных приложений](#мобильная-автоматизация-python)  <a id="мобильная-автоматизация-python-глава"></a>         
 
 * [Appium Python Client](#appium-python)
 * [Lokalise / MobileBy локаторы](#mobileby-python)
