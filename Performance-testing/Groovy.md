@@ -69,7 +69,7 @@
 
 * [Groovy скрипты для JMeter](#jmeter-groovy)
 * [Параллельное выполнение и GPars](#gpars)
-* [Оптимизация скриптов и memory footprint](#optimization-memory)
+* [Оптимизация скриптов и memory footprint](#optimization-memory) 
 
 ---
 
