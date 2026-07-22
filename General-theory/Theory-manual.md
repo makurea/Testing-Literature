@@ -84,7 +84,7 @@
 - [Дефект/отказ отличия](#дефект-отказ-отличия)
 - [Жизненный цикл бага](#жизненный-цикл-бага) 
 - [Классификация дефектов](классификация-дефектов)
-- [Zero Bug Policy](#Zero_Bug_Policy)
+- [Zero Bug Policy](#zero_bug_policy)
 - [Анализ первопричины бага(RCA)](#root-cause-analysis)
 - [Метрики качества багов (Bug metrics)](#метрики-качества-багов)
 - [Основные атрибуты баг-репорта](#основные-атрибуты-баг-репорта)
@@ -2528,7 +2528,7 @@ public class MathUtilsTest {
 
 ---
 
-###  Zero Bug Policy  <a id="Zero_Bug_Policy"></a>
+###  Zero Bug Policy  <a id="zero_bug_policy"></a>
 
 **📌 Что это?**
 
