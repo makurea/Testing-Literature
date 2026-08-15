@@ -1,6 +1,6 @@
 # Ресурсы и литература по тестированию программного обеспечения и обеспечению качества               
 
-<div align="center">      
+<div align="center">       
 
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Manual QA](https://img.shields.io/badge/Manual_QA-2C3E50?style=for-the-badge)
