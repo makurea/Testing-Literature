@@ -18,7 +18,7 @@
 * [Файл настройки CI/CD для Python проектов](#ci-cd-настройка)
 * [Виртуальные окружения и контейнеризация (venv, pipenv, Docker)](#виртуальные-окружения)
 
-## [🕵️ Тест-раннеры и фреймворки Python](#test-runners-python)  <a id="test-runners-python-глава"></a> 
+## [🕵️ Тест-раннеры и фреймворки Python](#test-runners-python)  <a id="test-runners-python-глава"></a>  
 
 * [pytest](#pytest)
 * [Параметризация тестов в pytest](#pytest-параметризация)
