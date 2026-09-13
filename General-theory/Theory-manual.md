@@ -6033,7 +6033,7 @@ bin/kafka-console-consumer.sh --topic my-topic --bootstrap-server kafka.mycompan
 - UI-клиенты (Kafka Tool, Kafdrop, Offset Explorer)
 - Интеграционные тесты с EmbeddedKafka
 
-#### Zookeeper в Kafka (до версии 3.0+)
+#### Zookeeper в Kafka (до версии 3.0+)  
 
 Роль Zookeeper:
 - Координация кластера (контроллер брокера)
