@@ -1230,6 +1230,35 @@ Maven использует концепцию жизненного цикла, �
 - **Command** (Команда): Действие, выполняемое в Maven через командную строку. Например, `mvn clean`, `mvn install`. 
 - **Phase** (Фаза): Стадия в жизненном цикле Maven (например, `validate`, `compile`, `test`, `package`, `verify`).
 
+# Maven Wrapper + Allure — команды (Windows)
+
+| Задача | Команда (Windows CMD / PowerShell) |
+|---|---|
+| Очистить проект | `mvnw.cmd clean` |
+| Запустить все тесты | `mvnw.cmd test` |
+| Очистить и запустить тесты | `mvnw.cmd clean test` |
+| Запустить конкретный класс | `mvnw.cmd test -Dtest=LoginTest` |
+| Запустить конкретный метод в классе | `mvnw.cmd test -Dtest=LoginTest#successfulLogin` |
+| Запустить несколько классов | `mvnw.cmd test -Dtest=LoginTest,CheckoutTest` |
+| Запустить несколько методов одного класса | `mvnw.cmd test -Dtest=LoginTest#login+logout` |
+| Запустить все классы по шаблону | `mvnw.cmd test -Dtest="*LoginTest"` |
+| Запустить методы по шаблону | `mvnw.cmd test -Dtest="LoginTest#test*"` |
+| Не падать, если тестов не найдено | `mvnw.cmd test -Dtest=LoginTest -DfailIfNoTests=false` |
+| Запуск smoke-тестов (профиль) | `mvnw.cmd clean test -Psmoke` |
+| Запуск регрессии (профиль) | `mvnw.cmd clean test -Pregression` |
+| Передать системное свойство (браузер) | `mvnw.cmd clean test -Dbrowser=chrome` |
+| Передать несколько свойств | `mvnw.cmd clean test -Dbrowser=chrome -Dheadless=true` |
+| Собрать без запуска тестов | `mvnw.cmd clean install -DskipTests` |
+| Скомпилировать тесты без запуска | `mvnw.cmd clean test-compile` |
+| Запустить только интеграционные тесты | `mvnw.cmd clean verify -DskipUnitTests=true` |
+| Сгенерировать Allure-отчёт | `mvnw.cmd allure:report` |
+| Сгенерировать Allure-отчёт и открыть в браузере | `mvnw.cmd allure:serve` |
+| Тесты + Allure-отчёт | `mvnw.cmd clean test allure:report` |
+| Тесты + Allure-отчёт в браузере | `mvnw.cmd clean test allure:serve` |
+| Открыть ранее сгенерированный Allure-отчёт | `allure open target\site\allure-maven-plugin` |
+| Открыть HTML-отчёт Allure вручную | `start target\site\allure-maven-plugin\index.html` |
+| Сменить кодировку консоли (при кракозябрах) | `chcp 65001` |
+
 [🔄 К содержанию - главы](#системы-сборки-глава)  
 [🔼 К содержанию](#content)
 
